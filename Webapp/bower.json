@@ -1,0 +1,19 @@
+{
+  "name": "Budi",
+  "version": "0.0.1",
+  "authors": [
+    "Pedro Tavares <p.miguel.tr@gmail.com>"
+  ],
+  "main": "app.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.25"
+  }
+}
