@@ -1,0 +1,7 @@
+[
+    "js/app.js",
+
+    "js/modules/WebRTC/src/scripts/WebRTC.js",
+    "js/modules/WebRTC/src/scripts/controllers/WebcamController.js",
+    "js/modules/WebRTC/src/scripts/directives/bdCamera.js"
+]

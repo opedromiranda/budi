@@ -1,4 +1,25 @@
 module.exports = function(config) {
+
+    var file,
+        jsAssetsFile,
+        srcFiles;
+
+    file = require('./node_modules/grunt/lib/grunt/file.js');
+    jsAssetsFile = file.glob.sync("**/js-assets.json")[0];
+
+    srcFiles = [
+        'bower_components/angular/angular.js',
+        'bower_components/angular-route/angular-route.js',
+        'bower_components/angular-mocks/angular-mocks.js',
+        'tests/*.js',
+        'js/modules/**/tests/**/*.js',
+        'js/modules/**/src/views/*.html'
+    ];
+
+    file.readJSON(jsAssetsFile).forEach(function (asset) {
+        srcFiles.push(asset);
+    });
+
     config.set({
         // base path, that will be used to resolve files and exclude
         basePath: '.',
@@ -6,18 +27,23 @@ module.exports = function(config) {
         frameworks: ['jasmine'],
 
         // list of files / patterns to load in the browser
-        files: [
-            'tests/*.js'
-        ],
+        files: srcFiles,
 
         // list of files to exclude
         exclude: [
-            'client/main.js'
         ],
 
         preprocessors: {
             'client/*.js': ['jasmine'],
-            'test/client/*.js': ['jasmine']
+            'test/client/*.js': ['jasmine'],
+            'js/modules/**/src/views/*.html': ['ng-html2js']
+        },
+
+        ngHtml2JsPreprocessor: {
+            // use stripPrefix and prependPrefix to adjust it.
+
+            // the name of the Angular module to create
+            moduleName: "Budi.templates"
         },
 
         // use dots reporter, as travis terminal does not support escaping sequences
@@ -70,7 +96,8 @@ module.exports = function(config) {
             'karma-jasmine',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
-            'karma-phantomjs-launcher'
+            'karma-phantomjs-launcher',
+            'karma-ng-html2js-preprocessor'
         ]
     });
 };

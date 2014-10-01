@@ -1,4 +1,7 @@
 .idea/
+AndroidClient/.idea
 AndroidClient/gen
 */node_modules
+*/bower_components
 .DS_STORE
+out/
