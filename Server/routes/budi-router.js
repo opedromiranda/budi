@@ -5,7 +5,7 @@
 var express = require('express');
 var router = express.Router();
 
-var budiController = require('../controllers/BudiController.js');
+var budiController = require('../controllers/budi-controller.js');
 
 
 router.get('/count', budiController.count);

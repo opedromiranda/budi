@@ -9,9 +9,11 @@ var mongoose = require('mongoose');
 var app = express();
 
 var routes = require('./routes/index');
-var budiRoutes = require('./routes/budies');
+var budiRouter = require('./routes/budi-router');
+var meetRouter = require('./routes/meet-router');
 
-mongoose.connect('mongodb://localhost/budi');
+//mongoose.connect('mongodb://localhost/budi');
+mongoose.connect('mongodb://192.168.1.83:27017/budi');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,7 +29,8 @@ app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/api/budies', budiRoutes);
+app.use('/api/budies', budiRouter);
+app.use('/api/meets', meetRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

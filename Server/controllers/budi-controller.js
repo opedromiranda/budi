@@ -2,7 +2,7 @@
  * Created by pedromiranda on 04/10/14.
  */
 
-var Budi = require('../models/Budi.js');
+var Budi = require('../models/budi.js');
 
 function BudiController () {
     this.insert = function (req, res) {
@@ -12,7 +12,6 @@ function BudiController () {
         if( !req.body.hasOwnProperty('email') ||
             !req.body.hasOwnProperty('name') ) {
 
-            console.log('1');
             res.json({
                 error: 1
             });
@@ -25,11 +24,9 @@ function BudiController () {
         });
 
         budi.save(function (err) {
-            console.log('2');
             if(err) {
                 res.json({error: 1});
             } else {
-                console.log('3');
                 res.json({
                     error: 0,
                     budi : budi

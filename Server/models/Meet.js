@@ -5,7 +5,7 @@
 var mongoose = require('mongoose');
 
 var meetSchema = new mongoose.Schema({
-    budies : 'array',
+    budies : [{ type: mongoose.Schema.Types.ObjectId}],
     chat : 'array',
     date : 'date'
 });
