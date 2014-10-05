@@ -1,38 +1,34 @@
 /**
  * Created by pedromiranda on 04/10/14.
  */
-var mongoose = require('mongoose');
+
 var Meet = require('../models/meet.js');
 var Budi = require('../models/budi.js');
 
 function MeetController () {
 
+    var budi;
+
     /**
      * Returns tomorrow's date
-     * Hours, minutes and seconds are set to 0
+     * Hours, minutes and seconds are set to midnight
      * @returns {Date}
      */
     function getTomorrowDate () {
         var tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
-        tomorrow.setHours(0);
-        tomorrow.setMinutes(0);
-        tomorrow.setSeconds(0);
-
+        tomorrow.setHours(0, 0, 0, 0);
         return tomorrow;
     }
 
     /**
      * Returns today's date
-     * Hours, minutes and seconds are set to 0
+     * Hours, minutes and seconds are set to midnight
      * @returns {Date}
      */
     function getTodayDate () {
         var today = new Date();
-        today.setHours(0);
-        today.setMinutes(0);
-        today.setSeconds(0);
-
+        today.setHours(0, 0, 0, 0);
         return today;
     }
 
@@ -44,16 +40,110 @@ function MeetController () {
     function handleError(res) {
         function err(e) {
             res.json({
-                error: 1
+                error: 1,
+                error_object : e
             });
         }
         return err;
     }
 
+    /**
+     * Returns a function that will interpret parameter b (budi)
+     * The returning function will answer {error : 1} if budi is a null object, otherwise it will return a promise
+     * that will search for budi's meets for today
+     * @param res
+     * @returns {Function}
+     */
+    function findTodayBudiMeets(res) {
+
+        return function (b) {
+            var today = getTodayDate(),
+                tomorrow = getTomorrowDate();
+            budi = b;
+
+            if(!budi) {
+                res.json({
+                    error: 1
+                });
+                return;
+            }
+            return budi.findMeets(today, tomorrow);
+        }
+    }
+
+    /**
+     * If the meets array size is 0, returns a promise that search for any available meets for today,
+     * otherwise returns first position of the array
+     * @param meets
+     * @returns {Meet|Promise}
+     */
+    function findAvailableMeets(meets) {
+        var today = getTodayDate(),
+            tomorrow = getTomorrowDate(),
+            meet = meets.length > 0 ? meets[0] : null;
+
+        if(!meet) {
+            return Meet.findAvailableMeets(today, tomorrow);
+        } else {
+            return meet;
+        }
+    }
+
+    /**
+     * Returns a function that will receive a meet object
+     * If the meet object is null, it will create and save a new meet object with budi._id
+     * If the meet object isn't null but budi isn't part of the event, it will update the document adding budi._id
+     * Uses res object to answer to the client the meet object
+     * @param res
+     * @returns {Function}
+     */
+    function handleMeet(res) {
+
+        return function(meet) {
+            console.log('handleMeet');
+            if(!meet) {
+                meet = new Meet({
+                    date : getTodayDate(),
+                    budies : [budi._id]
+                });
+
+                meet.save(function (err, meet) {
+                    if(err) {
+                        handleError(res);
+                    }
+                    res.json({
+                        error: 0,
+                        meet: meet
+                    });
+                });
+
+            } else {
+                if(meet.budies.indexOf(budi._id) == -1) {
+
+                    meet.budies.push(budi._id);
+
+                    Meet.update({_id : meet._id}, {
+                        $push: {budies : budi._id}
+                    }, function(err, numAffected, rawResponse) {
+                        if(err) {
+                            handleError(res);
+                        }
+                        res.json({
+                            error: 0,
+                            meet: meet
+                        });
+                    });
+                } else {
+                    res.json({
+                        error: 0,
+                        meet: meet
+                    });
+                }
+            }
+        }
+    }
+
     this.findMeet = function (req, res) {
-        var budi,
-            today = getTodayDate(),
-            tomorrow = getTomorrowDate();
 
         if(!req.body.hasOwnProperty('budi_id')) {
             res.json({
@@ -63,62 +153,9 @@ function MeetController () {
         }
 
         Budi.findOne({_id : req.body.budi_id}).exec()
-            .then(function handleBudi (b) {
-                budi = b;
-                if(!budi) {
-                    res.json({
-                        error: 1
-                    });
-                    return;
-                }
-
-                return Meet.findOne({
-                    date : {
-                        $gte : today,
-                        $lt : tomorrow
-                    },
-                    budies : budi._id
-                }).exec();
-
-            }, handleError(res))
-            .then(function (meet) {
-                if(!meet) {
-                    return  Meet.findOne({
-                        date : {
-                            $gte : today,
-                            $lt : tomorrow
-                        },
-                        budies : {
-                            $not : {
-                                $size : 2
-                            }
-                        }
-                    }).exec();
-                } else {
-                    return meet;
-                }
-            }, handleError(res))
-            .then(function (meet) {
-                if(!meet) {
-                    meet = new Meet({
-                        date : getTodayDate(),
-                        budies : [budi._id]
-                    });
-
-                } else {
-                    if(meet.budies.indexOf(budi._id) == -1)
-                        meet.budies.push(budi._id)
-                }
-
-                meet.save(function (err, meet) {
-                    if(err) {
-                        handleError(res);
-                    }
-                    res.json({
-                        error: 0
-                    });
-                });
-            });
+            .then(findTodayBudiMeets(res), handleError(res))
+            .then(findAvailableMeets, handleError(res))
+            .then(handleMeet(res));
     };
 }
 

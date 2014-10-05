@@ -12,8 +12,9 @@ var routes = require('./routes/index');
 var budiRouter = require('./routes/budi-router');
 var meetRouter = require('./routes/meet-router');
 
-//mongoose.connect('mongodb://localhost/budi');
-mongoose.connect('mongodb://192.168.1.83:27017/budi');
+mongoose.connect('mongodb://localhost/budi');
+//mongoose.connect('mongodb://192.168.1.83:27017/budi');
+//mongoose.connect('mongodb://sdis:sdis@ds033469.mongolab.com:33469/heroku_app25755838');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
