@@ -1,1 +1,1 @@
-angular.module('Budi', ['ngRoute', 'WebRTC']);
+angular.module('Budi', ['ngRoute', 'WebRTC', 'FacebookLogin']);

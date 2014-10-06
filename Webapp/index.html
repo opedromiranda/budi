@@ -10,9 +10,14 @@
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="js/app.js"></script>
+
     <script src="js/modules/WebRTC/src/scripts/WebRTC.js"></script>
     <script src="js/modules/WebRTC/src/scripts/controllers/WebcamController.js"></script>
     <script src="js/modules/WebRTC/src/scripts/directives/bdCamera.js"></script>
+
+    <script src="js/modules/FacebookLogin/src/scripts/FacebookLogin.js"></script>
+    <script src="js/modules/FacebookLogin/src/scripts/controllers/FBLoginController.js"></script>
+    <script src="js/modules/FacebookLogin/src/scripts/providers/services/FBLoginService.js"></script>
 </head>
 <body ng-app="Budi">
 
@@ -22,6 +27,18 @@
 
         <div ng-controller="WebcamController">
             <bd-camera webcam="localWebcam"/>
+        </div>
+
+        <div ng-controller="FacebookLoginController">
+            <div ng-show="!isLoggedIn()">
+                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                </fb:login-button>
+            </div>
+            <div ng-show="isLoggedIn()">
+                <h3>Welcome {{getUser().name}}</h3>
+                <input type="button" value="Log out" ng-click="logOut()"/>
+            </div>
+
         </div>
 
     </div>
