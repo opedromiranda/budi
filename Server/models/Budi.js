@@ -18,7 +18,6 @@ var budiSchema = new mongoose.Schema({
  * @returns {Promise|Array|{index: number, input: string}|*}
  */
 budiSchema.methods.findMeets = function findMeets(startDate, endDate) {
-    console.log('findMeets');
     return Meet.find({
         date : {
             $gte : startDate,

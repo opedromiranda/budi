@@ -2,11 +2,15 @@
  * Created by pedromiranda on 04/10/14.
  */
 
+var mongoose = require('mongoose');
 var Meet = require('../models/meet.js');
 var Budi = require('../models/budi.js');
 
 function MeetController () {
 
+    /**
+     * Object of the budi that is making the request
+     */
     var budi;
 
     /**
@@ -33,6 +37,18 @@ function MeetController () {
     }
 
     /**
+     * Uses response object to send a JSON object with given object
+     * @param res
+     * @returns {answer}
+     */
+    function handleAnswer(res) {
+        function answer(a) {
+            res.json(a);
+        }
+        return answer;
+    }
+
+    /**
      * Uses the response object to send a JSON object with error set to 1
      * @param res
      * @returns {err}
@@ -48,27 +64,15 @@ function MeetController () {
     }
 
     /**
-     * Returns a function that will interpret parameter b (budi)
-     * The returning function will answer {error : 1} if budi is a null object, otherwise it will return a promise
-     * that will search for budi's meets for today
-     * @param res
-     * @returns {Function}
+     * Returns a promise that will query for meets that budi b might have for today
+     * @param b
+     * @returns {mongoose.Promise}
      */
-    function findTodayBudiMeets(res) {
-
-        return function (b) {
-            var today = getTodayDate(),
-                tomorrow = getTomorrowDate();
-            budi = b;
-
-            if(!budi) {
-                res.json({
-                    error: 1
-                });
-                return;
-            }
-            return budi.findMeets(today, tomorrow);
-        }
+    function findTodayBudiMeets(b) {
+        var today = getTodayDate(),
+            tomorrow = getTomorrowDate();
+        budi = b;
+        return budi.findMeets(today, tomorrow);
     }
 
     /**
@@ -90,57 +94,61 @@ function MeetController () {
     }
 
     /**
-     * Returns a function that will receive a meet object
+     * Returns a promise that will try to be fulfilled with a meet object to be answered to client
      * If the meet object is null, it will create and save a new meet object with budi._id
      * If the meet object isn't null but budi isn't part of the event, it will update the document adding budi._id
-     * Uses res object to answer to the client the meet object
-     * @param res
-     * @returns {Function}
+     * @param meet
+     * @returns {mongoose.Promise}
      */
-    function handleMeet(res) {
+    function handleMeet(meet) {
+        var result = new mongoose.Promise;
 
-        return function(meet) {
-            console.log('handleMeet');
-            if(!meet) {
-                meet = new Meet({
-                    date : getTodayDate(),
-                    budies : [budi._id]
-                });
+        // no meet is available, create new one
+        if(!meet) {
+            meet = new Meet({
+                date : getTodayDate(),
+                budies : [budi._id]
+            });
 
-                meet.save(function (err, meet) {
-                    if(err) {
-                        handleError(res);
-                    }
-                    res.json({
-                        error: 0,
-                        meet: meet
-                    });
-                });
-
-            } else {
-                if(meet.budies.indexOf(budi._id) == -1) {
-
-                    meet.budies.push(budi._id);
-
-                    Meet.update({_id : meet._id}, {
-                        $push: {budies : budi._id}
-                    }, function(err, numAffected, rawResponse) {
-                        if(err) {
-                            handleError(res);
-                        }
-                        res.json({
-                            error: 0,
-                            meet: meet
-                        });
-                    });
-                } else {
-                    res.json({
-                        error: 0,
-                        meet: meet
-                    });
+            meet.save(function (err, meet) {
+                if(err) {
+                    result.error(err);
                 }
+                result.fulfill({
+                    error: 0,
+                    meet: meet
+                });
+            });
+        }
+        // found a valid meet
+        else {
+            // budi isn't part of selected meet, therefore should become a member
+            if(meet.budies.indexOf(budi._id) == -1) {
+
+                meet.budies.push(budi._id);
+
+                Meet.update({_id : meet._id}, {
+                    $push: {budies : budi._id}
+                }, function(err, numAffected, rawResponse) {
+                    if(err) {
+                        result.error(err);
+                    }
+                    result.fulfill({
+                        error: 0,
+                        meet: meet
+                    });
+                });
+            }
+            // budi is part of the meet
+            else {
+                result.fulfill({
+                    error: 0,
+                    meet: meet
+                });
             }
         }
+
+        return result;
     }
 
     this.findMeet = function (req, res) {
@@ -153,9 +161,11 @@ function MeetController () {
         }
 
         Budi.findOne({_id : req.body.budi_id}).exec()
-            .then(findTodayBudiMeets(res), handleError(res))
-            .then(findAvailableMeets, handleError(res))
-            .then(handleMeet(res));
+            .then(findTodayBudiMeets)
+            .then(findAvailableMeets)
+            .then(handleMeet)
+            .then(handleAnswer(res))
+            .onReject(handleError(res));
     };
 }
 
