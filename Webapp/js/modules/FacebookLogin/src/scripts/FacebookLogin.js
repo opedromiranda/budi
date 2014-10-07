@@ -1,0 +1,1 @@
+var FacebookLogin = angular.module('FacebookLogin', []);
