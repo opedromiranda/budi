@@ -6,9 +6,11 @@ var express = require('express');
 var router = express.Router();
 
 var meetController = require('../controllers/meet-controller.js');
+var chatController = require('../controllers/chat-controller.js');
 
 router.post('/find', meetController.findMeet);
-// sendMessage
+router.post('/message', chatController.sendMessage); // sendMessage
+
 // exitMeet
 // reportBudi
 // shareContactInformation

@@ -167,6 +167,7 @@ function MeetController () {
             .then(handleAnswer(res))
             .onReject(handleError(res));
     };
+
 }
 
 module.exports = new MeetController();

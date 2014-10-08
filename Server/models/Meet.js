@@ -30,6 +30,12 @@ meetSchema.statics.findAvailableMeets = function findAvailableMeets(startDate, e
     }).exec();
 };
 
+meetSchema.methods.findBudis = function findBudis() {
+    return Meet.find({
+        budies : this._id
+    }).exec()
+};
+
 Meet = mongoose.model('Meet', meetSchema);
 
 module.exports = Meet;
