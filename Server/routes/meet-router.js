@@ -9,10 +9,13 @@ var meetController = require('../controllers/meet-controller.js');
 var chatController = require('../controllers/chat-controller.js');
 
 router.post('/find', meetController.findMeet);
-router.post('/message', chatController.sendMessage); // sendMessage
+router.post('/message', chatController.sendMessage); // Falta imagens
 
 // exitMeet
 // reportBudi
 // shareContactInformation
+// Social login
+// Chat unlock
+
 
 module.exports = router;
