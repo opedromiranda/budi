@@ -121,6 +121,13 @@ function ChatController () {
             });
         });
     };
+
+    this.updateMessages = function (req, res){
+
+    // res.attachment([filename])
+    // messagens com data de envio para saber quando foi a ultima
+
+    };
 }
 
 module.exports = new ChatController();
