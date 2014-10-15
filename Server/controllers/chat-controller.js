@@ -5,6 +5,7 @@
 var mongoose = require('mongoose');
 var Meet = require('../models/meet.js');
 var Budi = require('../models/budi.js');
+var fs = require('fs');
 
 
 function ChatController () {
@@ -45,7 +46,7 @@ function ChatController () {
                             result.error(err);
                         }
                         result.fulfill({
-                            error: 0,
+                            error: 0
                             //meet: meet
                         });
                     }
@@ -83,6 +84,42 @@ function ChatController () {
             .then(handleAnswer(res))
             .onReject(handleError(res));
 
+    };
+
+    this.sendImage = function (req,res) {
+
+        var budiId = req.body.budi_id,
+            meetId = req.body.meet_id,
+            image = req.files.image;
+
+        if (!image || !meetId || !budiId) {
+            res.json({
+                error: 1
+            });
+            return;
+        }
+
+        console.log(req.files.image.originalFilename);
+        console.log(req.files.image.path);
+
+
+        fs.readFile(req.files.image.path, function (err, data){
+
+            var dirname = "/home/images/uploads/" + meet_id + "/" + budi_id + "/";
+            var newPath = dirname + req.files.image.originalFilename;
+            fs.writeFile(newPath, data, function (err) {
+                if (err) {
+                    res.json({
+                        error: 1
+                    });
+                }
+                else {
+                    res.json({
+                        saved: 1
+                    });
+                }
+            });
+        });
     };
 }
 

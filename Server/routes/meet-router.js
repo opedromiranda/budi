@@ -9,7 +9,8 @@ var meetController = require('../controllers/meet-controller.js');
 var chatController = require('../controllers/chat-controller.js');
 
 router.post('/find', meetController.findMeet);
-router.post('/message', chatController.sendMessage); // Falta imagens
+router.post('/message/text', chatController.sendMessage); // Falta imagens
+router.post('/message/image', charController.sendImage);
 
 // exitMeet
 // reportBudi
