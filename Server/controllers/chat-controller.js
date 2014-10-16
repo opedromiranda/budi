@@ -86,49 +86,57 @@ function ChatController () {
 
     };
 
-    function storeImageFromReq(req, meetId){
-        var result = new mongoose.Promise;
-
-        req.pipe(req.busboy);
-        req.busboy.on('file', function (fieldname, file, filename) {
-            console.log("Uploading: " + filename);
-            console.log("Uploading: " + fieldname);
-
-            var publicPath = 'img/'+ meetId + '/' + filename;
-            fstream = fs.createWriteStream(__dirname + '/../public/' + publicPath);
-            file.pipe(fstream);
-            fstream.on('close', function () {
-                result.fulfill({
-                    path: publicPath
-                });
-            });
+    function handleFormData(req){
+        var result = new mongoose.Promise,
+            meetId = null,
+            budiId = null,
+            uploadedFile,
+            uploadedFileName = null,
+            publicPath;
+        
+        req.busboy.on('field', function(key, value, keyTruncated, valueTruncated) {
+            switch(key) {
+                case 'meet_id':
+                        meetId = value;
+                        break;
+                case 'budi_id':
+                        budiId = value;
+                        break;
+            }
         });
 
+        req.busboy.on('file', function (fieldname, file, filename) {
+            uploadedFileName = filename;
+            uploadedFile = file; 
+            //file.resume(); // upload is done on finish when meetId and budiId are available
+            fstream = fs.createWriteStream(__dirname + '/../public/img/' + filename);
+            uploadedFile.pipe(fstream);
+        });
+
+        req.busboy.on('finish', function() {
+            if(!meetId || !budiId || !uploadedFileName) {
+                result.err({
+                    message : 'Missing parameters'
+                });
+            }
+            //// TODO MOVE UPLOADED FILE 
+            //publicPath = 'img/'+ meetId + '/' + uploadedFileName;
+            
+            result.fulfill({
+                error : 0
+            });
+        });
+        req.pipe(req.busboy);
         return result;
     }
 
     this.sendImage = function (req,res) {
-console.log(req.body);
-        var budiId = req.body.budi_id,
-            meetId = req.body.meet_id;
-
-        if (!meetId || !budiId) {
-            res.json({
-                error: 1,
-                message: 'Missing parameters'
-            });
-            return;
-        }
-
-        storeImageFromReq(req, meetId)
-            .then(function() {
-                res.json({
-                    saved: 1
-                });
+        handleFormData(req)
+            // .then(updateDB) TODO
+            .then(function(data) {
+                res.json(data);
             })
             .onReject(handleError(res));
-
-
     };
 
     this.updateMessages = function (req, res){
