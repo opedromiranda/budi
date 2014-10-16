@@ -86,40 +86,49 @@ function ChatController () {
 
     };
 
+    function storeImageFromReq(req, meetId){
+        var result = new mongoose.Promise;
+
+        req.pipe(req.busboy);
+        req.busboy.on('file', function (fieldname, file, filename) {
+            console.log("Uploading: " + filename);
+            console.log("Uploading: " + fieldname);
+
+            var publicPath = 'img/'+ meetId + '/' + filename;
+            fstream = fs.createWriteStream(__dirname + '/../public/' + publicPath);
+            file.pipe(fstream);
+            fstream.on('close', function () {
+                result.fulfill({
+                    path: publicPath
+                });
+            });
+        });
+
+        return result;
+    }
+
     this.sendImage = function (req,res) {
-
+console.log(req.body);
         var budiId = req.body.budi_id,
-            meetId = req.body.meet_id,
-            image = req.files.image;
+            meetId = req.body.meet_id;
 
-        if (!image || !meetId || !budiId) {
+        if (!meetId || !budiId) {
             res.json({
-                error: 1
+                error: 1,
+                message: 'Missing parameters'
             });
             return;
         }
 
-        console.log(req.files.image.originalFilename);
-        console.log(req.files.image.path);
+        storeImageFromReq(req, meetId)
+            .then(function() {
+                res.json({
+                    saved: 1
+                });
+            })
+            .onReject(handleError(res));
 
 
-        fs.readFile(req.files.image.path, function (err, data){
-
-            var dirname = "/home/images/uploads/" + meet_id + "/" + budi_id + "/";
-            var newPath = dirname + req.files.image.originalFilename;
-            fs.writeFile(newPath, data, function (err) {
-                if (err) {
-                    res.json({
-                        error: 1
-                    });
-                }
-                else {
-                    res.json({
-                        saved: 1
-                    });
-                }
-            });
-        });
     };
 
     this.updateMessages = function (req, res){

@@ -10,8 +10,8 @@ var chatController = require('../controllers/chat-controller.js');
 
 router.post('/find', meetController.findMeet);
 router.post('/message/text', chatController.sendMessage);
-router.post('/message/image', charController.sendImage);
-router.post('/message/update', charController.updateMessages);
+router.post('/message/image', chatController.sendImage);
+router.post('/message/update', chatController.updateMessages);
 
 
 
