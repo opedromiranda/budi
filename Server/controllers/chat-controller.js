@@ -40,7 +40,13 @@ function ChatController () {
 
                 Meet.update(
                     { _id : meet._id },
-                    { $push: {chat : message } },
+                    { $push: {
+                        chat: {
+                            type: 'text',
+                            message: message,
+                            budiSending: budiId
+                            }
+                    } },
                     function(err) {
                         if(err) {
                             result.error(err);
@@ -86,13 +92,42 @@ function ChatController () {
 
     };
 
+    function updateDB(messageObject){
+        var result = new mongoose.Promise;
+
+        console.log("meet id " + messageObject.meet_id);
+
+        Meet.update(
+            { _id : messageObject.meet_id },
+            { $push: {
+                chat: {
+                    type: 'image',
+                    message: messageObject.filePath,
+                    budiSending: messageObject.budi_id
+                }
+            } },
+            function(err) {
+                if(err) {
+                    result.error(err);
+                    return;
+                }
+                result.fulfill({
+                    error : 0
+                });
+            }
+        );
+
+        return result;
+    }
+
     function handleFormData(req){
         var result = new mongoose.Promise,
             meetId = null,
             budiId = null,
             uploadedFile,
             uploadedFileName = null,
-            publicPath;
+            uploadedFilePath,
+            publicPath = null;
         
         req.busboy.on('field', function(key, value, keyTruncated, valueTruncated) {
             switch(key) {
@@ -107,44 +142,53 @@ function ChatController () {
 
         req.busboy.on('file', function (fieldname, file, filename) {
             uploadedFileName = filename;
+            uploadedFilePath = __dirname + '/../public/img/';
+            if (!fs.existsSync(uploadedFilePath)) {
+                fs.mkdirSync(uploadedFilePath);
+            }
+            uploadedFilePath += filename;
             uploadedFile = file; 
             //file.resume(); // upload is done on finish when meetId and budiId are available
-            fstream = fs.createWriteStream(__dirname + '/../public/img/' + filename);
+            fstream = fs.createWriteStream(uploadedFilePath);
             uploadedFile.pipe(fstream);
         });
 
         req.busboy.on('finish', function() {
             if(!meetId || !budiId || !uploadedFileName) {
-                result.err({
+                result.error({
                     message : 'Missing parameters'
                 });
             }
-            //// TODO MOVE UPLOADED FILE 
-            //publicPath = 'img/'+ meetId + '/' + uploadedFileName;
-            
+
+            publicPath = __dirname + '/../public/img/' + meetId + '/';
+            if (!fs.existsSync(publicPath)) {
+                fs.mkdirSync(publicPath);
+            }
+            publicPath += uploadedFileName;
+
+            fs.rename(uploadedFilePath, publicPath);
+
             result.fulfill({
-                error : 0
+                meet_id : meetId,
+                filePath : publicPath,
+                budi_id :budiId
             });
         });
         req.pipe(req.busboy);
+
         return result;
     }
 
     this.sendImage = function (req,res) {
         handleFormData(req)
-            // .then(updateDB) TODO
+            .then(updateDB)
             .then(function(data) {
                 res.json(data);
             })
             .onReject(handleError(res));
     };
 
-    this.updateMessages = function (req, res){
 
-    // res.attachment([filename])
-    // messagens com data de envio para saber quando foi a ultima
-
-    };
 }
 
 module.exports = new ChatController();
