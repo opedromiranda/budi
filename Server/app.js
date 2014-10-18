@@ -14,8 +14,8 @@ var routes = require('./routes/index');
 var budiRouter = require('./routes/budi-router');
 var meetRouter = require('./routes/meet-router');
 
-mongoose.connect('mongodb://localhost/budi');
-//mongoose.connect('mongodb://192.168.1.83:27017/budi');
+//mongoose.connect('mongodb://localhost/budi');
+mongoose.connect('mongodb://192.168.1.83:27017/budi');
 //mongoose.connect('mongodb://sdis:sdis@ds033469.mongolab.com:33469/heroku_app25755838');
 
 // view engine setup
@@ -32,6 +32,16 @@ app.use(cookieParser());
 app.use(busboy());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header(" Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+    next();
+});
+
 
 app.use('/', routes);
 app.use('/api/budies', budiRouter);

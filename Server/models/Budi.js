@@ -8,7 +8,8 @@ var Meet = require('./meet.js')
 var budiSchema = new mongoose.Schema({
     email : 'string',
     name : 'string',
-    profile_picture : 'string'
+    profile_picture : 'string',
+    fbId : 'number'
 });
 
 /**

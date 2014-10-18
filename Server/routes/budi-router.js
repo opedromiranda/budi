@@ -10,5 +10,6 @@ var budiController = require('../controllers/budi-controller.js');
 
 router.get('/count', budiController.count);
 router.post('/insert', budiController.insert);
+router.get('/exists/:fbId', budiController.exists);
 
 module.exports = router;
