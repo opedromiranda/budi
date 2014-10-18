@@ -72,6 +72,10 @@ function ChatController () {
         }
     }
 
+    function getChat(meet){
+        return meet.chat;
+    }
+
     this.sendMessage = function (req,res) {
 
         var budiId = req.body.budi_id,
@@ -188,6 +192,16 @@ function ChatController () {
             .onReject(handleError(res));
     };
 
+    this.get = function(req, res){
+
+        var meetId = req.params.meetId;
+
+        Meet.findOne({_id : meetId}).exec()
+            .then(getChat)
+            .then(handleAnswer(res))
+            .onReject(handleError(res));
+
+    }
 
 }
 
