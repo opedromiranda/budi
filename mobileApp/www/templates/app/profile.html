@@ -1,0 +1,66 @@
+<ion-view title="{{'profile.main title' | i18n}}">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header" has-bouncing="false">
+      <div class="item item-divider">
+        {{'profile.personal data' | i18n}}
+      </div>
+      <div class="item item-input">
+          <span class="input-label">{{'form.name' | i18n}}</span>
+          <p> {{user.name}} </p>
+      </div>
+      <div class="item item-input">
+          <span class="input-label">{{'form.email.tag' | i18n}}</span>
+          <p> {{user.email}} </p>
+      </div>
+      <div class="item item-input">
+          <span class="input-label">{{'form.zip-code.tag' | i18n}}</span>
+          <p> {{user.location.zipCode}} </p>
+      </div>
+      <div class="item item-divider">
+        {{'profile.account' | i18n}}
+      </div>
+      <div class="item item-input">
+          <span class="input-label">{{'profile.balance' | i18n}}</span>
+          <p> {{user.loyalty.balance}} {{'profile.points' | i18n}} </p>
+      </div>
+      <div class="item item-divider">
+        {{'profile.statistics' | i18n}}
+      </div>
+      <div class="item sub-divider">
+        {{'profile.reports' | i18n}}
+      </div>
+      <div class="item item-input">
+          <span class="input-label">{{'profile.submitted reports' | i18n}}</span>
+          <p> {{user.stats.report.own.submitted}} </p>
+      </div>
+      <div class="item item-input">
+          <span class="input-label">{{'profile.pending reports' | i18n}}</span>
+          <p> {{user.stats.report.own.pending}} </p>
+      </div>
+      <div class="item item-input">
+          <span class="input-label">{{'profile.approved reports' | i18n}}</span>
+          <p> {{user.stats.report.own.approved}} </p>
+      </div>
+      <div class="item item-input">
+          <span class="input-label">{{'profile.voted reports' | i18n}}</span>
+          <p> {{user.stats.report.others.voted}} </p>
+      </div>
+      <div class="item item-input">
+          <span class="input-label">{{'profile.seen reports' | i18n}}</span>
+          <p> {{user.stats.report.others.seen}} </p>
+      </div>
+      <div class="item sub-divider">
+        {{'profile.events' | i18n}}
+      </div>
+      <div class="item item-input">
+          <span class="input-label">{{'profile.attended events' | i18n}}</span>
+          <p> {{user.stats.events.attended}} </p>
+      </div>
+      <div class="item item-input">
+          <span class="input-label">{{'profile.scheduled events' | i18n}}</span>
+          <p> {{user.stats.events.scheduled}} </p>
+      </div>
+  </ion-content>
+</ion-view>

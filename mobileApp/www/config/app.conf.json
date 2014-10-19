@@ -1,0 +1,85 @@
+[
+    {
+        "module": "budiApp",
+        "version": "0.0.1",
+        "name": "Dev",
+        "proxy": {
+            "_default": {
+                "debug": true
+            },
+            "web": {
+                "debug": true,
+                "url": "http://localhost:3000",
+                "timeout": 60000,
+                "data": {}
+            },
+            "file": {
+                "debug": true,
+                "url": "data/"
+            },
+            "fake": {
+                "debug": true
+            },
+            "webtransfer": {
+                "debug": true,
+                "url": "http://localhost:3000",
+                "timeout": 60000,
+                "data": {}
+            }
+        },
+        "menu": {
+            "left": {
+                "content": [
+                    {
+                        "name": "Chat",
+                        "url": "#/app/chat",
+                        "icon": "ion-alert"
+                    },
+                    {
+                        "name": "Budis",
+                        "url": "#/app/budis",
+                        "icon": "ion-ios7-paper-outline"
+                    },
+                    {
+                        "name": "Perfil",
+                        "url": "#/app/profile",
+                        "icon": "ion-android-user-menu"
+                    },
+                    {
+                        "name": "Definições",
+                        "url": "#/app/settings",
+                        "icon": "ion-ios7-gear"
+                    }
+                ]
+            }
+        },
+        "auth": {
+            "endpoints": {
+                "_default": {
+                    "policy": "web"
+                },
+                "facebook":{
+                    "login": {
+                        "url": "authentication/login",
+                        "method": "POST"
+                    },
+                    "logout":{
+                        "url": "authentication/logout",
+                        "method": "POST"
+                    }
+                }
+            }
+        },
+        "profile":{
+            "endpoints": {
+                "_default":{
+                    "policy":"web"
+                },
+                "info":{
+                    "url":"user/profile",
+                    "method":"POST"
+                }
+            }
+        }
+    }
+]
