@@ -6,7 +6,7 @@
         _userService = 'UserService';
     
     $angular.module($app.appName)
-        .service(_service, ['$myappConfig', _proxy, _userService, service]);
+        .service(_service, ['$budiappConfig', _proxy, _userService, service]);
         
     function service($config, $proxy, $userService) {
         /*jshint validthis:true */

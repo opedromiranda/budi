@@ -4,7 +4,7 @@
         $storage = $window.localStorage;
 
     $angular.module($app.appName)
-        .factory(_factory, ['$myappConfig', factory]);
+        .factory(_factory, ['$budiappConfig', factory]);
 
     function factory($config) {
 

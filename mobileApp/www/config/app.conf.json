@@ -41,12 +41,12 @@
                         "icon": "ion-ios7-paper-outline"
                     },
                     {
-                        "name": "Perfil",
+                        "name": "Profile",
                         "url": "#/app/profile",
                         "icon": "ion-android-user-menu"
                     },
                     {
-                        "name": "Definições",
+                        "name": "Settings",
                         "url": "#/app/settings",
                         "icon": "ion-ios7-gear"
                     }

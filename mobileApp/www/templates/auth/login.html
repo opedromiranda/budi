@@ -1,43 +1,10 @@
 <ion-view title="Login">
     <div class="bar bar-header bar-dark">
-        <h1 class="title">{{"auth.login.main title" | i18n }}</h1>
+        <h1 class="title">Login</h1>
     </div>
     <ion-content class="has-header" >
-        <form ng-submit="doLogin()">
-            <div class="list list-inset">
-                <label class="item item-input item-stacked-label">
-                    <span class="input-label">{{ "form.email.tag" | i18n}}</span>
-                    <input type="email" ng-model="loginData.email" placeholder="{{'form.email.placeholder' | i18n}}">
-                </label>
-                <label class="item item-input item-stacked-label">
-                    <span class="input-label">{{ "security.password.tag" | i18n }}</span>
-                    <input type="password" ng-model="loginData.password" placeholder="{{'security.password.placeholder' | i18n}}">
-                </label>
-                <div id="forgotPassword" class="item item-divider" ng-click="recoverPassword()">{{'security.password.lost' | i18n}}</div>
-                <button class="button button-block button-calm" type="submit" ng-disabled="loadingShow">
-                    <div ng-show="loadingShow">   
-                        <i class="icon ion-loading-c"></i>
-                        {{'loading.message.login' | i18n}}
-                    </div>
-                    <div ng-hide="loadingShow">
-                        {{'auth.login.login action' | i18n}}
-                    </div>
-                </button>
-            </div>
-        </form>
-        <div class="register-block">
-            <h4 class="register-item">{{'auth.register.not_member' | i18n}}</h4>
-            <button class="button button-small button-calm register-item" ng-click="goRegister()">
-                {{'auth.register.register action' | i18n}}
-            </button>
-        </div>  
-        <div class="dashed-label">
-            <label class="dash-label">{{'_.Or' | i18n}}</label>
-        </div>
         <div class="social-buttons">
-            <button class='zocial facebook'>{{'auth.login.login facebook' | i18n}}</button><br>
-            <!--<button class='zocial twitter'>{{'auth.login.login twitter' | i18n}}</button><br>-->
-            <button class='zocial googleplus'>{{'auth.login.login google' | i18n}}</button>
+            <button class='zocial facebook'>Login with Facebook</button><br>
         </div>
     </ion-content>
 </ion-view>

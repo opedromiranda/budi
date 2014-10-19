@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.budi.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>mobileApp</name>
+  <name>budiApp</name>
   <description>
-        An Ionic Framework and Cordova project.
+        budi
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
+  <author email="contact@budi.com" href="http://budiapp.com/">
+      budi
     </author>
   <content src="index.html"/>
   <access origin="*"/>

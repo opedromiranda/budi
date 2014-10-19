@@ -9,7 +9,7 @@
 
         var states = {
             // Authentication
-            'auth': {
+            /*'auth': {
                 url: '/auth',
                 abstract: true,
                 templateUrl: 'templates/auth.html'
@@ -32,7 +32,7 @@
                         controller: 'AuthLogoutCtrl'
                     }
                 }
-            },
+            },*/
             // App
             'app': {
                 url: '/app',
@@ -41,6 +41,24 @@
                 controller: 'AppCtrl'
             },
             // App navigation options
+            'app.chat': {
+                url: "/chat",
+                views: {
+                    'content': {
+                        templateUrl: 'templates/app/chat.html',
+                        controller: 'ChatCtrl'
+                    }
+                }
+            },
+            'app.budis':{
+                url: "/budis",
+                views: {
+                    'content': {
+                        templateUrl: "templates/app/budis.html",
+                        //controller: 'BudisCtrl'
+                    }
+                }
+            },
             'app.profile': {
                 url: "/profile",
                 views: {
@@ -64,7 +82,7 @@
         for (var key in states)
             $stateProvider.state(key, states[key]);
 
-        $urlRouterProvider.otherwise('/auth/profile');
+        $urlRouterProvider.otherwise('/app/chat');
 
         // Configure href policy
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|javascript|ms-appx|x-wmapp0|chrome-extension):|data:image\/|filesystem:chrome-extension:/);
