@@ -1,10 +1,14 @@
 <ion-view title="Login">
-    <div class="bar bar-header bar-dark">
-        <h1 class="title">Login</h1>
-    </div>
-    <ion-content class="has-header" >
-        <div class="social-buttons">
-            <button class='zocial facebook'>Login with Facebook</button><br>
-        </div>
+	<div class="logo">
+		<h3>[budi logo]</h3>
+	</div>
+    <ion-content class="center-page" has-bouncing="false" scroll="false">
+        <div class="center-text">
+	        <!--<button class='zocial facebook'>Login with Facebook</button><br>-->
+	        <button class="button button-outline button-positive" ng-click="fbLogin()">
+	  			<i class="fa fa-facebook-square fa-2x"></i>
+	  			Login with Facebook
+			</button>
+		</div>
     </ion-content>
 </ion-view>

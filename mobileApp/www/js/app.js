@@ -9,7 +9,7 @@
 
         var states = {
             // Authentication
-            /*'auth': {
+            'auth': {
                 url: '/auth',
                 abstract: true,
                 templateUrl: 'templates/auth.html'
@@ -22,7 +22,7 @@
                         controller: 'AuthLoginCtrl'
                     }
                 }
-            },
+            },/*
             'auth.logout': {
                 url: '/logout',
                 abstract: true,
@@ -82,7 +82,7 @@
         for (var key in states)
             $stateProvider.state(key, states[key]);
 
-        $urlRouterProvider.otherwise('/app/chat');
+        $urlRouterProvider.otherwise('/auth/login');
 
         // Configure href policy
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|javascript|ms-appx|x-wmapp0|chrome-extension):|data:image\/|filesystem:chrome-extension:/);
