@@ -33,12 +33,12 @@
                     {
                         "name": "Chat",
                         "url": "#/app/chat",
-                        "icon": "ion-alert"
+                        "icon": "fa fa-comments-o"
                     },
                     {
                         "name": "Budis",
                         "url": "#/app/budis",
-                        "icon": "ion-ios7-paper-outline"
+                        "icon": "fa fa-users"
                     },
                     {
                         "name": "Profile",
@@ -48,7 +48,7 @@
                     {
                         "name": "Settings",
                         "url": "#/app/settings",
-                        "icon": "ion-ios7-gear"
+                        "icon": "fa fa-cogs"
                     }
                 ]
             }

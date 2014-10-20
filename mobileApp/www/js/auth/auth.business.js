@@ -18,6 +18,10 @@
             $ionicViewService.nextViewOptions({
                 disableBack: true
             });
+            $userService.setUser({
+                name: 'Anthony Mark',
+                avatar: './img/avatar1.jpg'
+            })
             $state.go('app.chat');
             return true;
         };
