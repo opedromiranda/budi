@@ -45,7 +45,7 @@ function ChatController () {
                             type: 'text',
                             message: message,
                             budiSending: budiId
-                            }
+                           }
                     } },
                     function(err) {
                         if(err) {
@@ -172,6 +172,7 @@ function ChatController () {
 
             fs.rename(uploadedFilePath, publicPath);
 
+            publicPath = 'img/' + meetId + '/' + uploadedFileName;
             result.fulfill({
                 meet_id : meetId,
                 filePath : publicPath,

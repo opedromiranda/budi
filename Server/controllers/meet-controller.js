@@ -153,13 +153,15 @@ function MeetController () {
 
     this.findMeet = function (req, res) {
 
+        console.log(req.body);
         if(!req.body.hasOwnProperty('budiId')) {
             res.json({
                 error: 1
-            }, handleError(res));
+            });
             return;
         }
 
+        console.log('find meet');
         Budi.findOne({_id : req.body.budiId}).exec()
             .then(findTodayBudiMeets)
             .then(findAvailableMeets)
