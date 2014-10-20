@@ -1,1 +1,20 @@
-/* Empty. Add your own CSS if you like */
+.center-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-text {
+	text-align: center;
+}
+
+.center-text * {
+	vertical-align: middle;
+}
+
+.logo {
+	position: relative;
+	text-align: center;
+	top: 20%;
+	font-family: "Arial";
+}
