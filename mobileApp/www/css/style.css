@@ -104,3 +104,49 @@
 	max-width: 200px;
 	height: auto;
 }
+
+.camera-temp {
+	max-width: 60%;
+	height: auto;
+	opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+
+.camera-back {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.picture-display {
+	max-width: 90%;
+	height: auto;
+}
+
+.picButtons{
+    position: static;
+    text-align: center;
+    display: inline-table;
+    table-layout: auto;
+    width: 100%;
+}
+
+.picButtons * {
+    display: table-cell;
+    width: 48%;
+    text-align: center;
+}
+
+.picButtons #picBleft {
+    margin-right: 0.5%;
+}
+
+.picButtons #picBright {
+    margin-left: 0.5%;
+}
+
+.chat-input {
+	position: absolute;
+	width: 100%;
+	bottom: 50px;
+}

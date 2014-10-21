@@ -1,11 +1,11 @@
 // Ionic Starter App
 (function ($window, $app, $angular) {
 
-    $angular.module($app.appName, ['ionic', 'budiProxy', 'ngCordova'])
-        .config(['$stateProvider', '$urlRouterProvider', '$compileProvider', appConfig])
+    $angular.module($app.appName, ['ionic', 'budiProxy', 'ngCordova' /*, 'facebook'*/])
+        .config(['$stateProvider', '$urlRouterProvider', '$compileProvider', /*'FacebookProvider',*/ appConfig])
         .run(['$budiappConfig', '$ionicPlatform', '$log', '$http', appRun]);
 
-    function appConfig($stateProvider, $urlRouterProvider, $compileProvider) {
+    function appConfig($stateProvider, $urlRouterProvider, $compileProvider /*, $FacebookProvider*/) {
 
         var states = {
             // Authentication
@@ -87,6 +87,8 @@
         // Configure href policy
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|javascript|ms-appx|x-wmapp0|chrome-extension):|data:image\/|filesystem:chrome-extension:/);
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob|ms-appx|x-wmapp0|chrome-extension):|data:image\/|filesystem:chrome-extension:/);
+
+        //$FacebookProvider.init('1416301545283139');
     }
 
     function appRun($config, $ionicPlatform, $log, $http) {

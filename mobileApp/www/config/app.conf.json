@@ -67,17 +67,57 @@
                         "url": "authentication/logout",
                         "method": "POST"
                     }
+                },
+                "server":{
+                    "register":{
+                        "url":"api/budies/insert",
+                        "method":"POST"
+                    }
                 }
             }
         },
-        "profile":{
+        "profile": {
             "endpoints": {
                 "_default":{
                     "policy":"web"
                 },
                 "info":{
-                    "url":"user/profile",
+                    "url":"api/budi/profile",
                     "method":"POST"
+                }
+            }
+        },
+        "meeting": {
+            "endpoints": {
+                "_default":{
+                    "policy":"web"
+                },
+                "find": {
+                    "url":"api/meets/find",
+                    "method":"POST"
+                }
+            }
+        },
+        "validate": {
+            "endpoints": {
+                "_default":{
+                    "policy":"web"
+                },
+                "user":{
+                    "url":"api/budies/exists/",
+                    "method":"GET"
+                }
+            }
+        },
+        "message": {
+            "endpoints": {
+                "_default":{
+                    "policy":"web"
+                },
+                "image": {
+                    "url":"",
+                    "method":"POST",
+                    "policy":"webtransfer"
                 }
             }
         }
