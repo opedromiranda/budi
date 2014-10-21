@@ -9,7 +9,7 @@
 
     function controller($scope, $authBS) {
     	$scope.fbLogin = function fbLogin () {
-  			$authBS.fbLogin("");
+  			$authBS.fbLogin();
     	};
 
     }

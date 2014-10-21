@@ -5,6 +5,7 @@
         _authAdapter = 'AuthAdapter',
         _userService = 'UserService',
         _proxy = 'AppDataProxy';
+        //_fb = 'Facebook';
 
     $angular.module($app.appName)
         .service(_business, ['$q', '$state', '$ionicViewService', _authAdapter, _userService, _proxy, business]);
@@ -14,7 +15,10 @@
 
         var self = this;
 
-        this.fbLogin = function fbLogin(email){
+        this.fbLogin = function fbLogin(){
+            /*$fb.login(function(response) {
+                console.log(response);
+            });*/
             $ionicViewService.nextViewOptions({
                 disableBack: true
             });
