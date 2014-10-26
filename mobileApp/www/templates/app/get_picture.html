@@ -1,18 +1,18 @@
 <ion-view title="Picture">
-	<ion-content class="center-page" has-bouncing="false" scroll="false">
-		<div class="camera-back">
-	    	<button class="button button-clear button-dark icon-right fa fa-chevron-right" ng-click="modal.hide()">
-	    	</button>
-    	</div>
-        <div class="center-text">
+	<div class="camera-back">
+    	<button class="button button-clear button-dark icon-right fa fa-chevron-right" ng-click="modal.hide()">
+    	</button>
+	</div>
+	<ion-content class="camera-page" has-bouncing="false" scroll="false">
+        <div class="camera-temp-view">
         	<div ng-hide="sendForm.picture">
 	        	<img class="camera-temp" src="./img/camera.png">
 	        	<br><br>
-		        <button class="button button-outline button-balanced" ng-click="takePicture()">
+		        <button class="button button-outline button-balanced camera-button" ng-click="takePicture()">
 		        	Take a Picture!
 				</button>
 				<br><br>
-				<button class="button button-outline button-energized" ng-click="selectPicture()">
+				<button class="button button-outline button-energized gallery-button" ng-click="selectPicture()">
 		        	Choose one from your gallery
 				</button>
 			</div>

@@ -111,17 +111,32 @@
 	height: auto;
 }
 
+.camera-page {
+	top: 15%;
+}
+
+.camera-temp-view {
+	text-align: center;
+}
+
 .camera-temp {
-	max-width: 60%;
+	width: 60%;
 	height: auto;
 	opacity: 0.6;
-    filter: alpha(opacity=60);
 }
 
 .camera-back {
 	position: absolute;
-	top: 0px;
+	top: 0%;
 	right: 0px;
+}
+
+.camera-button {
+
+}
+
+.gallery-button {
+
 }
 
 .picture-display {
