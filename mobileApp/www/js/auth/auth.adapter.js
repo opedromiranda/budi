@@ -9,8 +9,6 @@
     function adapter($config) {
         /*jshint validthis:true */
 
-        var config = $config.auth,
-            endpoints = config.endpoints;
     }
 
 })(this.app, this.angular);

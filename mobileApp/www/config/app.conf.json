@@ -53,29 +53,6 @@
                 ]
             }
         },
-        "auth": {
-            "endpoints": {
-                "_default": {
-                    "policy": "web"
-                },
-                "facebook":{
-                    "login": {
-                        "url": "authentication/login",
-                        "method": "POST"
-                    },
-                    "logout":{
-                        "url": "authentication/logout",
-                        "method": "POST"
-                    }
-                },
-                "server":{
-                    "register":{
-                        "url":"api/budies/insert",
-                        "method":"POST"
-                    }
-                }
-            }
-        },
         "profile": {
             "endpoints": {
                 "_default":{

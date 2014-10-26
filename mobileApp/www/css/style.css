@@ -1,7 +1,13 @@
 .center-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /*display: flex;*/
+  position: relative;
+}
+
+.login-button {
+	position: absolute;
+	width: 100%;
+	height: 10%;
+	top: 45%;
 }
 
 .center-text {
