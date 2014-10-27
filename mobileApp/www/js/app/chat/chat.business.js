@@ -36,11 +36,11 @@
         };
 
         this.sendImage = function sendImage(){
-
+            return;
         };
 
         this.sendMsg = function sendMsg(){
-            
+            return;
         };
 
         this.getMsgs = function getMsgs(){
