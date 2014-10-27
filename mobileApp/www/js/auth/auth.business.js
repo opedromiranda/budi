@@ -4,63 +4,49 @@
     var _business = 'AuthBS',
         _authAdapter = 'AuthAdapter',
         _userService = 'UserService',
+        _facebookLS = 'FBLoginService',
         _proxy = 'AppDataProxy';
-        //_fb = 'Facebook';
 
     $angular.module($app.appName)
-        .service(_business, ['$q', '$state', '$ionicViewService', _authAdapter, _userService, _proxy, business]);
+        .service(_business, ['$q', '$state', '$ionicViewService', _authAdapter, _userService, _facebookLS, _proxy, business]);
 
-    function business($q, $state, $ionicViewService, $authAdapter, $userService, $proxy) {
+    function business($q, $state, $ionicViewService, $authAdapter, $userService, $facebookLS, $proxy) {
         /*jshint validthis:true */
 
         var self = this;
+        /*  === Facebook Login Service Methods ===
+            login : $facebookLS.login
+            isLoggedIn : $facebookLS.isLoggedIn
+            logout : $facebookLS.logOut
+            getUser : $facebookLS.getUser
+        */
 
         this.fbLogin = function fbLogin(){
-            /*$fb.login(function(response) {
-                console.log(response);
-            });*/
+            $facebookLS.login();
+        };
+
+        this.successLogin = function successLogin(){
             $ionicViewService.nextViewOptions({
                 disableBack: true
             });
+            var fb_user_info = $facebookLS.getUser(); 
             $userService.setUser({
+                // TODO check what facebook returns
                 name: 'Anthony Mark',
                 avatar: './img/avatar1.jpg'
-            })
+            });
             $state.go('app.chat');
             return true;
         };
 
-        /*
         this.checkSession = function checkSession(){
+            return $facebookLS.isLoggedIn();
+        };
 
-            if( typeof $userService.getSession() !== 'undefined' ){
-                // Disable tracking this page change
-                $ionicViewService.nextViewOptions({
-                    disableBack: true
-                });
-                return true;
-            }
-            else return false;
-        };*/
-
-        
-
-        /*
         this.logout = function logout() {
-
-            var req = $authAdapter.logout.to();
-            return $proxy.send(req).then(
-                function onSuccess(data){
-                },
-                function onError(error){
-                    // TODO handle error
-                    throw error;
-                }).finally(function(){
-                    $userService.clearSession();
-                    $state.go('auth.login');
-                });
-
-        };*/
+            $facebookLS.logOut();
+            $state.go('auth.login');
+        };
 
     }
 
