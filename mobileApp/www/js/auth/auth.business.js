@@ -5,15 +5,16 @@
         _authAdapter = 'AuthAdapter',
         _userService = 'UserService',
         _facebookLS = 'FBLoginService',
+        _budiapi = 'BudiApiService',
         _proxy = 'AppDataProxy';
 
     $angular.module($app.appName)
-        .service(_business, ['$q', '$state', '$ionicViewService', _authAdapter, _userService, _facebookLS, _proxy, business]);
+        .service(_business, ['$q', '$rootScope', '$state', '$ionicViewService', _authAdapter, _userService, _facebookLS, _budiapi, _proxy, business]);
 
-    function business($q, $state, $ionicViewService, $authAdapter, $userService, $facebookLS, $proxy) {
+    function business($q, $rootScope, $state, $ionicViewService, $authAdapter, $userService, $facebookLS, $budiapi, $proxy) {
         /*jshint validthis:true */
 
-        var self = this;
+        var auth_service = this;
         /*  === Facebook Login Service Methods ===
             login : $facebookLS.login
             isLoggedIn : $facebookLS.isLoggedIn
@@ -25,16 +26,40 @@
             $facebookLS.login();
         };
 
+        $rootScope.$on('loggedIn', function (event, user) {
+            user.from = 'facebook';
+            $budiapi.validateUser(user).then(function (budi) {
+                auth_service.successLogin();
+            });
+        });
+
         this.successLogin = function successLogin(){
+            // Disable 'Back' button 
             $ionicViewService.nextViewOptions({
                 disableBack: true
             });
-            var fb_user_info = $facebookLS.getUser(); 
-            $userService.setUser({
-                // TODO check what facebook returns
-                name: 'Anthony Mark',
-                avatar: './img/avatar1.jpg'
-            });
+
+            // Get User Info from Facebook
+            var fb_user_info = $facebookLS.getUser();
+            // Get Profile Picture
+            var fb_user_picture = '';
+            $authAdapter.getUserPicture().then(
+                function success(data){
+                    fb_user_picture = data.pictureURL;
+                }
+            ); 
+
+            // Save User details
+            $userService.setUser(
+                $angular.extend({}, 
+                    fb_user_info, 
+                    {
+                        picture: fb_user_picture
+                    }
+                )
+            );
+
+            // Finally go to app
             $state.go('app.chat');
             return true;
         };
@@ -45,6 +70,9 @@
 
         this.logout = function logout() {
             $facebookLS.logOut();
+            $ionicViewService.nextViewOptions({
+                disableBack: true
+            });
             $state.go('auth.login');
         };
 

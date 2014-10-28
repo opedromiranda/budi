@@ -64,17 +64,6 @@
                 }
             }
         },
-        "meeting": {
-            "endpoints": {
-                "_default":{
-                    "policy":"web"
-                },
-                "find": {
-                    "url":"api/meets/find",
-                    "method":"POST"
-                }
-            }
-        },
         "validate": {
             "endpoints": {
                 "_default":{
@@ -95,6 +84,24 @@
                     "url":"",
                     "method":"POST",
                     "policy":"webtransfer"
+                }
+            }
+        },
+        "budi":{
+            "api": {
+                "endpoints": {
+                    "insertBudi": {
+                        "url":"api/budies/insert"
+                    },
+                    "budiExists": {
+                        "url": "api/budies/exists"
+                    },
+                    "findMeet": {
+                        "url":"api/meets/find"
+                    },
+                    "sendMessage" :{
+                        "url":"api/meets/message/text"
+                    }
                 }
             }
         }

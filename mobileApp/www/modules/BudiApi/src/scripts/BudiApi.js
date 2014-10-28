@@ -1,18 +1,19 @@
 /*exported BudiApi*/
 var BudiApi = angular.module('BudiApi', [])
-    .service('BudiApiService', ['$http', 'API_ENDPOINTS', function($http, apiEndpoints) {
+    .service('BudiApiService', ['$http', '$budiappConfig', function($http, $config) {
         'use strict';
 
         var self = this;
+        var endpoints = $config.budi.api.endpoints;
 
         this.loggedBudi = null;
 
         function budiExists(budi) {
-            return $http.get(apiEndpoints.budiExists + budi.id);
+            return $http.get(endpoints.budiExists + budi.id);
         }
 
         function registerBudi(budi) {
-            return $http.post(apiEndpoints.insertBudi, {
+            return $http.post(endpoints.insertBudi, {
                 name:budi.name,
                 email:budi.email,
                 fbId:budi.id
@@ -40,7 +41,7 @@ var BudiApi = angular.module('BudiApi', [])
                 meet_id: meet._id,
                 message: message
             });
-            return $http.post(apiEndpoints.sendMessage, {
+            return $http.post(endpoints.sendMessage, {
                 budi_id: budi._id,
                 meet_id: meet._id,
                 message: message
@@ -48,7 +49,7 @@ var BudiApi = angular.module('BudiApi', [])
         };
 
         this.findMeet = function findMeet(budi) {
-            return $http.post(apiEndpoints.findMeet, {
+            return $http.post(endpoints.findMeet, {
                 budiId: budi._id
             }).then(function(response) {
                 return response.data.meet;
@@ -60,12 +61,4 @@ var BudiApi = angular.module('BudiApi', [])
         this.getBudi = function getBudi() {
             return this.loggedBudi;
         };
-
-
-    }]).constant('API_ENDPOINTS', {
-        insertBudi : 'http://murmuring-thicket-4981.herokuapp.com/api/budies/insert',
-        budiExists : 'http://murmuring-thicket-4981.herokuapp.com/api/budies/exists/',
-        findMeet : 'http://murmuring-thicket-4981.herokuapp.com/api/meets/find',
-        sendMessage : 'http://murmuring-thicket-4981.herokuapp.com/api/meets/message/text',
-        baseURL : 'http://murmuring-thicket-4981.herokuapp.com'
-    });
+    }]);

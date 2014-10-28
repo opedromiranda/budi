@@ -1,11 +1,11 @@
 // Ionic Starter App
 (function ($window, $app, $angular) {
 
-    $angular.module($app.appName, ['ionic', 'budiProxy', 'ngCordova' /*, 'facebook'*/])
-        .config(['$stateProvider', '$urlRouterProvider', '$compileProvider', /*'FacebookProvider',*/ appConfig])
+    $angular.module($app.appName, ['ionic', 'budiProxy', 'ngCordova', 'FacebookLogin','BudiApi'])
+        .config(['$stateProvider', '$urlRouterProvider', '$compileProvider', appConfig])
         .run(['$budiappConfig', '$ionicPlatform', '$log', '$http', appRun]);
 
-    function appConfig($stateProvider, $urlRouterProvider, $compileProvider /*, $FacebookProvider*/) {
+    function appConfig($stateProvider, $urlRouterProvider, $compileProvider) {
 
         var states = {
             // Authentication
