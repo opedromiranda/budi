@@ -14,7 +14,7 @@
     function business($q, $rootScope, $state, $ionicViewService, $authAdapter, $userService, $facebookLS, $budiapi, $proxy) {
         /*jshint validthis:true */
 
-        var auth_service = this;
+        var service = this;
         /*  === Facebook Login Service Methods ===
             login : $facebookLS.login
             isLoggedIn : $facebookLS.isLoggedIn
@@ -28,9 +28,10 @@
 
         $rootScope.$on('loggedIn', function (event, user) {
             user.from = 'facebook';
-            $budiapi.validateUser(user).then(function (budi) {
-                auth_service.successLogin();
-            });
+
+            //$budiapi.validateUser(user).then(function (budi) {
+            service.successLogin();
+            //});*/
         });
 
         this.successLogin = function successLogin(){
@@ -41,22 +42,22 @@
 
             // Get User Info from Facebook
             var fb_user_info = $facebookLS.getUser();
-            // Get Profile Picture
-            var fb_user_picture = '';
-            $authAdapter.getUserPicture().then(
-                function success(data){
-                    fb_user_picture = data.pictureURL;
-                }
-            ); 
 
-            // Save User details
-            $userService.setUser(
-                $angular.extend({}, 
-                    fb_user_info, 
-                    {
-                        picture: fb_user_picture
-                    }
-                )
+            // Get Profile Picture
+            var fb_user_picture;
+            $authAdapter.getUserPicture()
+            .then(
+                function success(data){
+                    fb_user_picture = $angular.copy(data.pictureURL);
+                }
+            )
+            .then(
+                function(){
+                    // Save User details
+                    $userService.setUser(
+                        $angular.extend({}, fb_user_info, { picture: fb_user_picture })
+                    );
+                }
             );
 
             // Finally go to app

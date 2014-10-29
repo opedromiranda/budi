@@ -68,7 +68,7 @@ FacebookLogin.service('FBLoginService', ['$rootScope', '$window', function ($roo
     function initFB() {
 
         FB.init({
-            appId      : '1547574108812210',
+            appId      : '868824609795999',
             xfbml      : true,
             version    : 'v2.1',
             cookie     : false,

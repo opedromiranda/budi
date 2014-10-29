@@ -9,7 +9,7 @@
     function adapter($q, $config) {
         /*jshint validthis:true */
         this.getUserPicture = function getUserPicture(){
-    		var deferred = $q.defer;
+    		var deferred = $q.defer();
     		FB.api(
 			    "/me/picture",
 			    {
@@ -21,7 +21,7 @@
 			    function (response) {
 			      if (response && !response.error) {
 			        deferred.resolve({
-			        	pictureURL: response.url
+			        	pictureURL: response.data.url
 			        });
 			      }else {
 			      	 deferred.reject();
@@ -29,7 +29,7 @@
 			    }
 			);
 			return deferred.promise;
-    	}
+    	};
     }
 
 })(this.app, this.angular);
