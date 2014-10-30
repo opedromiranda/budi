@@ -53,29 +53,6 @@
                 ]
             }
         },
-        "auth": {
-            "endpoints": {
-                "_default": {
-                    "policy": "web"
-                },
-                "facebook":{
-                    "login": {
-                        "url": "authentication/login",
-                        "method": "POST"
-                    },
-                    "logout":{
-                        "url": "authentication/logout",
-                        "method": "POST"
-                    }
-                },
-                "server":{
-                    "register":{
-                        "url":"api/budies/insert",
-                        "method":"POST"
-                    }
-                }
-            }
-        },
         "profile": {
             "endpoints": {
                 "_default":{
@@ -83,17 +60,6 @@
                 },
                 "info":{
                     "url":"api/budi/profile",
-                    "method":"POST"
-                }
-            }
-        },
-        "meeting": {
-            "endpoints": {
-                "_default":{
-                    "policy":"web"
-                },
-                "find": {
-                    "url":"api/meets/find",
                     "method":"POST"
                 }
             }
@@ -118,6 +84,24 @@
                     "url":"",
                     "method":"POST",
                     "policy":"webtransfer"
+                }
+            }
+        },
+        "budi":{
+            "api": {
+                "endpoints": {
+                    "insertBudi": {
+                        "url":"api/budies/insert"
+                    },
+                    "budiExists": {
+                        "url": "api/budies/exists"
+                    },
+                    "findMeet": {
+                        "url":"api/meets/find"
+                    },
+                    "sendMessage" :{
+                        "url":"api/meets/message/text"
+                    }
                 }
             }
         }

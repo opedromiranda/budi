@@ -23,7 +23,7 @@
     	};
 
     	$scope.messages = [
-    		{
+    		/*{
     			owner: 'my',
     			side: 'right',
     			avatar: './img/avatar1.jpg',
@@ -46,7 +46,7 @@
     			side: 'left',
     			avatar: './img/avatar2.jpg',
     			image: 'http://www.snappypixels.com/wp-content/uploads/2013/08/bunch-of-random-funny-pictures-6.jpg'
-    		}
+    		}*/
     	];
 
 
@@ -95,7 +95,7 @@
 
         $scope.sendImage = function sendImage(){
         	$scope.modal.hide();
-        	$chatBS.sendImage().then(
+        	$chatBS.sendImage(sendForm.picture).then(
         		function success(data){
         			var msg = {
         				owner: $scope.myInfo.id
@@ -110,14 +110,14 @@
         };
 
         $scope.sendMsg = function sendMsg(){
-        	$chatBS.sendMsg().then(
+        	$chatBS.sendMsg(sendForm.message).then(
         		function success(data){
         			var msg = {
         				owner: $scope.myInfo.id
         			}
-        			msg.image = angular.copy(sendForm.picture);
+        			msg.message = sendForm.message;
         			insertMsg(msg);
-        			$scope.clearPicture();
+                    $scope.inputVisible = false;
         		},
         		function error(err){
         			console.log(err);
@@ -160,6 +160,4 @@
             $scope.popover.hide();
         };
 
-    }
-// 1416301545283139
 })(this.app, this.angular);

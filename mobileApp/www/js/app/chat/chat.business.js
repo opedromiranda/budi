@@ -1,7 +1,8 @@
 (function ChatBS($app, $angular) {
     'use strict';
     
-    var _business = 'ChatBS';
+    var _business = 'ChatBS',
+        _userS = 'UserService';
     
     $angular.module($app.appName)
         .service(_business, ['$q', business]);
@@ -35,12 +36,16 @@
         };
 
         this.sendImage = function sendImage(){
-
+            return;
         };
 
         this.sendMsg = function sendMsg(){
-            
+            return;
         };
+
+        this.getMsgs = function getMsgs(){
+
+        }
     }
 
 })(this.app, this.angular);
