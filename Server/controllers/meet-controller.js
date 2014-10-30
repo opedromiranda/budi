@@ -96,11 +96,29 @@ function MeetController () {
 
     function findAvailableMeets(b) {
         budi = b;
+        var meets = budi.findMeets(),
+            budiGenre = budi.settings.genre,
+            budiAge = budi.settings.age,
+            i;
 
-        return budi.findMeets();
+
+        if ( budiGenre != 'none' ) {
+            for (i = 0; i < meets.length; ++i) {
+                if (meets[i].settings.genre != budiGenre) {
+                    meets.splice(i--, 1);
+                }
+            }
+        }
+
+        if ( budiAge != 'none' ) {
+            for (i = 0; i < meets.length; ++i) {
+                if (meets[i].settings.age != budiAge) {
+                    meets.splice(i--, 1);
+                }
+            }
+        }
+        return meets[0];
     }
-
-
 
     /**
      * Returns a promise that will try to be fulfilled with a meet object to be answered to client
@@ -114,6 +132,7 @@ function MeetController () {
 
         // no meet is available, create new one
         if(!meet) {
+
             meet = new Meet({
                 date : getTodayDate(),
                 budies : [budi._id]
@@ -170,9 +189,10 @@ function MeetController () {
         }
 
         // findAvailableMeets  -> meets    -> ver questão de delay, e só verificar se tem um budi no fim.
-        // findAvailableMeets
+
         Budi.findOne({_id : req.body.budi_id}).exec()
             .then(findAvailableMeets)
+            .then(handleMeet)
             .then(handleAnswer(res))
             .onReject(handleError(res));
 

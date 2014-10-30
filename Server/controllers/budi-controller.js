@@ -3,14 +3,17 @@
  */
 
 var Budi = require('../models/budi.js');
+var moment = require('moment');
 
 function BudiController () {
     this.insert = function (req, res) {
-        var budi;
+        var budi, age, now = moment(), bornDate;
 
         // validate mandatory Budi fields
         if( !req.body.hasOwnProperty('email') ||
-            !req.body.hasOwnProperty('name') ) {
+            !req.body.hasOwnProperty('name') ||
+            !req.body.hasOwnProperty('dateBorn') || // yyyy-mm-dd
+            !req.body.hasOwnProperty('genre')) {
 
             res.json({
                 error: 1
@@ -18,9 +21,17 @@ function BudiController () {
             return;
         }
 
+        bornDate = moment(req.body.dateBorn);
+        age = now.diff(bornDate, 'years');
+
         budi = new Budi({
             name : req.body.name,
-            email : req.body.email
+            email : req.body.email,
+            settings : [{
+                genre: req.body.genre,
+                age: age,
+                numberReports: 0
+            }]
         });
 
         budi.save(function (err) {
