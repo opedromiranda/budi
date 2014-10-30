@@ -6,6 +6,10 @@ var mongoose = require('mongoose'),
     meetSchema = new mongoose.Schema({
         budies : [{ type: mongoose.Schema.Types.ObjectId}],
         chat : 'array',
+        options : {
+            rate : 'Number',
+            age : 'Number'
+        },
         date : Date
     }),
     Meet;

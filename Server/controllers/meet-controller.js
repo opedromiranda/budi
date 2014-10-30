@@ -81,7 +81,7 @@ function MeetController () {
      * @param meets
      * @returns {Meet|Promise}
      */
-    function findAvailableMeets(meets) {
+    /*function findAvailableMeets(meets) {
         var today = getTodayDate(),
             tomorrow = getTomorrowDate(),
             meet = meets.length > 0 ? meets[0] : null;
@@ -92,6 +92,15 @@ function MeetController () {
             return meet;
         }
     }
+    */
+
+    function findAvailableMeets(b) {
+        budi = b;
+
+        return budi.findMeets();
+    }
+
+
 
     /**
      * Returns a promise that will try to be fulfilled with a meet object to be answered to client
@@ -160,12 +169,19 @@ function MeetController () {
             return;
         }
 
+        // findAvailableMeets  -> meets    -> ver questão de delay, e só verificar se tem um budi no fim.
+        // findAvailableMeets
         Budi.findOne({_id : req.body.budi_id}).exec()
+            .then(findAvailableMeets)
+            .then(handleAnswer(res))
+            .onReject(handleError(res));
+
+            /*
             .then(findTodayBudiMeets)
             .then(findAvailableMeets)
             .then(handleMeet)
             .then(handleAnswer(res))
-            .onReject(handleError(res));
+            .onReject(handleError(res));*/
     };
 
 }

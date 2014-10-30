@@ -8,6 +8,7 @@ var Meet = require('./meet.js')
 var budiSchema = new mongoose.Schema({
     email : 'string',
     name : 'string',
+    oldBudis: 'array',
     profile_picture : 'string'
 });
 
@@ -17,7 +18,8 @@ var budiSchema = new mongoose.Schema({
  * @param endDate
  * @returns {Promise|Array|{index: number, input: string}|*}
  */
-budiSchema.methods.findMeets = function findMeets(startDate, endDate) {
+
+/*budiSchema.methods.findMeets = function findMeets(startDate, endDate) {
     return Meet.find({
         date : {
             $gte : startDate,
@@ -26,6 +28,17 @@ budiSchema.methods.findMeets = function findMeets(startDate, endDate) {
         budies : this._id
     }).exec()
 };
+*/
+budiSchema.methods.findMeets = function findMeets(oldBudis) {
+    return Meet.find({
+        budies : {
+            size : 1,
+            $nin : this.oldBudis
+        },
+
+    }).exec()
+};
+
 
 var Budi = mongoose.model('Budi', budiSchema);
 
