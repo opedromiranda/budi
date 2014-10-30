@@ -1,36 +1,55 @@
-<div>
-  <div class="bar bar-header">
-  	<button menu-toggle="left" class="button button-icon icon-right fa fa-angle-left fa-lg"></button>
-  	<h1 class="title">{{budiInfo.name}}</h1>
-  	<button class="button button-icon icon ion-android-add-contact" ng-click="addBudi()"></button>
-  </div>
-  <ion-content class="has-header chat-background">
-	<div ng-repeat="msg in messages" class="item item-chat item-avatar-{{msg.side}}">
-  		<img src="{{msg.avatar}}">
-  		<div class="{{msg.owner}}-bubble">
-  			<img class="chat-picture" ng-show="msg.image" src="{{msg.image}}">
-  			<p ng-hide="msg.image">
-  				{{msg.message}}
-  			</p>
-  		</div>
-	</div>
-  </ion-content>
-  	<div ng-show="inputVisible" class="item item-input-inset chat-input">
-	    <label class="item-input-wrapper">
-	      <input type="text" ng-model="sendForm.message" placeholder="Message">
-	    </label>
-	    <button class="button button-small button-calm" ng-click="sendMsg()">
-	      Send
-	    </button>
-  	</div>
-	<div class="tabs-striped tabs-background-dark tabs-color-calm">
-		<div class="tabs">
-			<div class="tab-item" ng-click="showPicturePage()">
-				<i class="icon ion-camera"></i>
-			</div>
-			<div class="tab-item" ng-click="toggleInput()">
-				<i class="icon ion-ios7-email"></i>
-			</div>
-		</div>
-	</div>
+
+<div ng-show="hasMeet">
+    <div class="bar bar-header bar-positive">
+        <button menu-toggle="left" class="button button-icon icon-right fa fa-angle-left fa-lg"></button>
+        <h1 class="title">{{budiInfo.name}}</h1>
+        <div class="buttons">
+            <button class="button button-icon ion-more" ng-click="popover.show($event)">
+            </button>
+        </div>
+    </div>
+    <ion-content class="has-header chat-background">
+        <div ng-repeat="msg in messages" class="item item-chat item-avatar-{{msg.side}}">
+            <img src="{{msg.avatar}}">
+            <div class="{{msg.owner}}-bubble">
+                <img class="chat-picture" ng-show="msg.image" src="{{msg.image}}">
+                <p ng-hide="msg.image">
+                    {{msg.message}}
+                </p>
+            </div>
+        </div>
+    </ion-content>
+    <div ng-show="inputVisible" class="item item-input-inset chat-input">
+        <label class="item-input-wrapper">
+            <input type="text" ng-model="sendForm.message" placeholder="Message">
+        </label>
+        <button class="button button-small button-calm" ng-click="sendMsg()">
+            Send
+        </button>
+    </div>
+    <div class="tabs-striped tabs-background-dark tabs-color-calm">
+        <div class="tabs">
+            <div class="tab-item" ng-click="showPicturePage()">
+                <i class="icon ion-camera"></i>
+            </div>
+            <div class="tab-item" ng-click="toggleInput()">
+                <i class="icon ion-ios7-email"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div ng-hide="hasMeet">
+    <div class="bar bar-header bar-positive">
+        <button menu-toggle="left" class="button button-icon icon-right fa fa-angle-left fa-lg"></button>
+        <h1 class="title"> Budi </h1>
+    </div>
+    <ion-content class="has-header chat-background">
+    <p align="center">
+        <button  class="button button-large button-positive" ng-click="findBudi()" style="margin-left:auto;margin-right:auto;margin-top:75%;margin-bottom:0%"> Meet new Budi</button>
+    </p>
+    </ion-content>
+
+
 </div>

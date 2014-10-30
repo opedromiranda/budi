@@ -6,9 +6,9 @@
     	_userS = 'UserService';
 
     $angular.module($app.appName)
-        .controller(_controller, ['$scope', '$ionicModal', _chatBS, _userS, controller]);
+        .controller(_controller, ['$scope', '$ionicModal', '$ionicPopover', _chatBS, _userS, controller]);
 
-    function controller($scope, $ionicModal, $chatBS, $userS) {
+    function controller($scope, $ionicModal, $ionicPopover, $chatBS, $userS) {
     	$scope.budiInfo = {
     		id: '2',
     		name: "Jessica Lorenz",
@@ -48,6 +48,8 @@
     			image: 'http://www.snappypixels.com/wp-content/uploads/2013/08/bunch-of-random-funny-pictures-6.jpg'
     		}
     	];
+
+
 
     	function insertMsg(msg){
     		var go_msg = {};
@@ -133,7 +135,31 @@
 
         $scope.getMessages = function getMessages(){
         	
-        }
+        };
+
+        $scope.hasMeet = false;
+
+        $scope.findBudi = function findBudi(){
+            $scope.hasMeet = true;
+        };
+
+        $scope.endMeet = function endMeet(){
+            $scope.hasMeet = false;
+        };
+
+        $ionicPopover.fromTemplateUrl('templates/popover.html', {
+            scope: $scope
+        }).then(function(popover) {
+            $scope.popover = popover;
+        });
+
+        $scope.openPopover = function($event) {
+            $scope.popover.show($event);
+        };
+        $scope.closePopover = function() {
+            $scope.popover.hide();
+        };
+
     }
 // 1416301545283139
 })(this.app, this.angular);

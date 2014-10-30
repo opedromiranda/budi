@@ -50,6 +50,15 @@
                     }
                 }
             },
+            'app.popover': {
+                url: "/popover",
+                views: {
+                    'content': {
+                        templateUrl: 'templates/popover.html',
+                        controller: 'PopoverCtrl'
+                    }
+                }
+            },
             'app.budis':{
                 url: "/budis",
                 views: {
