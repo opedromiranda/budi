@@ -2,12 +2,25 @@
     'use strict';
     
     var _business = 'ChatBS',
-        _userS = 'UserService';
+        _userS = 'UserService',
+        _budiAPI = 'BudiApiService';
     
     $angular.module($app.appName)
-        .service(_business, ['$q', business]);
+        .service(_business, ['$q', _userS, _budiAPI, business]);
         
-    function business($q) {
+    function business($q, $userS, $budiAPI) {
+        var meet_info = {
+            id: undefined,
+            meet_budi: undefined,
+            active: false
+        };
+
+        var my_info = $userS.getUser();
+
+        this.getMyInfo = function getMyInfo(){
+            return my_info;
+        };
+
     	this.takePicture = function takePicture() {
             var deffered = $q.defer();
             
@@ -39,12 +52,29 @@
             return;
         };
 
-        this.sendMsg = function sendMsg(){
-            return;
+        this.sendMsg = function sendMsg(msg){
+            return $budAPI.sendMessage(my_info, meet_info, msg);
         };
 
         this.getMsgs = function getMsgs(){
+            return;
+        };
 
+        this.getMeetInfo = function getMeetInfo(){
+            return meet_info;
+        };
+
+        this.findMeet = function findMeet(){
+            var deferred = $q.defer();
+            deferred.resolve({});
+            return deferred.promise;
+            $budiAPI.findMeet().then(function(_meet) {
+                meet_info.id = _meet.id;
+                meet_info.meet_budi = _meet.budi;
+
+                console.log(_meet);
+                return true;
+            });
         }
     }
 

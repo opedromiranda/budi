@@ -2,20 +2,13 @@
     'use strict';
 
     var _controller = 'ChatCtrl',
-        _chatBS = 'ChatBS',
-        _userS = 'UserService';
+        _chatBS = 'ChatBS';
 
     $angular.module($app.appName)
-        .controller(_controller, ['$scope', '$ionicModal', '$ionicPopover', _chatBS, _userS, controller]);
+        .controller(_controller, ['$scope', '$ionicModal', '$ionicPopover', _chatBS, controller]);
 
-    function controller($scope, $ionicModal, $ionicPopover, $chatBS, $userS) {
-        $scope.budiInfo = {
-            id: '2',
-            name: "Jessica Lorenz",
-            avatar: './img/avatar2.jpg'
-        };
-
-        $scope.myInfo = $userS.getUser();
+    function controller($scope, $ionicModal, $ionicPopover, $chatBS) {
+        $scope.myInfo = $chatBS.getMyInfo();
 
         $scope.sendForm = {
             message: undefined,
@@ -62,7 +55,7 @@
             else {
                 go_msg.owner = 'my';
                 go_msg.side = 'right';
-                go_msg.avatar = $scope.myInfo.avatar;
+                go_msg.avatar = $scope.myInfo.picture;
             }
             $scope.messages.push(go_msg);
         }
@@ -89,7 +82,8 @@
             $chatBS.takePicture().then(
                 function success(data) {
                     $scope.sendForm.picture = data.image;
-                });
+                }
+            );
         };
 
         $scope.sendImage = function sendImage() {
@@ -105,7 +99,8 @@
                 },
                 function error(err) {
                     console.log(err);
-                });
+                }
+            );
         };
 
         $scope.sendMsg = function sendMsg() {
@@ -132,21 +127,27 @@
             }
         };
 
-        $scope.getMessages = function getMessages() {
-
-        };
-
-        $scope.hasMeet = false;
+        $scope.meet = $chatBS.getMeetInfo();
+        $scope.meetAnimation = false;
 
         $scope.findBudi = function findBudi() {
-            $scope.hasMeet = true;
+            $scope.meetAnimation = true;
+            $chatBS.findMeet().then(
+                function success(){
+                    $scope.meetAnimation = false;
+                    $scope.meet.active = true;
+                },
+                function error(e){
+                    $scope.meetAnimation = false;
+                }
+            );
         };
 
         $scope.endMeet = function endMeet() {
-            $scope.hasMeet = false;
+            $scope.meet.active = false
         };
 
-        $ionicPopover.fromTemplateUrl('templates/popover.html', {
+        $ionicPopover.fromTemplateUrl('templates/app/popover-chat.html', {
             scope: $scope
         }).then(function (popover) {
             $scope.popover = popover;

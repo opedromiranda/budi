@@ -1,5 +1,5 @@
 
-<div ng-show="hasMeet">
+<div ng-show="meet.active">
     <div class="bar bar-header bar-positive">
         <button menu-toggle="left" class="button button-icon icon-right fa fa-angle-left fa-lg"></button>
         <h1 class="title">{{budiInfo.name}}</h1>
@@ -40,14 +40,20 @@
 </div>
 
 
-<div ng-hide="hasMeet">
+<div ng-hide="meet.active">
     <div class="bar bar-header bar-positive">
         <button menu-toggle="left" class="button button-icon icon-right fa fa-angle-left fa-lg"></button>
         <h1 class="title"> Budi </h1>
     </div>
     <ion-content class="has-header chat-background">
     <p align="center">
-        <button  class="button button-large button-positive" ng-click="findBudi()" style="margin-left:auto;margin-right:auto;margin-top:75%;margin-bottom:0%"> Meet new Budi</button>
+        <button ng-hide="meetAnimation" class="button button-large button-positive" ng-click="findBudi()" style="margin-left:auto;margin-right:auto;margin-top:75%;margin-bottom:0%">
+            Meet new Budi
+        </button>
+        <button ng-show="meetAnimation" class="button button-large button-outline button-light" style="margin-left:auto;margin-right:auto;margin-top:75%;margin-bottom:0%" disabled="">
+            Finding a budi
+            <i class="fa fa-circle-o-notch fa-spin"></i>
+        </button>
     </p>
     </ion-content>
 
