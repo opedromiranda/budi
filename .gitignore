@@ -1,8 +1,0 @@
-.idea/
-AndroidClient/.idea
-AndroidClient/gen
-Webapp/.idea
-*/node_modules
-*/bower_components
-.DS_STORE
-out/
