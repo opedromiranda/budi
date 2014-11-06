@@ -1,8 +1,31 @@
-<ion-view title="Budis">
-  <ion-nav-buttons side="left">
-    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-  </ion-nav-buttons>
-  <ion-content class="has-header">
-      <h1> budi </h1>
-  </ion-content>
-</ion-view>
+<ion-header-bar class="bar-positive">
+      <div class="buttons">
+        <ion-nav-back-button class="button-icon ion-arrow-left-c"> </ion-nav-back-button>
+        <button title="More" menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        <button title="Delete Budi(s)" class="button button-icon icon ion-ios7-minus-outline" 
+          ng-click="data.showDelete = !data.showDelete;"></button>
+        <h1 class="title">Budi List</h1>
+      
+      </div>
+    </ion-header-bar>
+
+    <ion-content>
+    
+      <ion-list show-delete="data.showDelete">
+
+        <ion-item ng-repeat="budi in budisList" 
+                  href="#/app/profile"
+                  class="item item-thumbnail-left">
+          <img ng-src="{{ budi.image }}">
+          <p>
+          <h2>{{ budi.name }}</h2>
+          <p>
+          <h3>{{ budi.location }}</h3>
+          <ion-delete-button class="ion-minus-circled" ng-click="onBudiDelete(budi)"> </ion-delete-button>
+
+          
+        </ion-item>
+
+      </ion-list>
+
+    </ion-content>
