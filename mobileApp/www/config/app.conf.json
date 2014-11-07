@@ -101,6 +101,9 @@
                     },
                     "sendMessage" :{
                         "url":"api/meets/message/text"
+                    },
+                    "budiList" :{
+                        "url":""
                     }
                 }
             }

@@ -64,7 +64,7 @@
                 views: {
                     'content': {
                         templateUrl: "templates/app/budis.html",
-                        //controller: 'BudisCtrl'
+                        controller: 'BudisCtrl'
                     }
                 }
             },

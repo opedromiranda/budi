@@ -1,7 +1,6 @@
-
 <div ng-show="hasMeet">
     <div class="bar bar-header bar-positive">
-        <button menu-toggle="left" class="button button-icon icon-right fa fa-angle-left fa-lg"></button>
+        <button title="Men" menu-toggle="left" class="button button-icon icon ion-navicon"></button>
         <h1 class="title">{{budiInfo.name}}</h1>
         <div class="buttons">
             <button class="button button-icon ion-more" ng-click="popover.show($event)">
@@ -23,16 +22,16 @@
         <label class="item-input-wrapper">
             <input type="text" ng-model="sendForm.message" placeholder="Message">
         </label>
-        <button class="button button-small button-calm" ng-click="sendMsg()">
+        <button title="Send Message" class="button button-small button-calm" ng-click="sendMsg()">
             Send
         </button>
     </div>
     <div class="tabs-striped tabs-background-dark tabs-color-calm">
         <div class="tabs">
-            <div class="tab-item" ng-click="showPicturePage()">
+            <div title="Send Photo" class="tab-item" ng-click="showPicturePage()">
                 <i class="icon ion-camera"></i>
             </div>
-            <div class="tab-item" ng-click="toggleInput()">
+            <div title="Send Message"  class="tab-item" ng-click="toggleInput()">
                 <i class="icon ion-ios7-email"></i>
             </div>
         </div>
@@ -42,12 +41,12 @@
 
 <div ng-hide="hasMeet">
     <div class="bar bar-header bar-positive">
-        <button menu-toggle="left" class="button button-icon icon-right fa fa-angle-left fa-lg"></button>
+        <button title="More" menu-toggle="left" class="button button-icon icon ion-navicon"></button>
         <h1 class="title"> Budi </h1>
     </div>
     <ion-content class="has-header chat-background">
     <p align="center">
-        <button  class="button button-large button-positive" ng-click="findBudi()" style="margin-left:auto;margin-right:auto;margin-top:75%;margin-bottom:0%"> Meet new Budi</button>
+        <button  class="button button-large button-positive" ng-click="findBudi()" style="margin-top:30%"> Meet New Budi</button>
     </p>
     </ion-content>
 
