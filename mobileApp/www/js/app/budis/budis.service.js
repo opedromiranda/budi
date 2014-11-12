@@ -41,6 +41,12 @@
 
             return ;
         };
+        
+        this.data = 
+        {
+            showDelete: false,
+            showBackButton: false
+        };
     }
 
 })(this.app, this.angular);

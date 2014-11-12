@@ -7,8 +7,10 @@
     $angular.module($app.appName)
         .controller(_controller, ['$scope', _profileBS, controller]);
 
-    function controller($scope, $profileBS) {
+    function controller($scope, $profileBS) 
+    {
         $scope.user = {};
+    
 
         // TODO update profile as necessary, so if offline we have something
         /*$profileBS.getUserInfo().then(
