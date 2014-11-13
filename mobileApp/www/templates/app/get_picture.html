@@ -1,29 +1,27 @@
 <ion-view title="Picture">
-	<div class="camera-back">
-    	<button class="button button-clear button-dark icon-right fa fa-chevron-right" ng-click="modal.hide()">
+    	<button class="button button-clear button-dark icon-right fa fa-chevron-left" ng-click="modal.hide()">
     	</button>
-	</div>
 	<ion-content class="camera-page" has-bouncing="false" scroll="false">
         <div class="camera-temp-view">
         	<div ng-hide="sendForm.picture">
 	        	<img class="camera-temp" src="./img/camera.png">
 	        	<br><br>
-		        <button class="button button-outline button-balanced camera-button" ng-click="takePicture()">
+		        <button class="button button-outline button-balanced icon-left ion-android-camera" ng-click="takePicture()">
 		        	Take a Picture!
 				</button>
 				<br><br>
-				<button class="button button-outline button-energized gallery-button" ng-click="selectPicture()">
-		        	Choose one from your gallery
+				<button class="button button-outline button-energized icon-left ion-android-image" ng-click="selectPicture()">
+		        	Choose One From Your Gallery
 				</button>
 			</div>
 			<div ng-show="sendForm.picture">
-				<img class="picture-display" src="{{sendForm.picture}}">
+				<img class="picture-display" src="{{sendForm.picture}}">io
 				<br><br>
 				<div class="picButtons">
-					<button class="button button-outline button-balanced" id="picBleft" ng-click="sendImage()">
+					<button title="Send Photo" class="button button-outline button-balanced" id="picBleft" ng-click="sendImage()">
 						Send
 					</button>
-					<button class="button button-outline button-assertive" id="picBright" ng-click="clearPicture()">
+					<button title="Cancel" class="button button-outline button-assertive" id="picBright" ng-click="clearPicture()">
 						Cancel
 					</button>
 				</div>

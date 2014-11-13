@@ -26,7 +26,6 @@
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
   <component name="IdProvider" IDEtalkID="634FD1932F8231C2C9019994EF725CD3" />
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$/Server" libraries="{Node.js v0.10.31 Core Modules}" />
     <file url="file://$PROJECT_DIR$/Webapp" libraries="{Webapp node_modules}" />
   </component>
   <component name="Palette2">

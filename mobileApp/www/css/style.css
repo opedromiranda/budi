@@ -171,3 +171,13 @@
 	width: 100%;
 	bottom: 50px;
 }
+
+.custom-icon {
+    font-size: 64px;
+    color : #2b57ff;
+}
+
+body {
+    cursor: url('http://ionicframework.com/img/finger.png'), auto;
+}
+

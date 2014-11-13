@@ -1,0 +1,16 @@
+{
+  "name": "budi",
+  "version": "0.0.0",
+  "private": true,
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
