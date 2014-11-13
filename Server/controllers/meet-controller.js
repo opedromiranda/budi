@@ -3,8 +3,8 @@
  */
 
 var mongoose = require('mongoose');
-var Meet = require('../models/meet.js');
-var Budi = require('../models/budi.js');
+var Meet = require('../models/meet');
+var Budi = require('../models/budi');
 
 function MeetController () {
 

@@ -2,7 +2,7 @@
  * Created by pedromiranda on 04/10/14.
  */
 
-var Budi = require('../models/budi.js');
+var Budi = require('../models/budi');
 
 function BudiController () {
     this.insert = function (req, res) {
