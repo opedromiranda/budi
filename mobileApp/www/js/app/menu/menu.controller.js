@@ -15,7 +15,7 @@
 
         $menuService.list('left').then(
             function onSuccess(data) {
-                console.log(data);
+                // console.log(data);
                 $scope.items = data;
             });
 

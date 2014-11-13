@@ -9,8 +9,9 @@
 
     function controller($scope, $profileBS) 
     {
-        $scope.user = {};
-    
+        $scope.user = $profileBS.getUserInfo;
+        
+        console.log($scope.user);
 
         // TODO update profile as necessary, so if offline we have something
         /*$profileBS.getUserInfo().then(

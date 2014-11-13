@@ -3,15 +3,18 @@
 
     var _service = 'ProfileBS',
         _adapter = 'ProfileAdapter',
-        _proxy = 'AppDataProxy';
+        _proxy = 'AppDataProxy',
+        _user_service = 'UserService';
 
     $angular.module($app.appName)
-        .service(_service, [_adapter, _proxy, service]);
+        .service(_service, [_adapter, _user_service, _proxy, service]);
 
-    function service($adapter, $proxy) {
+    function service($adapter, $user_service, $proxy) {
         /*jshint validthis:true */
         
-        this.getUserInfo = function getUserInfo() {
+        this.getUserInfo = $user_service.getUser();
+        
+    /*    this.getUserInfo = function getUserInfo() {
             var req = $adapter.getInfo.to();
             return $proxy.send(req).then(
                 function onSuccess(data){
@@ -21,6 +24,7 @@
                     throw error;
                 });
         };
+    */
 
     }
 
