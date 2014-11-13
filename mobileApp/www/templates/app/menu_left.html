@@ -4,9 +4,10 @@
     </header>-->
     <ion-content class="menu-header" has-bouncing="false">
         <ion-list>
-            <button class="button button-full button-positive" ng-repeat="item in items" menu-close ng-click="goToState('{{item.name}}');">
-                <i class="icon {{item.icon}}"></i>    {{item.name}}
-            </button>
+            <ion-item class="item-icon-left" ng-repeat="item in items" nav-clear menu-close ng-href="{{item.url}}">
+                <i class="icon {{item.icon}}"></i>
+                {{item.name}}
+            </ion-item>
         </ion-list>
     </ion-content>
 </ion-view>
