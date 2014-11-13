@@ -68,6 +68,15 @@
                     }
                 }
             },
+            'app.budi_profile': {
+                url: "/budis/profile",
+                views: {
+                    'content': {
+                        templateUrl: "templates/app/budi_profile.html",
+                        controller: 'ProfileCtrl'
+                    }
+                }
+            },
             'app.profile': {
                 url: "/profile",
                 views: {

@@ -11,20 +11,17 @@
     function controller($scope, $service, $ionicScrollDelegate, $filterFilter) 
     {
 
-      $scope.budisList = $service.getBudisList();
+        $scope.budisList = $service.getBudisList();
 
-      $scope.data = 
-      {
-        showDelete: false
-      };
+        $scope.data = $service.data;
 
-      $scope.onBudiDelete = function(budi) 
-      {
+        $scope.onBudiDelete = function(budi) 
+        {
         $scope.budisList.splice($scope.budisList.indexOf(budi), 1);
 
         //função eliminar budi ->> servidor
         $scope.deleteBudi = $service.deleteBudi();
-      };
+        };
 
     }
 
