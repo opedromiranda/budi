@@ -9,6 +9,7 @@ var budiController = require('../controllers/budi-controller.js');
 
 
 router.get('/count', budiController.count);
-router.post('/insert', budiController.insert);
+router.post('/insert', budiController.insert);  //email, name, bornDate, genre
+router.post('/settings/restrictions', budiController.restrictions); // budi_id
 
 module.exports = router;

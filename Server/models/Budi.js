@@ -6,17 +6,23 @@ var mongoose = require('mongoose');
 var Meet = require('./meet.js');
 
 var budiSchema = new mongoose.Schema({
-    email : 'string',
-    name : 'string',
-    oldBudis: [],
-    settings: [
-        {
-        genre : String,
-        age : Number,
-        numberReports : Number
-        }
-    ],
-    profile_picture : 'string'
+    email : String,
+    name : String,
+    old_budis: [],
+    settings : {
+            genre :
+                {
+                    genre: String,
+                    restriction: Boolean
+                },
+            age:
+                {
+                    age: String,
+                    restriction: Boolean
+                },
+            reports: []
+         },
+    profile_picture : String
 });
 
 /**
@@ -37,7 +43,6 @@ var budiSchema = new mongoose.Schema({
 };
 */
 budiSchema.methods.findMeets = function findMeets() {
-
     var budiReports = this.options.numberReports;
 
     return Meet.find({
@@ -45,17 +50,15 @@ budiSchema.methods.findMeets = function findMeets() {
             size: 1,
             $nin: this.oldBudis
         },
-        settings: {
-            numberReports: {
-                $gte : (budiReports - 3),
-                $lt : (budiReports + 3)
+        settings : {
+            reports: {
+                reports : {
+                    $gte: (budiReports - 3),
+                    $lt: (budiReports + 3)
+                }
             }
         }
     }).exec()
-};
-
-budiSchema.methods.restrictGenre = function restrictGenre(meets) {
-
 };
 
 var Budi = mongoose.model('Budi', budiSchema);

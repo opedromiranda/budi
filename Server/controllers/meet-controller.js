@@ -96,27 +96,7 @@ function MeetController () {
 
     function findAvailableMeets(b) {
         budi = b;
-        var meets = budi.findMeets(),
-            budiGenre = budi.settings.genre,
-            budiAge = budi.settings.age,
-            i;
-
-
-        if ( budiGenre != 'none' ) {
-            for (i = 0; i < meets.length; ++i) {
-                if (meets[i].settings.genre != budiGenre) {
-                    meets.splice(i--, 1);
-                }
-            }
-        }
-
-        if ( budiAge != 'none' ) {
-            for (i = 0; i < meets.length; ++i) {
-                if (meets[i].settings.age != budiAge) {
-                    meets.splice(i--, 1);
-                }
-            }
-        }
+        var meets = budi.findMeets();
         return meets[0];
     }
 
@@ -132,7 +112,6 @@ function MeetController () {
 
         // no meet is available, create new one
         if(!meet) {
-
             meet = new Meet({
                 date : getTodayDate(),
                 budies : [budi._id]
