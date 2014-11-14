@@ -6,16 +6,13 @@ var mongoose = require('mongoose'),
     meetSchema = new mongoose.Schema({
         budies : [{ type: mongoose.Schema.Types.ObjectId}],
         chat : 'array',
-        settings : [
-            {
-                numberReports: Number,
-                age: Number,
-                genre: String
-            }
-        ],
+        settings : {
+            age : String,
+            genre: String,
+            reports: Number
+        },
         date : Date
-    }),
-    Meet;
+    });
 
 /**
  * Search for meets that contain less than 2 budis and that are between 2 dates
@@ -43,6 +40,6 @@ meetSchema.methods.findBudis = function findBudis() {
     }).exec()
 };
 
-Meet = mongoose.model('Meet', meetSchema);
+var Meet = mongoose.model('Meet', meetSchema);
 
 module.exports = Meet;

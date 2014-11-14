@@ -2,6 +2,7 @@
  * Created by pedromiranda on 04/10/14.
  */
 
+var mongoose = require('mongoose');
 var Budi = require('../models/budi.js');
 var moment = require('moment');
 
@@ -30,7 +31,7 @@ function BudiController () {
     }
 
     this.insert = function (req, res) {
-        var budi, now = moment(), bornDate;
+        var budi, bornDate;
 
         // validate mandatory Budi fields
         if( !req.body.hasOwnProperty('email') ||
@@ -59,7 +60,8 @@ function BudiController () {
                 },
                 age : {
                     age: bornDate
-                }
+                },
+                reports : []
             }
         });
 
@@ -90,19 +92,25 @@ function BudiController () {
     function setRestrictions(restrictions){
         return function(b){
 
-            var restrictionsJson = JSON.parse(restrictions);
+            var restrictionsJson = JSON.parse(restrictions),
+                result = new mongoose.Promise;
 
-            console.log("restrictions: " + restrictionsJson);
+            console.log('Restrictions age: ' + restrictionsJson.age);
+            console.log('Restrictions genre: ' + restrictionsJson.genre);
+            console.log('Budi: ' + b);
 
-            //if (restrictionsJson )
+            if (typeof  restrictionsJson.age !== 'undefined') {
+                b.settings.age.restriction = restrictionsJson.age;
+            }
 
-
-
-            throw new Error('lalal');
-
-            var result = new mongoose.Promise;
-            b.settings.age.age = age;
+            if (typeof restrictionsJson.genre !== 'undefined') {
+                b.settings.genre.restriction = restrictionsJson.genre;
+            }
             b.save();
+
+            result.fulfill({
+                error: 0
+            });
 
             return result;
         }
@@ -111,15 +119,18 @@ function BudiController () {
     this.restrictions = function (req, res) {
         if( !req.body.hasOwnProperty('budi_id') ||
             !req.body.hasOwnProperty('restrictions') ) {
-            res.json({
-                error: 1
-            });
-            return;
-        }
+                res.json({
+                    error: 1
+                });
+                return;
+            }
 
         Budi.findOne({_id : req.body.budi_id}).exec()
             .then(setRestrictions(req.body.restrictions))
-            .then(handleAnswer(res));
+            .then(handleAnswer(res))
+            .onReject(function (err) {
+                console.log(err);
+            });
     };
 }
 

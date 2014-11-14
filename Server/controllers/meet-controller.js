@@ -5,6 +5,7 @@
 var mongoose = require('mongoose');
 var Meet = require('../models/meet');
 var Budi = require('../models/budi');
+var moment = require('moment');
 
 function MeetController () {
 
@@ -96,7 +97,11 @@ function MeetController () {
 
     function findAvailableMeets(b) {
         budi = b;
+
         var meets = budi.findMeets();
+
+        console.log('meets: ' + meets[0]);
+
         return meets[0];
     }
 
@@ -113,8 +118,13 @@ function MeetController () {
         // no meet is available, create new one
         if(!meet) {
             meet = new Meet({
-                date : getTodayDate(),
-                budies : [budi._id]
+                date : moment(),
+                budies : [budi._id],
+                settings: {
+                    age : moment().diff(budi.settings.age.age, 'years'),
+                    genre : budi.settings.genre.genre,
+                    reports : budi.settings.reports.length
+                }
             });
 
             meet.save(function (err, meet) {
@@ -136,7 +146,7 @@ function MeetController () {
 
                 Meet.update({_id : meet._id}, {
                     $push: {budies : budi._id}
-                }, function(err, numAffected, rawResponse) {
+                }, function(err) {
                     if(err) {
                         result.error(err);
                     }
@@ -184,5 +194,6 @@ function MeetController () {
     };
 
 }
+
 
 module.exports = new MeetController();

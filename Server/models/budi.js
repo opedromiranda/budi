@@ -3,7 +3,8 @@
  */
 
 var mongoose = require('mongoose');
-var Meet = require('./meet.js');
+var Meet = require('./meet');
+var moment = require('moment');
 
 var budiSchema = new mongoose.Schema({
     email : String,
@@ -20,7 +21,7 @@ var budiSchema = new mongoose.Schema({
                     age: String,
                     restriction: Boolean
                 },
-            reports: []
+            reports: Array
          },
     profile_picture : String
 });
@@ -42,23 +43,93 @@ var budiSchema = new mongoose.Schema({
     }).exec()
 };
 */
-budiSchema.methods.findMeets = function findMeets() {
-    var budiReports = this.options.numberReports;
 
-    return Meet.find({
-        budies: {
-            size: 1,
-            $nin: this.oldBudis
-        },
-        settings : {
-            reports: {
-                reports : {
-                    $gte: (budiReports - 3),
-                    $lt: (budiReports + 3)
+budiSchema.methods.findMeets = function findMeets() {
+    var budiReports = this.settings.reports.length,
+        budiAgeRestriction = this.settings.age.restriction,
+        budiGenreRestriction = this.settings.genre.restriction,
+        oldBudis = this.old_budis,
+        yearsOld = moment().diff(this.settings.age.age, 'years'),
+        gender = this.settings.genre.genre;
+
+    if (budiAgeRestriction && budiGenreRestriction) {
+
+        return Meet.find({
+            budies: {
+                size: 1,
+                $nin: oldBudis
+            },
+            settings : {
+                reports: {
+                    size: {
+                        $gte: (budiReports - 3),
+                        $lt: (budiReports + 3)
+                    }
+                },
+                age : {
+                    $gte: (yearsOld - 5),
+                    $lt: (yearsOld + 5)
+                },
+                genre : gender
+            }
+        }).exec()
+    }
+
+    else if (budiAgeRestriction && !budiGenreRestriction) {
+        return Meet.find({
+            budies: {
+                size: 1,
+                $nin: oldBudis
+            },
+            settings : {
+                reports: {
+                    size: {
+                        $gte: (budiReports - 3),
+                        $lt: (budiReports + 3)
+                    }
+                },
+                age : {
+                    $gte: (yearsOld - 5),
+                    $lt: (yearsOld + 5)
                 }
             }
-        }
-    }).exec()
+        }).exec()
+    }
+
+    else if (!budiAgeRestriction && budiGenreRestriction) {
+        return Meet.find({
+            budies: {
+                $size: 1,
+                $nin: oldBudis
+            },
+            settings : {
+                reports: {
+                    $size: {
+                        $gte: (budiReports - 3),
+                        $lt: (budiReports + 3)
+                    }
+                },
+                genre : gender
+            }
+        }).exec()
+    }
+
+    else {
+        return Meet.find({
+            budies: {
+                $size: 1,
+                $nin: oldBudis
+            },
+            settings : {
+                reports: {
+                    $size: {
+                        $gte: (budiReports - 3),
+                        $lt: (budiReports + 3)
+                    }
+                }
+            }
+        }).exec()
+    }
 };
 
 var Budi = mongoose.model('Budi', budiSchema);
