@@ -50,85 +50,49 @@ budiSchema.methods.findMeets = function findMeets() {
         budiGenreRestriction = this.settings.genre.restriction,
         oldBudis = this.old_budis,
         yearsOld = moment().diff(this.settings.age.age, 'years'),
-        gender = this.settings.genre.genre;
-
-    if (budiAgeRestriction && budiGenreRestriction) {
-
-        return Meet.find({
+        gender = this.settings.genre.genre,
+        query = {
             budies: {
-                size: 1,
+                $size: 1,
                 $nin: oldBudis
             },
             settings : {
                 reports: {
-                    size: {
+                    $size: {
                         $gte: (budiReports - 3),
                         $lt: (budiReports + 3)
                     }
-                },
-                age : {
-                    $gte: (yearsOld - 5),
-                    $lt: (yearsOld + 5)
-                },
-                genre : gender
+                }
             }
-        }).exec()
+        };
+
+    if (budiAgeRestriction && budiGenreRestriction) {
+        query.settings.genre = gender;
+        query.settings.age = {
+            $gte: (yearsOld - 5),
+            $lt: (yearsOld + 5)
+        };
+        console.log(query);
+        return Meet.find(query).exec()
     }
 
     else if (budiAgeRestriction && !budiGenreRestriction) {
-        return Meet.find({
-            budies: {
-                size: 1,
-                $nin: oldBudis
-            },
-            settings : {
-                reports: {
-                    size: {
-                        $gte: (budiReports - 3),
-                        $lt: (budiReports + 3)
-                    }
-                },
-                age : {
-                    $gte: (yearsOld - 5),
-                    $lt: (yearsOld + 5)
-                }
-            }
-        }).exec()
+        query.settings.age = {
+            $gte: (yearsOld - 5),
+            $lt: (yearsOld + 5)
+        };
+        console.log(query);
+        return Meet.find(query).exec()
     }
 
     else if (!budiAgeRestriction && budiGenreRestriction) {
-        return Meet.find({
-            budies: {
-                $size: 1,
-                $nin: oldBudis
-            },
-            settings : {
-                reports: {
-                    $size: {
-                        $gte: (budiReports - 3),
-                        $lt: (budiReports + 3)
-                    }
-                },
-                genre : gender
-            }
-        }).exec()
+        query.settings.genre = gender;
+        console.log(query);
+        return Meet.find(query).exec()
     }
-
     else {
-        return Meet.find({
-            budies: {
-                $size: 1,
-                $nin: oldBudis
-            },
-            settings : {
-                reports: {
-                    $size: {
-                        $gte: (budiReports - 3),
-                        $lt: (budiReports + 3)
-                    }
-                }
-            }
-        }).exec()
+        console.log(query);
+        return Meet.find(query).exec()
     }
 };
 

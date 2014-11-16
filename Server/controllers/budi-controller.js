@@ -39,7 +39,8 @@ function BudiController () {
             !req.body.hasOwnProperty('bornDate') || // yyyy-mm-dd
             !req.body.hasOwnProperty('genre')) {
                 res.json({
-                    error: 1
+                    error: 1,
+                    reason: 'Missing arguments'
                 });
                 return;
             }
@@ -67,7 +68,11 @@ function BudiController () {
 
         budi.save(function (err) {
             if(err) {
-                res.json({error: 1});
+                console.log(err);
+                res.json({
+                    error: 1,
+                    reason: 'An error occurred on registration'
+                });
             } else {
                 res.json({
                     error: 0,
