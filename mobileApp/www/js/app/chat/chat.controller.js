@@ -146,7 +146,7 @@
             $scope.hasMeet = false;
         };
 
-        $ionicPopover.fromTemplateUrl('templates/popover.html', {
+        $ionicPopover.fromTemplateUrl('templates/popover_chat.html', {
             scope: $scope
         }).then(function (popover) {
             $scope.popover = popover;
