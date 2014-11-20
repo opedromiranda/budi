@@ -116,10 +116,12 @@ function MeetController () {
             meet = new Meet({
                 date : moment(),
                 budies : [budi._id],
-                settings: {
-                    age : moment().diff(budi.born_date, 'years'),
-                    genre : budi.genre,
-                    reports : budi.reports.length
+                age : moment().diff(budi.born_date, 'years'),
+                genre : budi.genre,
+                reports : budi.reports.length,
+                restrictions : {
+                    age : budi.restrictions.age,
+                    genre : budi.restrictions.genre
                 }
             });
 

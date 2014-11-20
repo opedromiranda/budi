@@ -55,11 +55,11 @@ function BudiController () {
         budi = new Budi({
             name : req.body.name,
             email : req.body.email,
-            genre: req.body.genre,
-            born_date: bornDate,
-            restrictions: {
-                genre: null,
-                born_date: false
+            genre : req.body.genre,
+            born_date : bornDate,
+            restrictions : {
+                genre : null,
+                age : false
             }
         });
 

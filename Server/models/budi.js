@@ -55,37 +55,37 @@ budiSchema.methods.findMeet = function findMeet() {
                 $gte: (budiReports - 3),
                 $lt: (budiReports + 3)
             },
-            settings:{}
+
+            $and: [
+                {
+                    $or: [{
+                            "restrictions.genre": null
+                        },
+                        {
+                            "restrictions.genre": gender
+                        }]
+                }, {
+                    $or: [{
+                            "restrictions.age": null
+                        }, {
+                            "age": {
+                                $gte: (yearsOld - 5),
+                                $lt: (yearsOld + 5)
+                            }
+                        }]
+                }, {
+                    "age": budiAgeRestriction ? {
+                            $gte: (yearsOld - 5),
+                            $lt: (yearsOld + 5)
+                        } : { $exists: true },
+                    "genre": budiGenreRestriction ? gender : { $exists: true }
+                }
+            ]
         };
 
-    if (budiAgeRestriction && budiGenreRestriction) {
-        query.settings.genre = gender;
-        query.settings.age = {
-            $gte: (yearsOld - 5),
-            $lt: (yearsOld + 5)
-        };
-        console.log(query);
-        return Meet.findOne(query).exec()
-    }
+    console.log(JSON.stringify(query, null, 15));
 
-    else if (budiAgeRestriction && !budiGenreRestriction) {
-        query.settings.age = {
-            $gte: (yearsOld - 5),
-            $lt: (yearsOld + 5)
-        };
-        console.log(query);
-        return Meet.findOne(query).exec()
-    }
-
-    else if (!budiAgeRestriction && budiGenreRestriction) {
-        query.settings.genre = gender;
-        console.log(query);
-        return Meet.findOne(query).exec()
-    }
-    else {
-        console.log(query);
-        return Meet.findOne(query).exec()
-    }
+    return Meet.findOne(query).exec();
 };
 
 var Budi = mongoose.model('Budi', budiSchema);
