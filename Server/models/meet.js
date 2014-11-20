@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
         budies : [{ type: mongoose.Schema.Types.ObjectId}],
         chat : 'array',
         settings : {
-            age : String,
+            age : Number,
             genre: String,
             reports: Number
         },

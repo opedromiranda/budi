@@ -55,14 +55,11 @@ function BudiController () {
         budi = new Budi({
             name : req.body.name,
             email : req.body.email,
-            settings : {
-                genre : {
-                    genre: req.body.genre
-                },
-                age : {
-                    age: bornDate
-                },
-                reports : []
+            genre: req.body.genre,
+            born_date: bornDate,
+            restrictions: {
+                genre: null,
+                born_date: false
             }
         });
 
@@ -97,24 +94,23 @@ function BudiController () {
     function setRestrictions(restrictions){
         return function(b){
 
-            var restrictionsJson = JSON.parse(restrictions),
-                result = new mongoose.Promise;
-
-            console.log('Restrictions age: ' + restrictionsJson.age);
-            console.log('Restrictions genre: ' + restrictionsJson.genre);
-            console.log('Budi: ' + b);
-
-            if (typeof  restrictionsJson.age !== 'undefined') {
-                b.settings.age.restriction = restrictionsJson.age;
-            }
-
-            if (typeof restrictionsJson.genre !== 'undefined') {
-                b.settings.genre.restriction = restrictionsJson.genre;
-            }
-            b.save();
-
-            result.fulfill({
-                error: 0
+            var restrictionsJson = JSON.parse(restrictions);
+            var result = new mongoose.Promise;
+            var newRestrictions = {
+                age: restrictionsJson.age || false,
+                genre: restrictionsJson.genre || null
+            };
+            b.restrictions = newRestrictions;
+            b.save(function (err) {
+                if(err) {
+                    result.reject({
+                        error: 1,
+                        reason: 'Error updating budi settings'
+                    })
+                }
+                result.fulfill({
+                    error: 0
+                });
             });
 
             return result;

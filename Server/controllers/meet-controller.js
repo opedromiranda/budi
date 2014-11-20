@@ -56,10 +56,11 @@ function MeetController () {
      */
     function handleError(res) {
         function err(e) {
-            res.json({
+            throw e;
+            /*res.json({
                 error: 1,
                 error_object : e
-            });
+            });*/
         }
         return err;
     }
@@ -97,12 +98,7 @@ function MeetController () {
 
     function findAvailableMeets(b) {
         budi = b;
-
-        var meets = budi.findMeets();
-
-        console.log('meets: ' + meets[0]);
-
-        return meets[0];
+        return budi.findMeet();
     }
 
     /**
@@ -121,13 +117,14 @@ function MeetController () {
                 date : moment(),
                 budies : [budi._id],
                 settings: {
-                    age : moment().diff(budi.settings.age.age, 'years'),
-                    genre : budi.settings.genre.genre,
-                    reports : budi.settings.reports.length
+                    age : moment().diff(budi.born_date, 'years'),
+                    genre : budi.genre,
+                    reports : budi.reports.length
                 }
             });
 
             meet.save(function (err, meet) {
+
                 if(err) {
                     result.error(err);
                 }
