@@ -10,7 +10,8 @@
 
     function service($q, $config, $userS, $budiApi) {
         /*jshint validthis:true */
-
+        
+        // Mesmo que peofile.controller.user //
         var user = $userS.getUser();
 
         this.getBudisList = function getBudisList() 
