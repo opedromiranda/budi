@@ -36,9 +36,9 @@
         {     
             //função eliminar budi ->> servidor
             $scope.deleteBudi = $service.deleteBudi();
-            
+
             $scope.budisList.splice($scope.budisList.indexOf(budi), 1);
-            
+
             if ($scope.searchResults().length === 0) $scope.onButtonClick('search_clear');
         };
         
@@ -49,7 +49,7 @@
                 $scope.data.showDelete = !$scope.data.showDelete; 
 
                 $scope.data.showInput = false; 
-                
+
                 $scope.closePopover();
             }
             
@@ -106,8 +106,6 @@
                 $scope.data.showInput = false; 
 
                 $scope.data.showDelete = false; 
-
-                //$scope.clearSearch();
             }
             
             else;
@@ -126,6 +124,11 @@
         $scope.clearSearch = function() 
         {
             $scope.search = '';
+        };
+        
+        $scope.getSearch = function() 
+        {
+            return $scope.search;
         };
         
         $ionicPopover.fromTemplateUrl('templates/popover_budis.html', 
@@ -155,19 +158,15 @@
             else return false;
         };
 
-
-      $scope.budisListUnsorted
+        $scope.budisListUnsorted
         .sort(function(a, b) 
         {
             return a.first_name > b.first_name ? 1 : -1;
         })
         .forEach(function(person) 
         {
-            //Get the first letter of the first name, and if the first name changes
-            //put the letter in the array
             var personCharCode = person.first_name.toUpperCase().charCodeAt(0);
-            //We may jump two letters, be sure to put both in
-            //(eg if we jump from Adam Bradley to Bob Doe, add both C and D)
+
             var difference = personCharCode - currentCharCode;
 
             for (var i = 1; i <= difference; i++) 
@@ -180,54 +179,48 @@
             $scope.budisList.push(person);
         });
 
-      //If names ended before Z, add everything up to Z
-      for (var i = currentCharCode + 1; i <= 'Z'.charCodeAt(0); i++) {
-        addLetter(i);
-      }
-
-    function addLetter(code) 
-    {
-        var letter = String.fromCharCode(code);
-
-        $scope.budisList.push(
+        for (var i = currentCharCode + 1; i <= 'Z'.charCodeAt(0); i++) 
         {
-            isLetter: true,
-            letter: letter
-        });
+            addLetter(i);
+        }
 
-        letters.push(letter);
-    }
-
-
-    $scope.searchResults = function() 
-    {
-        letterHasMatch = {};
-        //Filter contacts by $scope.search.
-        //Additionally, filter letters so that they only show if there
-        //is one or more matching contact
-        return $scope.budisList.filter(function(item) 
+        function addLetter(code) 
         {
-            var itemDoesMatch = !$scope.search || item.isLetter ||
-                item.first_name.toLowerCase().indexOf($scope.search.toLowerCase()) > -1 ||
-                item.last_name.toLowerCase().indexOf($scope.search.toLowerCase()) > -1;
+            var letter = String.fromCharCode(code);
 
-            //Mark this person's last name letter as 'has a match'
-            if (!item.isLetter && itemDoesMatch) 
+            $scope.budisList.push(
             {
-                var letter = item.first_name.charAt(0).toUpperCase();
-                letterHasMatch[letter] = true;
-            }
+                isLetter: true,
+                letter: letter
+            });
 
-            return itemDoesMatch;  
-        }).filter(function(item) 
+            letters.push(letter);
+        }
+
+        $scope.searchResults = function() 
         {
-          //Finally, re-filter all of the letters and take out ones that don't
-          //have a match
-          if (item.isLetter && !letterHasMatch[item.letter]) return false;
+            letterHasMatch = {};
 
-          else return true;
-        });
-    };
+            return $scope.budisList.filter(function(item) 
+            {
+                var itemDoesMatch = !$scope.search || item.isLetter ||
+                    item.first_name.toLowerCase().indexOf($scope.search.toLowerCase()) > -1 ||
+                    item.last_name.toLowerCase().indexOf($scope.search.toLowerCase()) > -1;
+
+                if (!item.isLetter && itemDoesMatch) 
+                {
+                    var letter = item.first_name.charAt(0).toUpperCase();
+                    letterHasMatch[letter] = true;
+                }
+
+                return itemDoesMatch;  
+            }).filter(function(item) 
+            {
+                if (item.isLetter && !letterHasMatch[item.letter]) return false;
+
+                else return true;
+            });
+        };
     }
 
 })(this.app, this.angular);
