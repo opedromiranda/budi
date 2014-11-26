@@ -7,19 +7,21 @@
             <button title="More" class="button button-icon icon ion-more" 
                     ng-click="openPopover($event); onButtonClick('more');"></button>
         </ion-nav-buttons> 
-    </ion-nav-bar>
-    <ion-header-bar ng-show="data.showInput" class="bar-light bar-subheader">
-        <input type="search" placeholder=" Filter Budi(s)..." ng-model="search" ng-focus="searchFocused = true"
-            ng-blur="searchFocused = false" ng-change="scrollTop()">      
-    </ion-header-bar>  
+    </ion-nav-bar>   
+    <ion-header-bar ng-show="data.showInput || search.length" class="bar-subheader bar-positive item-input-inset">
+        <label class="item-input-wrapper">
+            <i class="icon ion-ios7-search placeholder-icon"></i>
+            <input type="search" placeholder=" Search Budi(s)..." ng-model="search" ng-change="scrollTop()">
+        </label>
+        <button title="Clear Search" class="button button-clear" ng-click="onButtonClick('search_clear')">
+            Cancel
+        </button>      
+    </ion-header-bar>
     <ion-content>     
-        <ion-item ng-if="(search.length && !data.showInput) || !data.showInput">
+        <ion-item ng-if="!search.length && !data.showInput">
 	        <p></p>
             <p></p>
 	    </ion-item>
-        <button title="Clear Search" ng-if="search.length" class="button button-icon ion-android-close"
-            ng-click="onButtonClick('search_clear')"> Clear Search: {{getSearch()}}
-        </button>   
         <ion-item ng-show="isSearchResultsEmpty()">
 	        <h2> {{ isSearchResultsEmpty() }} </h2>
 	    </ion-item>

@@ -151,7 +151,7 @@
         
         $scope.isSearchResultsEmpty = function()
         {
-            if ($scope.hasNoBudis() === true) return 'No Budi(s) Yet';
+            if ($scope.hasNoBudis() === true) return 'You Have No Budi(s) Yet';
             
             else if ($scope.searchResults().length === 0) return 'No Search Results';
             
