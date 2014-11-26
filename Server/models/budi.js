@@ -3,7 +3,7 @@
  */
 
 var mongoose = require('mongoose');
-var Meet = require('./meet.js')
+var Meet = require('./meet.js');
 
 var budiSchema = new mongoose.Schema({
     email : 'string',
