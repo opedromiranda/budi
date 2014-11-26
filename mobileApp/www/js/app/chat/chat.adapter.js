@@ -7,7 +7,7 @@
         .service(_adapter, ['$budiappConfig',adapter]);
         
     function adapter($budiappConfig) {
-    	
+
     }
 
 })(this.app, this.angular);

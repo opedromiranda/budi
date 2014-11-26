@@ -59,7 +59,7 @@
                     );
                 }
             );
-
+            console.log("Successful Login!", fb_user_info);
             // Finally go to app
             $state.go('app.chat');
             return true;
