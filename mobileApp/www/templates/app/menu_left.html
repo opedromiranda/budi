@@ -4,6 +4,11 @@
     </header>-->
     <ion-content class="menu-header" has-bouncing="false">
         <ion-list>
+            <ion-item class="item item-avatar menu-header">
+                <img src="/img/avatar1.jpg">
+                <h2>Utilizador</h2>
+            </ion-item>
+
             <ion-item class="item-icon-left" ng-repeat="item in items" nav-clear menu-close ng-href="{{item.url}}">
                 <i class="icon {{item.icon}}"></i>
                 {{item.name}}
