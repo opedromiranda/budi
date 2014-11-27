@@ -2,6 +2,9 @@ language: node_js
 node_js:
   - "0.10"
 
+before_script:
+  - echo -e "Host 178.62.109.12\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
 after_success:
    - git remote add live ssh://root@178.62.109.12/var/repo/budi.git
    - git push live
