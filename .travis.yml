@@ -5,9 +5,36 @@ node_js:
 before_script:
   - echo -e "Host 178.62.109.12\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - echo -e "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1u2fM8nBs5qvYG9e1wB0uMzwtqgEkMcVnTsLDGkm6v9mvzc34C7fqyZpNhS92i8Ep9+HimG2HVGlDI3IExmfQewZKR/ZUDRXGkRrPeFNMTjrPg1mYdc4qDtVVlXPnIgZmQA1YuUCiLcadSzl2CzsgC0I40VmKBoVFUKvRBnEkziuPIW9V4iELuVNVbad82HKYlub3NBzkbAv36yx7y7pn4OmBPHCTZXxE0Xk+4V4zTqDjZ9g0N9xF+1t2VxrEETZeigwxviPs38LoucZ0wkHVBI0Z4geV5n+aQqHKQkDTl+bOjTes+k9MircVkc1uD57kyl7JDHRZ3tXkyOuEMWYf emanuelaspinho@gmail.com" > ~/.ssh/id_rsa.pub
-  - echo -e "-----BEGIN RSA PRIVATE KEY-----MIIEpQIBAAKCAQEAtbtnzPJwbOar2BvXtcAdLjM8LaoBJDHFZ07CwxpJur/Zr83N+Au36smaTYUvdovBKffh4phth1RpQyNyBMZn0HsGSkf2VA0VxpEaz3hTTE46z4NZmHXOKg7VVZVz5yIGZkANWLlAoi3GnUs5dgs7IAtCONFZigaFRVCr0QZxJM4rjyFvVeIhC7lTVW2nfNhymJbm9zQc5GwL9+sse8u6Z+DpgTxwk2V8RNF5PuFeM06g42fYNDfcRftbdlcaxBE2XooMMb4j7N/C6LnGdMJB1QSNGeIHleZ/mkKhykJA05fmzo03rPpPTIq3FZHNbg+e5MpeyQx0Wd7V5MjrhDFmHwIDAQABAoIBAQCsDeydVZ7pC48AgIO+WE+IMQu1c/G2scRiJWgxTQ8m1oIjdqadQ4Lxr8L9x62C/5d2w2/Bl2yDJoCuBr3pFWquL/tpki39r5HBOBn4+MNsR9hYJNRLiqUQnpCNgXyFBGqondXE/UbbBJm4y8JwJvvoP6CHqHSsP7YnRNQWhpHSNCL76F4+fCz8YcMOT7Aymwj4DvFOABM0PZ1pRwhK/XT26P6v10fIBZMnBzaMYY/gitt+Un7J5Lwp5banEhr4n+Hy1F9e6fADU8n2KtrHy0gxeju1X9qDExTDbfkTD624hcC3g/uEZ8or0nLj6DOBhkDSvOD5sDDnAMuHqXHAah/RAoGBANvz/XxnYu2Ipf0Z+muBWWfg5KeJDuIwePEQjefTtYw4TXymiovEwsBvASUXWxVJr9zpDboeOAcf+sdeuR4QQeV3xjS+bw3VbH7FthckVVk5cJJtdhu6uiAqc8ct1MFADydDuu8SqNuy5BxucnfZyzLrVEAW6ndamNM4nrKC/ZVnAoGBANOD33y4j7Lid61STwcDSPYVYjD8Vsr/M+djXuVD/TXrn1WQcO3IrSi/k+kliAIlBqsFBHzwWjkCXPrfoS4ubI9kwJbtqEBjqBKKGdMbmvdVhcXfLzNqh5F+hrXepkab7rxHDw3NjWk0W3beDNk5vNfWiGDS0DkIS0CUb9yzVr6JAoGBAMFMZLn+te8ghxeuy+fMrkDfYLNnfQAFL1RTgxJ4ePU4ychBKEL68VhidXQeWXqU3ova+KhXRE/mp+KseS1VhkPehf72WOykYovqv0MJOESIeUkGD6UA7e+0vzkNKwuGe4q7OD5AfMtPJK9j1Q9FBRHDxK/qM7YelW4TNUyWV7sDAoGBALCSaCFAGYXmFK42Bg7+qQv1sfDe1r3D6dqCVBfkeB9pQaw2Vm/KlPNtata5JB9WNYjTOXnrVAY/eMtdoLpiuvHB1Byq7UhDaW2AqCpZ4zYSyQf0Vvz/M4k8LMzqv7g2OEgoseJ99E0dDjXfDK7SylkMmPDrTDQwPlH9GJ0PgZyxAoGAErAuUCeHMGUgr8iKnrhMgz26woLsUYEFo3ezXifqEPdtnrXrq0AY8vAZ8dV05b7N6RVGr+T8RBNBLFSYBkRNz15gSDYqJtj3Wkzvk9VGsaq3bhnrUAwXVwYRNq3PPxWIHzQ6WjubCoA7TQ4S7mByPVH2iliLD+q35ko6ZzaEe5s=-----END RSA PRIVATE KEY-----" > ~/.ssh/id_rsa
+  - echo -e "-----BEGIN RSA PRIVATE KEY-----" > ~/.ssh/id_rsa
+  - echo -e "MIIEpQIBAAKCAQEAtbtnzPJwbOar2BvXtcAdLjM8LaoBJDHFZ07CwxpJur/Zr83N" >> ~/.ssh/id_rsa
+  - echo -e "+Au36smaTYUvdovBKffh4phth1RpQyNyBMZn0HsGSkf2VA0VxpEaz3hTTE46z4NZ" >> ~/.ssh/id_rsa
+  - echo -e "mHXOKg7VVZVz5yIGZkANWLlAoi3GnUs5dgs7IAtCONFZigaFRVCr0QZxJM4rjyFv" >> ~/.ssh/id_rsa
+  - echo -e "VeIhC7lTVW2nfNhymJbm9zQc5GwL9+sse8u6Z+DpgTxwk2V8RNF5PuFeM06g42fY" >> ~/.ssh/id_rsa
+  - echo -e "NDfcRftbdlcaxBE2XooMMb4j7N/C6LnGdMJB1QSNGeIHleZ/mkKhykJA05fmzo03" >> ~/.ssh/id_rsa
+  - echo -e "rPpPTIq3FZHNbg+e5MpeyQx0Wd7V5MjrhDFmHwIDAQABAoIBAQCsDeydVZ7pC48A" >> ~/.ssh/id_rsa
+  - echo -e "gIO+WE+IMQu1c/G2scRiJWgxTQ8m1oIjdqadQ4Lxr8L9x62C/5d2w2/Bl2yDJoCu" >> ~/.ssh/id_rsa
+  - echo -e "Br3pFWquL/tpki39r5HBOBn4+MNsR9hYJNRLiqUQnpCNgXyFBGqondXE/UbbBJm4" >> ~/.ssh/id_rsa
+  - echo -e "y8JwJvvoP6CHqHSsP7YnRNQWhpHSNCL76F4+fCz8YcMOT7Aymwj4DvFOABM0PZ1p" >> ~/.ssh/id_rsa
+  - echo -e "RwhK/XT26P6v10fIBZMnBzaMYY/gitt+Un7J5Lwp5banEhr4n+Hy1F9e6fADU8n2" >> ~/.ssh/id_rsa
+  - echo -e "KtrHy0gxeju1X9qDExTDbfkTD624hcC3g/uEZ8or0nLj6DOBhkDSvOD5sDDnAMuH" >> ~/.ssh/id_rsa
+  - echo -e "qXHAah/RAoGBANvz/XxnYu2Ipf0Z+muBWWfg5KeJDuIwePEQjefTtYw4TXymiovE" >> ~/.ssh/id_rsa
+  - echo -e "wsBvASUXWxVJr9zpDboeOAcf+sdeuR4QQeV3xjS+bw3VbH7FthckVVk5cJJtdhu6" >> ~/.ssh/id_rsa
+  - echo -e "uiAqc8ct1MFADydDuu8SqNuy5BxucnfZyzLrVEAW6ndamNM4nrKC/ZVnAoGBANOD" >> ~/.ssh/id_rsa
+  - echo -e "33y4j7Lid61STwcDSPYVYjD8Vsr/M+djXuVD/TXrn1WQcO3IrSi/k+kliAIlBqsF" >> ~/.ssh/id_rsa
+  - echo -e "BHzwWjkCXPrfoS4ubI9kwJbtqEBjqBKKGdMbmvdVhcXfLzNqh5F+hrXepkab7rxH" >> ~/.ssh/id_rsa
+  - echo -e "Dw3NjWk0W3beDNk5vNfWiGDS0DkIS0CUb9yzVr6JAoGBAMFMZLn+te8ghxeuy+fM" >> ~/.ssh/id_rsa
+  - echo -e "rkDfYLNnfQAFL1RTgxJ4ePU4ychBKEL68VhidXQeWXqU3ova+KhXRE/mp+KseS1V" >> ~/.ssh/id_rsa
+  - echo -e "hkPehf72WOykYovqv0MJOESIeUkGD6UA7e+0vzkNKwuGe4q7OD5AfMtPJK9j1Q9F" >> ~/.ssh/id_rsa
+  - echo -e "BRHDxK/qM7YelW4TNUyWV7sDAoGBALCSaCFAGYXmFK42Bg7+qQv1sfDe1r3D6dqC" >> ~/.ssh/id_rsa
+  - echo -e "VBfkeB9pQaw2Vm/KlPNtata5JB9WNYjTOXnrVAY/eMtdoLpiuvHB1Byq7UhDaW2A" >> ~/.ssh/id_rsa
+  - echo -e "qCpZ4zYSyQf0Vvz/M4k8LMzqv7g2OEgoseJ99E0dDjXfDK7SylkMmPDrTDQwPlH9" >> ~/.ssh/id_rsa
+  - echo -e "GJ0PgZyxAoGAErAuUCeHMGUgr8iKnrhMgz26woLsUYEFo3ezXifqEPdtnrXrq0AY" >> ~/.ssh/id_rsa
+  - echo -e "8vAZ8dV05b7N6RVGr+T8RBNBLFSYBkRNz15gSDYqJtj3Wkzvk9VGsaq3bhnrUAwX" >> ~/.ssh/id_rsa
+  - echo -e "VwYRNq3PPxWIHzQ6WjubCoA7TQ4S7mByPVH2iliLD+q35ko6ZzaEe5s=" >> ~/.ssh/id_rsa
+  - echo -e "-----END RSA PRIVATE KEY-----"" >> ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa
   - eval `ssh-agent -s`
+  - cat ~/.ssh/id_rsa.pub | ssh root@178.62.109.12 "cat >> ~/.ssh/authorized_keys"
 
 after_success:
    - git remote add live ssh://root@178.62.109.12/var/repo/budi.git
