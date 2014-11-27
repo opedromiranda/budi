@@ -154,6 +154,7 @@
       <module fileurl="file://$PROJECT_DIR$/AndroidClient/AndroidClient.iml" filepath="$PROJECT_DIR$/AndroidClient/AndroidClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/Server/Server.iml" filepath="$PROJECT_DIR$/Server/Server.iml" />
       <module fileurl="file://$PROJECT_DIR$/Webapp/Webapp.iml" filepath="$PROJECT_DIR$/Webapp/Webapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mobileApp/mobileApp.iml" filepath="$PROJECT_DIR$/mobileApp/mobileApp.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
@@ -194,4 +195,3 @@
     </states>
   </component>
 </project>
-

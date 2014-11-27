@@ -1,15 +1,60 @@
-<ion-view title="Profile">
+<ion-view title="My Profile">
+
 	<ion-nav-bar class="bar-positive" animation="no-animation">
         <ion-nav-buttons>
             <button title="Menu" menu-toggle="left" class="button button-icon icon ion-navicon"></button>
         </ion-nav-buttons>
-	</ion-nav-bar>     
+	</ion-nav-bar>
 
-	<ion-content>
-		<ion-list>
-	        <ion-item>
-	            <h1> My Profile </h1>
-	        </ion-item>
-	    </ion-list>
+	<ion-content >
+		<ion-item class="item item-thumbnail-left">
+				<img src="avatar2.jpg">
+			<!-- Falta ir buscar valores reais e foto do utilizador -->
+			<h2>     Nome do Budi</h2>
+			<p>  Cidade</p>
+			<button title="Configuration" class="button button-clear button-positive button-small icon ion-gear-a">
+				Configurar
+			</button>
+		</ion-item>
+
+		<ion-item>
+			<i class="icon ion-email"></i>
+			<p> &nbsp &nbsp &nbsp Utilizador@gmail.com</p>
+			<button title="ChangeEmail" class="button button-clear button-positive button-small icon ion-gear-a">
+				Alterar
+			</button>
+		</ion-item>
+
+		<ion-item>
+			<i class="icon ion-social-facebook"></i>
+			<p> &nbsp &nbsp &nbsp www.facebook.com/utilizador </p>
+			<button title="ChangeFacebook" class="button button-clear button-positive button-small icon ion-gear-a">
+				Alterar
+			</button>
+		</ion-item>
+
+		<ion-item>
+			<i class="icon ion-social-twitter"></i>
+			<p> &nbsp &nbsp &nbsp twitter.com/utilizador</p>
+			<button title="ChangeTwitter" class="button button-clear button-positive button-small icon ion-gear-a">
+				Alterar
+			</button>
+		</ion-item>
+
+		<ion-item>
+			<i class="icon ion-social-skype"></i>
+			<p> &nbsp &nbsp &nbsp Utilizador util</p>
+			<button title="ChangeSkype" class="button button-clear button-positive button-small icon ion-gear-a">
+				Alterar
+			</button>
+		</ion-item>
+
+
 	</ion-content>
+
+
+
+
+
+
 </ion-view>
