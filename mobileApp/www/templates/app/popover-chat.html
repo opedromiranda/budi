@@ -1,18 +1,10 @@
-<style>.popover { height:190px; width: 150px; }</style>
+<style>.popover { height:125px; width: 150px; }</style>
 
 <ion-popover-view>
-    <ion-content>
-        <div class="list">
-
-            <button class="button button-full button-positive" ng-click="popover.hide($event)">
-                <i class="icon ion-android-add-contact"></i>    Add Budi
-            </button>
-            <button class="button button-full button-positive" ng-click="endMeet(); popover.hide($event)">
-                <i class="icon ion-log-out"></i>    Leave
-            </button>
-            <button class="button button-full button-positive" ng-click="popover.hide($event)">
-                <i class="icon ion-close-circled"></i>    Report
-            </button>
-        </div>
-    </ion-content>
+    <button class="button button-full button-positive" ng-click="popover.hide($event)">
+        <i class="icon ion-android-add-contact"> Add Budi </i>    
+    </button>
+    <button class="button button-full button-positive" ng-click="endMeet()">
+        <i class="icon ion-log-out"> Leave Chat</i>    
+    </button>
 </ion-popover-view>

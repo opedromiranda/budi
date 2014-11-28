@@ -6,9 +6,9 @@
     _service = 'BudisService';
 
     $angular.module($app.appName)
-        .controller(_controller, ['$scope', _service, '$ionicScrollDelegate', '$ionicPopover', 'filterFilter', controller]);
+        .controller(_controller, ['$scope', _service, '$ionicScrollDelegate', '$ionicPopover', '$ionicPopup', 'filterFilter', controller]);
 
-    function controller($scope, $service, $ionicScrollDelegate, $ionicPopover, $filterFilter) 
+    function controller($scope, $service, $ionicScrollDelegate, $ionicPopover, $ionicPopup, $filterFilter) 
     {  
         var letters = [];
         
@@ -42,11 +42,47 @@
             if ($scope.searchResults().length === 0) $scope.onButtonClick('search_clear');
         };
         
+        $scope.onBudiReport = function(budi) 
+        {     
+
+            if ($scope.searchResults().length === 0) $scope.onButtonClick('search_clear');
+        };
+        
+        $scope.onBudiBlock = function(budi) 
+        {     
+
+            if ($scope.searchResults().length === 0) $scope.onButtonClick('search_clear');
+        };
+        
         $scope.onButtonClick = function(button)
         {
             if (button === 'delete')
             {
                 $scope.data.showDelete = !$scope.data.showDelete; 
+
+                $scope.data.showInput = false; 
+
+                $scope.closePopover();
+            }
+            
+            else if (button === 'report')
+            {
+                $scope.data.showReport = !$scope.data.showReport;
+                
+                $scope.data.showDelete = false; 
+
+                $scope.data.showInput = false; 
+
+                $scope.closePopover();
+            }
+            
+            else if (button === 'block')
+            {
+                $scope.data.showBlock = !$scope.data.showBlock;
+                
+                $scope.data.showReport = false;
+                
+                $scope.data.showDelete = false; 
 
                 $scope.data.showInput = false; 
 
@@ -76,28 +112,6 @@
                 
                 $scope.scrollTop();
 
-                $scope.closePopover();
-            }
-            
-            else if (button === 'top')
-            {
-                $scope.data.showInput = false;
-                
-                $scope.data.showDelete = false; 
-                
-                $scope.scrollTop();
-                
-                $scope.closePopover();
-            }
-            
-            else if (button === 'bottom')
-            {
-                $scope.data.showInput = false;
-                
-                $scope.data.showDelete = false; 
-                
-                $scope.scrollBottom();
-                
                 $scope.closePopover();
             }
 
@@ -221,6 +235,53 @@
                 else return true;
             });
         };
-    }
+        
+        $scope.showConfirmDeleteBudi = function(budi) 
+        {
+            var template = budi.first_name + ' ' + budi.last_name + ' Will Be Erased';
+            
+            var confirmPopup = $ionicPopup.confirm(
+            {
+               title: 'Delete Budi',
+               template: template
+            });
 
+            confirmPopup.then(function(res) 
+            {
+                if(res) $scope.onBudiDelete(budi);
+            });
+        };
+        
+        $scope.showConfirmReportBudi = function(budi) 
+        {
+            var template = budi.first_name + ' ' + budi.last_name + ' Will Be Flagged';
+            
+            var confirmPopup = $ionicPopup.confirm(
+            {
+               title: 'Report Budi',
+               template: template
+            });
+
+            confirmPopup.then(function(res) 
+            {
+                if(res) $scope.onBudiReport(budi);
+            });
+        };
+        
+        $scope.showConfirmBlockBudi = function(budi) 
+        {
+            var template = budi.first_name + ' ' + budi.last_name + ' Will Be Blocked';
+            
+            var confirmPopup = $ionicPopup.confirm(
+            {
+               title: 'Block Budi',
+               template: template
+            });
+
+            confirmPopup.then(function(res) 
+            {
+                if(res) $scope.onBudiBlock(budi);
+            });
+        };
+    }
 })(this.app, this.angular);

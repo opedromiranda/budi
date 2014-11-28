@@ -33,7 +33,7 @@
                 <h2>{{ budi.first_name + ' ' + budi.last_name }}</h2>
                 <p></p>
                 <h3>{{ budi.location }}</h3>
-                <ion-delete-button class="ion-minus-circled" ng-click="onBudiDelete(budi)"> </ion-delete-button>
+                <ion-delete-button class="ion-minus-circled" ng-click="showConfirmDeleteBudi(budi)"> </ion-delete-button>
             </ion-item>           
             <ion-item ng-if="budi.isLetter" class="item item-divider">
                 {{ budi.letter }}

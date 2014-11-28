@@ -136,7 +136,9 @@
         this.data = 
         {
             showDelete: false,
-            showInput: false
+            showInput: false,
+            showReport: false,
+            showBlock: false
         };
     }
 
