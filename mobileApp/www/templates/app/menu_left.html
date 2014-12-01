@@ -1,17 +1,16 @@
 <ion-view ng-controller="AppMenuCtrl">
-    <!--<header class="bar bar-header bar-stable">
-        <h1 class="title">Menu</h1>
-    </header>-->
     <ion-content class="menu-header" has-bouncing="false">
         <ion-list>
-            <ion-item class="item item-avatar menu-header">
+            <ion-item class="item item-thumbnail-left">
                 <img src="/img/avatar1.jpg">
-                <h2>Utilizador</h2>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h2> {{ user_info.first_name + ' ' + user_info.last_name }} </h2>
             </ion-item>
-
-            <ion-item class="item-icon-left" ng-repeat="item in items" nav-clear menu-close ng-href="{{item.url}}">
-                <i class="icon {{item.icon}}"></i>
-                {{item.name}}
+            <ion-item class="item-icon-left" ng-repeat="item in items" nav-clear menu-close ng-href="{{ item.url }}">
+                <i class="icon {{ item.icon }}"></i>
+                {{ item.name }}
             </ion-item>
         </ion-list>
     </ion-content>

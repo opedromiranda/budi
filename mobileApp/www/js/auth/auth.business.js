@@ -25,6 +25,11 @@
         this.fbLogin = function fbLogin(){
             $facebookLS.login();
         };
+        
+        this.fbLoginWithPermissions = function()
+        {
+            $facebookLS.loginWithPermissions();
+        };
 
         $rootScope.$on('loggedIn', function (event, user) {
             user.from = 'facebook';

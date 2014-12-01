@@ -13,7 +13,7 @@
             <i class="icon ion-ios7-search placeholder-icon"></i>
             <input type="search" placeholder=" Search Budi(s)..." ng-model="search" ng-change="scrollTop()">
         </label>
-        <button title="Clear Search" class="button button-clear" ng-click="onButtonClick('search_clear')">
+        <button title="Clear Search" class="button button-clear" ng-click="onButtonClick('cancel')">
             Cancel
         </button>      
     </ion-header-bar>
@@ -25,15 +25,21 @@
         <ion-item ng-show="isSearchResultsEmpty()">
 	        <h2> {{ isSearchResultsEmpty() }} </h2>
 	    </ion-item>
-        <ion-list show-delete="data.showDelete" ng-repeat="budi in searchResults()" >
+        <ion-list show-delete="data.showDelete || data.showReport || data.showBlock" ng-repeat="budi in searchResults()" >
           <!-- trocar URL para profile do budi seleccionado -->
-            <ion-item ng-if="!budi.isLetter" ng-href="#/app/budis/profile" class="item item-thumbnail-left">     
+            <ion-item ng-if="!budi.isLetter" ng-href="#/app/budis/profile" class="item item-thumbnail-left">    
                 <img ng-src="{{ budi.picture }}">
                 <p></p>
-                <h2>{{ budi.first_name + ' ' + budi.last_name }}</h2>
+                <h2>
+                    <i title="Blocked" ng-show="budi.blocked" class="icon ion-locked"></i> 
+                    {{ budi.first_name + ' ' + budi.last_name }} 
+                </h2>
                 <p></p>
-                <h3>{{ budi.location }}</h3>
-                <ion-delete-button class="ion-minus-circled" ng-click="showConfirmDeleteBudi(budi)"> </ion-delete-button>
+                <h3>{{ budi.location }}</h3>  
+                <ion-delete-button ng-hide="budi.blocked === true && data.showDelete === false && 
+                    (data.showReport === true || data.showBlock === true)" title="{{ buttonName() }}" 
+                    class="ion-minus-circled" ng-click="showConfirm(budi)"> 
+                </ion-delete-button>
             </ion-item>           
             <ion-item ng-if="budi.isLetter" class="item item-divider">
                 {{ budi.letter }}

@@ -115,6 +115,24 @@ FacebookLogin.service('FBLoginService', ['$rootScope', '$window', function ($roo
             });
         }
     };
+    
+    this.loginWithPermissions = function login() 
+    {
+        if(typeof facebookConnectPlugin !== 'undefined')
+            facebookConnectPlugin.login(['email'], this.handleResponse, function() {alert('failure')});
+        
+        else 
+        {
+            FB.login(function(response) 
+            {
+                FB.api('/me', service.handleResponse);
+            },
+            {
+                scope: 'user_about_me, user_birthday, user_interests, user_location, user_religion_politics',
+                return_scopes: true
+            });
+        }
+    };
 
     /**
      * Handles FB.getLoginStatus and authResponseChange event responses

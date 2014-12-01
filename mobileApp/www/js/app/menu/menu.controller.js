@@ -11,6 +11,7 @@
     function controller($scope, $window, $state, $menuService, $userService) 
     {
         $scope.items = [];
+        
         $scope.user_info = $userService.getUser();
 
         $menuService.list('left').then(
