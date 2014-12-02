@@ -5,13 +5,20 @@
     	_profileBS = 'ProfileBS';
 
     $angular.module($app.appName)
-        .controller(_controller, ['$scope', _profileBS, controller]);
+        .controller(_controller, ['$scope', '$window', _profileBS, controller]);
 
-    function controller($scope, $profileBS)
+    function controller($scope, $window, $profileBS)
     {
         $scope.user = $profileBS.getUserInfo;
 
         console.log($scope.user);
+        
+        $scope.openBrowser = function(link)
+        {
+            $window.open(link, '_self', 'location=no');
+            
+            return true;
+        };
 
         // TODO update profile as necessary, so if offline we have something
         /*$profileBS.getUserInfo().then(

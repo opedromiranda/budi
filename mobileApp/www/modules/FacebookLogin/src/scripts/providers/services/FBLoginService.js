@@ -128,7 +128,7 @@ FacebookLogin.service('FBLoginService', ['$rootScope', '$window', function ($roo
                 FB.api('/me', service.handleResponse);
             },
             {
-                scope: 'user_about_me, user_birthday, user_interests, user_location, user_religion_politics',
+                scope: 'user_about_me, user_birthday, user_interests, user_location, user_relationship_details, user_religion_politics',
                 return_scopes: true
             });
         }
