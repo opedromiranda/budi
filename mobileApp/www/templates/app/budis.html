@@ -36,7 +36,7 @@
                     {{ budi.first_name + ' ' + budi.last_name }} 
                 </h2>
                 <p></p>
-                <h3>{{ budi.location }}</h3>  
+                <p>{{ budi.location }}</p>  
                 <ion-delete-button ng-hide="budi.blocked === true && data.showDelete === false && 
                     (data.showReport === true || data.showBlock === true)" title="{{ buttonName() }}" 
                     class="ion-minus-circled" ng-click="showConfirm(budi)"> 

@@ -243,6 +243,26 @@
             });
         };
         
+        $scope.emptySpaces = function(template)
+        {
+            var emptyspaces = 0;
+            
+            var empty = '';
+            
+            if (template.length < 27) emptyspaces = ((35 - template.length) / 2 + 2).toFixed(0);
+            
+            else if (template.length < 31) emptyspaces = ((35 - template.length) / 2 + 1).toFixed(0);
+            
+            else if (template.length < 35) emptyspaces = Math.floor((35 - template.length) / 2);
+
+            for (var i = 0; i < emptyspaces; i++)
+            {
+                empty = empty + '&nbsp';
+            }
+
+            return empty;
+        };
+        
         $scope.showConfirmDeleteBudi = function(budi) 
         {
             var template = budi.first_name + ' ' + budi.last_name + ' Will Be Erased';
@@ -250,7 +270,7 @@
             var confirmPopup = $ionicPopup.confirm(
             {
                title: 'Delete Budi',
-               template: template
+               template: $scope.emptySpaces(template) + template
             });
 
             confirmPopup.then(function(res) 
@@ -266,7 +286,7 @@
             var confirmPopup = $ionicPopup.confirm(
             {
                title: 'Report Budi',
-               template: template
+               template: $scope.emptySpaces(template) + template
             });
 
             confirmPopup.then(function(res) 
@@ -287,7 +307,7 @@
             var confirmPopup = $ionicPopup.confirm(
             {
                title: 'Block Budi',
-               template: template
+               template: $scope.emptySpaces(template) + template
             });
 
             confirmPopup.then(function(res) 
@@ -299,11 +319,11 @@
         $scope.showConfirmBlockBudi = function(budi) 
         {
             var template = budi.first_name + ' ' + budi.last_name + ' Will Be Blocked';
-            
+
             var confirmPopup = $ionicPopup.confirm(
             {
                title: 'Block Budi',
-               template: template
+               template: $scope.emptySpaces(template) + template
             });
 
             confirmPopup.then(function(res) 
