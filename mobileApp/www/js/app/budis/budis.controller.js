@@ -10,11 +10,9 @@
 
     function controller($scope, $service, $ionicScrollDelegate, $ionicPopover, $ionicPopup, $filterFilter) 
     {  
-        var letters = [];
-        
-        var currentCharCode = 'A'.charCodeAt(0) - 1;
-        
-        var letterHasMatch = {};
+        var letters = [],
+            currentCharCode = 'A'.charCodeAt(0) - 1,
+            letterHasMatch = {};
         
         $scope.data = $service.data;
         
@@ -186,9 +184,8 @@
         })
         .forEach(function(person) 
         {
-            var personCharCode = person.first_name.toUpperCase().charCodeAt(0);
-
-            var difference = personCharCode - currentCharCode;
+            var personCharCode = person.first_name.toUpperCase().charCodeAt(0),
+                difference = personCharCode - currentCharCode;
 
             for (var i = 1; i <= difference; i++) 
             {
@@ -245,9 +242,8 @@
         
         $scope.emptySpaces = function(template)
         {
-            var emptyspaces = 0;
-            
-            var empty = '';
+            var emptyspaces = 0,
+                empty = '';
             
             if (template.length < 27) emptyspaces = ((35 - template.length) / 2 + 2).toFixed(0);
             
@@ -265,9 +261,8 @@
         
         $scope.showConfirmDeleteBudi = function(budi) 
         {
-            var template = budi.first_name + ' ' + budi.last_name + ' Will Be Erased';
-            
-            var confirmPopup = $ionicPopup.confirm(
+            var template = budi.first_name + ' ' + budi.last_name + ' Will Be Erased',
+                confirmPopup = $ionicPopup.confirm(
             {
                title: 'Delete Budi',
                template: $scope.emptySpaces(template) + template
@@ -281,9 +276,8 @@
         
         $scope.showConfirmReportBudi = function(budi) 
         {
-            var template = budi.first_name + ' ' + budi.last_name + ' Will Be Flagged';
-            
-            var confirmPopup = $ionicPopup.confirm(
+            var template = budi.first_name + ' ' + budi.last_name + ' Will Be Flagged',
+                confirmPopup = $ionicPopup.confirm(
             {
                title: 'Report Budi',
                template: $scope.emptySpaces(template) + template
@@ -302,9 +296,8 @@
         
         $scope.showConfirmAsWellBlockBudi = function(budi) 
         {
-            var template = 'Block ' + budi.first_name + ' ' + budi.last_name + ' As Well';
-            
-            var confirmPopup = $ionicPopup.confirm(
+            var template = 'Block ' + budi.first_name + ' ' + budi.last_name + ' As Well',
+                confirmPopup = $ionicPopup.confirm(
             {
                title: 'Block Budi',
                template: $scope.emptySpaces(template) + template
@@ -318,9 +311,8 @@
         
         $scope.showConfirmBlockBudi = function(budi) 
         {
-            var template = budi.first_name + ' ' + budi.last_name + ' Will Be Blocked';
-
-            var confirmPopup = $ionicPopup.confirm(
+            var template = budi.first_name + ' ' + budi.last_name + ' Will Be Blocked',
+                confirmPopup = $ionicPopup.confirm(
             {
                title: 'Block Budi',
                template: $scope.emptySpaces(template) + template

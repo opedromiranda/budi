@@ -16,60 +16,115 @@
 		</ion-item>
         
         <ion-item>
-			<i class="icon ion-social-facebook"> Gender </i>
+            <i ng-hide="user.gender.length" class="icon ion-person"> Gender </i>
+			<i ng-show="user.gender === 'female'" class="icon ion-female"> Gender </i>
+            <i ng-show="user.gender === 'male'" class="icon ion-male"> Gender </i>
             <p></p>
-			<p ng-show="user.gender.length" style="text-transform: capitalize"> &nbsp &nbsp &nbsp {{ user.gender }} </p>
-            <p ng-hide="user.gender.length"> &nbsp &nbsp &nbsp Unknown </p>
-		</ion-item>
-        
-        <ion-item>
-			<i class="icon ion-social-facebook"> Birthday </i>
-            <p></p>
-			<p ng-show="user.birthday.length"> &nbsp &nbsp &nbsp {{ user.birthday }} </p>
-            <p ng-hide="user.birthday.length"> &nbsp &nbsp &nbsp Unknown </p>
-		</ion-item>
-        
-        <ion-item>
-			<i class="icon ion-social-facebook"> Religion</i>
-            <p></p>
-			<p ng-show="user.religion.length"> &nbsp &nbsp &nbsp {{ user.religion.substr(0, user.religion.length - 3) }} </p>
-            <p ng-hide="user.religion.length"> &nbsp &nbsp &nbsp Unknown </p>
-		</ion-item>
-        
-        <ion-item>
-			<i class="icon ion-social-facebook"> Politics </i>
-            <p></p>
-			<p ng-show="user.political.length"> &nbsp &nbsp &nbsp {{ user.political.substr(0, user.political.length - 3) }} </p>
-            <p ng-hide="user.political.length"> &nbsp &nbsp &nbsp Unknown </p>
-		</ion-item>
-        
-        <ion-item>
-			<i class="icon ion-social-facebook"> Interested In </i>
-            <p></p>
-			<p ng-show="user.interested_in.length" style="text-transform: capitalize"> &nbsp &nbsp &nbsp {{ user.interested_in[0] }} </p>
-            <p ng-hide="user.interested_in.length"> &nbsp &nbsp &nbsp Unknown </p>
+			<p ng-show="user.gender.length" style="text-transform: capitalize"> &nbsp&nbsp&nbsp {{ user.gender }} </p>
+            <p ng-hide="user.gender.length"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
 
-		<ion-item href="" ng-click="openBrowser('{{ user.link }}')">
-			<i class="icon ion-social-facebook"></i>
+        <ion-item>
+			<i class="icon ion-calendar"> Age </i>
             <p></p>
-			<p > &nbsp &nbsp &nbsp {{ user.link }} </p>
+			<p ng-show="user.birthday.length"> &nbsp&nbsp&nbsp {{ age }} </p>
+            <p ng-hide="user.birthday.length"> &nbsp&nbsp&nbsp Unknown </p>
+		</ion-item>
+        
+        <ion-item>
+			<i class="icon ion-android-book"> About Me </i>
+            <p></p>
+			<p ng-show="user.bio"> &nbsp&nbsp&nbsp {{ user.bio }} </p>
+            <p ng-hide="user.bio"> &nbsp&nbsp&nbsp Unknown </p>
+		</ion-item>
+        
+        <ion-item>
+			<i class="icon ion-eye ion"> Interested In </i>
+            <p></p>
+			<p ng-show="user.interested_in.length == 1" style="text-transform: capitalize">
+                &nbsp&nbsp&nbsp {{ user.interested_in[0] }} </p>
+            <p ng-show="user.interested_in.length == 2" style="text-transform: capitalize"> 
+                &nbsp&nbsp&nbsp {{ user.interested_in[0] + ' | ' + user.interested_in[1] }} </p>
+            <p ng-hide="user.interested_in.length"> &nbsp&nbsp&nbsp Unknown </p>
+		</ion-item>
+        
+        <ion-item>
+			&nbsp<i class="icon ion-bookmark"> Religion</i>
+            <p></p>
+			<p ng-show="user.religion.length"> &nbsp&nbsp&nbsp {{ user.religion.substr(0, user.religion.length - 3) }} </p>
+            <p ng-hide="user.religion.length"> &nbsp&nbsp&nbsp Unknown </p>
+		</ion-item>
+        
+        <ion-item>
+			<i class="icon ion-speakerphone"> Politics </i>
+            <p></p>
+			<p ng-show="user.political.length"> &nbsp&nbsp&nbsp {{ user.political.substr(0, user.political.length - 3) }} </p>
+            <p ng-hide="user.political.length"> &nbsp&nbsp&nbsp Unknown </p>
+		</ion-item>
+ 
+		<ion-item href="" ng-click="openBrowser('{{ user.link }}')">
+			&nbsp<i class="icon ion-social-facebook"> Facebook </i>
+            <p></p>
+			<p > &nbsp&nbsp&nbsp {{ user.link }} </p>
 		</ion-item>
 
 		<ion-item>
-			<i class="icon ion-social-twitter"></i>
+			<i class="icon ion-social-twitter"> Twitter </i>
             <p></p>
-			<p> &nbsp &nbsp &nbsp twitter.com/utilizador</p>
-			<button title="ChangeTwitter" class="button button-clear button-positive button-small icon ion-gear-a">
+			<p ng-show="user.twitter"> &nbsp&nbsp&nbsp {{ user.twitter }} </p>
+            
+            <div ng-hide="user.twitter" class="button-wrapper">
+                <button title="Change" class="button button-clear button-positive button-small icon ion-gear-a"> Unknown </button>
+                
+            </div>
+		</ion-item>
+        
+        <ion-item href="" ng-click="openBrowser('{{ user.link }}')">
+			<i class="icon ion-social-linkedin"> LinkedIn </i>
+            <p></p>
+			<p ng-show="user.linkedin"> &nbsp&nbsp&nbsp {{ user.linkedin }} </p>
+            <p ng-hide="user.linkedin"> &nbsp&nbsp&nbsp Unknown </p>
+            <button title="Change" class="button button-clear button-positive button-small icon ion-gear-a">
+				Alterar
+			</button>
+		</ion-item>
+        
+        <ion-item href="" ng-click="openBrowser('{{ user.link }}')">
+			<i class="icon ion-social-instagram"> Instagram </i>
+            <p></p>
+			<p ng-show="user.instagram"> &nbsp&nbsp&nbsp {{ user.instagram }} </p>
+            <p ng-hide="user.instagram"> &nbsp&nbsp&nbsp Unknown </p>
+            <button title="Change" class="button button-clear button-positive button-small icon ion-gear-a">
+				Alterar
+			</button>
+		</ion-item>
+        
+        <ion-item href="" ng-click="openBrowser('{{ user.link }}')">
+			<i class="icon ion-social-reddit"> Reddit </i>
+            <p></p>
+			<p ng-show="user.reddit"> &nbsp&nbsp&nbsp {{ user.reddit }} </p>
+            <p ng-hide="user.reddit"> &nbsp&nbsp&nbsp Unknown </p>
+            <button title="Change" class="button button-clear button-positive button-small icon ion-gear-a">
+				Alterar
+			</button>
+		</ion-item>
+        
+        <ion-item href="" ng-click="openBrowser('{{ user.link }}')">
+			<i class="icon ion-social-googleplus"> Google+ </i>
+            <p></p>
+			<p ng-show="user.googleplus"> &nbsp&nbsp&nbsp {{ user.googleplus }} </p>
+            <p ng-hide="user.googleplus"> &nbsp&nbsp&nbsp Unknown </p>
+            <button title="Change" class="button button-clear button-positive button-small icon ion-gear-a">
 				Alterar
 			</button>
 		</ion-item>
 
 		<ion-item>
-			<i class="icon ion-social-skype"></i>
+			<i class="icon ion-social-skype"> Skype </i>
             <p></p>
-			<p> &nbsp &nbsp &nbsp Utilizador util</p>
-			<button title="ChangeSkype" class="button button-clear button-positive button-small icon ion-gear-a">
+			<p ng-show="user.skype"> &nbsp&nbsp&nbsp {{ user.skype }} </p>
+            <p ng-hide="user.skype"> &nbsp&nbsp&nbsp Unknown </p>
+			<button title="Change" class="button button-clear button-positive button-small icon ion-gear-a">
 				Alterar
 			</button>
 		</ion-item>

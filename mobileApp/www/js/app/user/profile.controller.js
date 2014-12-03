@@ -19,6 +19,27 @@
             
             return true;
         };
+        
+        $scope.calculateAge = function(birth)
+        {
+            var todayDate = new Date(),
+                todayYear = todayDate.getFullYear(),
+                todayMonth = todayDate.getMonth(),
+                todayDay = todayDate.getDate(),
+                birthDate = new Date(birth),
+                birthYear = birthDate.getFullYear(),
+                birthMonth = birthDate.getDate(),
+                birthDay = birthDate.getMonth(),
+                age = todayYear - birthYear;
+            
+            if (todayMonth < birthMonth - 1) age--;
+
+            else if (todayMonth === birthMonth - 1 && todayDay - 1 < birthDay) age--;
+
+            return age;
+        };
+        
+        $scope.age = $scope.calculateAge($scope.user.birthday);
 
         // TODO update profile as necessary, so if offline we have something
         /*$profileBS.getUserInfo().then(
