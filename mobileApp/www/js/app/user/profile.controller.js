@@ -28,13 +28,13 @@
                 todayDay = todayDate.getDate(),
                 birthDate = new Date(birth),
                 birthYear = birthDate.getFullYear(),
-                birthMonth = birthDate.getDate(),
-                birthDay = birthDate.getMonth(),
+                birthMonth = birthDate.getMonth(),
+                birthDay = birthDate.getDate(),
                 age = todayYear - birthYear;
             
-            if (todayMonth < birthMonth - 1) age--;
+            if (todayMonth < birthMonth) age--;
 
-            else if (todayMonth === birthMonth - 1 && todayDay - 1 < birthDay) age--;
+            else if (todayMonth === birthMonth && todayDay < birthDay) age--;
 
             return age;
         };
