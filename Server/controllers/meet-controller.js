@@ -5,6 +5,7 @@
 var mongoose = require('mongoose');
 var Meet = require('../models/meet');
 var Budi = require('../models/budi');
+var moment = require('moment');
 
 function MeetController () {
 
@@ -55,10 +56,11 @@ function MeetController () {
      */
     function handleError(res) {
         function err(e) {
-            res.json({
+            throw e;
+            /*res.json({
                 error: 1,
                 error_object : e
-            });
+            });*/
         }
         return err;
     }
@@ -81,7 +83,7 @@ function MeetController () {
      * @param meets
      * @returns {Meet|Promise}
      */
-    function findAvailableMeets(meets) {
+    /*function findAvailableMeets(meets) {
         var today = getTodayDate(),
             tomorrow = getTomorrowDate(),
             meet = meets.length > 0 ? meets[0] : null;
@@ -91,6 +93,12 @@ function MeetController () {
         } else {
             return meet;
         }
+    }
+    */
+
+    function findAvailableMeets(b) {
+        budi = b;
+        return budi.findMeet();
     }
 
     /**
@@ -106,11 +114,19 @@ function MeetController () {
         // no meet is available, create new one
         if(!meet) {
             meet = new Meet({
-                date : getTodayDate(),
-                budies : [budi._id]
+                date : moment(),
+                budies : [budi._id],
+                age : moment().diff(budi.born_date, 'years'),
+                genre : budi.genre,
+                reports : budi.reports.length,
+                restrictions : {
+                    age : budi.restrictions.age,
+                    genre : budi.restrictions.genre
+                }
             });
 
             meet.save(function (err, meet) {
+
                 if(err) {
                     result.error(err);
                 }
@@ -129,7 +145,7 @@ function MeetController () {
 
                 Meet.update({_id : meet._id}, {
                     $push: {budies : budi._id}
-                }, function(err, numAffected, rawResponse) {
+                }, function(err) {
                     if(err) {
                         result.error(err);
                     }
@@ -160,14 +176,23 @@ function MeetController () {
             return;
         }
 
+        // findAvailableMeets  -> meets    -> ver questão de delay, e só verificar se tem um budi no fim.
+
         Budi.findOne({_id : req.body.budi_id}).exec()
-            .then(findTodayBudiMeets)
             .then(findAvailableMeets)
             .then(handleMeet)
             .then(handleAnswer(res))
             .onReject(handleError(res));
+
+            /*
+            .then(findTodayBudiMeets)
+            .then(findAvailableMeets)
+            .then(handleMeet)
+            .then(handleAnswer(res))
+            .onReject(handleError(res));*/
     };
 
 }
+
 
 module.exports = new MeetController();
