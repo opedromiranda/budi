@@ -34,10 +34,10 @@ function BudiController () {
         var budi, bornDate;
 
         // validate mandatory Budi fields
-        if( !req.body.hasOwnProperty('email') ||
+        if( !req.body.hasOwnProperty('fb_id') ||
             !req.body.hasOwnProperty('name') ||
-            !req.body.hasOwnProperty('bornDate') || // yyyy-mm-dd
-            !req.body.hasOwnProperty('genre')) {
+            !req.body.hasOwnProperty('born_date') ||
+            !req.body.hasOwnProperty('gender')) {
                 res.json({
                     error: 1,
                     reason: 'Missing arguments'
@@ -45,8 +45,8 @@ function BudiController () {
                 return;
             }
 
-        if ( moment(req.body.bornDate).isValid() ) {
-            bornDate = moment(req.body.bornDate );
+        if ( moment(req.body.born_date).isValid() ) {
+            bornDate = moment(req.body.born_date );
         }
         else {
             throw new Error('Invalid date born');
@@ -54,9 +54,10 @@ function BudiController () {
 
         budi = new Budi({
             name : req.body.name,
-            email : req.body.email,
-            genre : req.body.genre,
+            fb_id : req.body.fb_id,
+            genre : req.body.gender,
             born_date : bornDate,
+            old_budis: [],
             restrictions : {
                 genre : null,
                 age : false

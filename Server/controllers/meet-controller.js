@@ -101,8 +101,31 @@ function MeetController () {
         return budi.findMeet();
     }
 
-    function updateBudi(meet){
+    function updateOldBudis(meet, callback){
+        var budi1 = meet.budies[0];
+        var budi2 = meet.budies[1];
 
+        Budi.findOne({_id : budi1}, function(err, doc){
+            if(err){
+                callback(err);
+            }
+            else {
+                Budi.update({_id : doc._id},{
+                    $push : {
+                        old_budis : {
+                            id : budi2,
+                            friend: false
+                            }
+                        }
+                }, function(err){
+                    if(err){
+                        callback(err);
+                    }
+                });
+            }
+        });
+
+        callback();
     }
 
     /**
@@ -149,7 +172,7 @@ function MeetController () {
 
                 Meet.update({_id : meet._id}, {
                     $push: {budies : budi._id}
-                }, function(err) {
+                }, updateOldBudis(meet, function(err) {
                     if(err) {
                         result.error(err);
                     }
@@ -157,7 +180,7 @@ function MeetController () {
                         error: 0,
                         meet: meet
                     });
-                });
+                }));
             }
             // budi is part of the meet
             else {
@@ -185,16 +208,8 @@ function MeetController () {
         Budi.findOne({_id : req.body.budi_id}).exec()
             .then(findAvailableMeets)
             .then(handleMeet)
-            .then(updateBudi)
             .then(handleAnswer(res))
             .onReject(handleError(res));
-
-            /*
-            .then(findTodayBudiMeets)
-            .then(findAvailableMeets)
-            .then(handleMeet)
-            .then(handleAnswer(res))
-            .onReject(handleError(res));*/
     };
 
 }

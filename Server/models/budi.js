@@ -7,10 +7,12 @@ var Meet = require('./meet');
 var moment = require('moment');
 
 var budiSchema = new mongoose.Schema({
-    email : String,
-    fbId : String,
+    fb_id : String,
     name : String,
-    old_budis: [],
+    old_budis: [{
+        id : String,
+        friend : Boolean
+    }],
     genre: String,
     born_date: String,
     reports: [],
@@ -83,8 +85,6 @@ budiSchema.methods.findMeet = function findMeet() {
                 }
             ]
         };
-
-    console.log(JSON.stringify(query, null, 15));
 
     return Meet.findOne(query).exec();
 };
