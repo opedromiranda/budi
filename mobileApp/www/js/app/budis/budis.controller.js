@@ -55,7 +55,7 @@
 
             $scope.budisList.splice($scope.budisList.indexOf(budi), 1);
 
-            if ($scope.searchResults().length === 0) $scope.onButtonClick('search_clear');
+            if ($scope.searchResults().length === 0) $scope.onButtonClick('cancel');
         };
         
         $scope.onBudiReport = function(budi) 
@@ -63,14 +63,14 @@
             //função reportar budi ->> servidor
             $scope.reportBudi = $service.reportBudi();
             
-            if ($scope.searchResults().length === 0) $scope.onButtonClick('search_clear');
+            if ($scope.searchResults().length === 0) $scope.onButtonClick('cancel');
         };
         
         $scope.onBudiBlock = function(budi) 
         {     
             budi.blocked = true;
             
-            if ($scope.searchResults().length === 0) $scope.onButtonClick('search_clear');
+            if ($scope.searchResults().length === 0) $scope.onButtonClick('cancel');
         };
         
         $scope.onButtonClick = function(button)
@@ -142,12 +142,7 @@
         
         $scope.clearSearch = function() 
         {
-            $scope.search = '';
-        };
-        
-        $scope.getSearch = function() 
-        {
-            return $scope.search;
+            $scope.data.search = '';
         };
         
         $ionicPopover.fromTemplateUrl('templates/popover_budis.html', 
@@ -218,12 +213,12 @@
         $scope.searchResults = function() 
         {
             letterHasMatch = {};
-
+            
             return $scope.budisList.filter(function(item) 
             {
-                var itemDoesMatch = !$scope.search || item.isLetter ||
-                    item.first_name.toLowerCase().indexOf($scope.search.toLowerCase()) > -1 ||
-                    item.last_name.toLowerCase().indexOf($scope.search.toLowerCase()) > -1;
+                var itemDoesMatch = !$scope.data.search || item.isLetter ||
+                    item.first_name.toLowerCase().indexOf($scope.data.search.toLowerCase()) > -1 ||
+                    item.last_name.toLowerCase().indexOf($scope.data.search.toLowerCase()) > -1;
 
                 if (!item.isLetter && itemDoesMatch) 
                 {

@@ -17,7 +17,8 @@
             showDelete: false,
             showInput: false,
             showReport: false,
-            showBlock: false
+            showBlock: false,
+            search: ''
         };
         
         // Mesmo que profile.controller.user //
