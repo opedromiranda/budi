@@ -45,8 +45,8 @@ function BudiController () {
                 return;
             }
 
-        if ( moment(req.body.bornDate, "YYYYMMDD").isValid() ) {
-            bornDate = moment(req.body.bornDate, "YYYY-MM-DD");
+        if ( moment(req.body.bornDate).isValid() ) {
+            bornDate = moment(req.body.bornDate );
         }
         else {
             throw new Error('Invalid date born');
@@ -133,6 +133,17 @@ function BudiController () {
                 console.log(err);
             });
     };
+
+    this.login = function (req, res) {
+        if(!req.body.hasOwnProperty('id')){
+            res.json({
+                error:1
+            });
+            return;
+        }
+
+
+    }
 }
 
 module.exports = new BudiController();

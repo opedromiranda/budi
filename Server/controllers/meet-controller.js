@@ -101,6 +101,10 @@ function MeetController () {
         return budi.findMeet();
     }
 
+    function updateBudi(meet){
+
+    }
+
     /**
      * Returns a promise that will try to be fulfilled with a meet object to be answered to client
      * If the meet object is null, it will create and save a new meet object with budi._id
@@ -181,6 +185,7 @@ function MeetController () {
         Budi.findOne({_id : req.body.budi_id}).exec()
             .then(findAvailableMeets)
             .then(handleMeet)
+            .then(updateBudi)
             .then(handleAnswer(res))
             .onReject(handleError(res));
 

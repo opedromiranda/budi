@@ -8,6 +8,7 @@ var moment = require('moment');
 
 var budiSchema = new mongoose.Schema({
     email : String,
+    fbId : String,
     name : String,
     old_budis: [],
     genre: String,
