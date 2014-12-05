@@ -5,17 +5,24 @@
     	_profileBS = 'ProfileBS';
 
     $angular.module($app.appName)
-        .controller(_controller, ['$scope', '$window', _profileBS, controller]);
+        .controller(_controller, ['$scope', '$window', '$ionicModal', _profileBS, controller]);
 
-    function controller($scope, $window, $profileBS)
+    function controller($scope, $window, $ionicModal, $profileBS)
     {
         $scope.user = $profileBS.getUserInfo;
 
-        console.log($scope.user);
+        $scope.edit = '';
+        
+        $scope.info = '';
+        
+        $scope.setEdit = function(edi)
+        {
+            $scope.edit = edi; 
+        };
         
         $scope.openBrowser = function(link)
         {
-            $window.open(link, '_self', 'location=no');
+            $window.open(link, '_self', 'location = no');
             
             return true;
         };
@@ -40,6 +47,23 @@
         };
         
         $scope.age = $scope.calculateAge($scope.user.birthday);
+        
+        $ionicModal.fromTemplateUrl('templates/app/change_profile_info.html', 
+        {
+            scope: $scope
+        }).then(function(modal) 
+        {
+            $scope.modal = modal;
+        });
+        
+        $scope.saveUserInfo = function(edit)
+        {
+          //  $scope.user.edit = $scope.info; console.log(edit); console.log($scope.user.edit);
+            
+            $scope.setEdit('');
+            
+            $scope.modal.hide();
+        };
 
         // TODO update profile as necessary, so if offline we have something
         /*$profileBS.getUserInfo().then(

@@ -1,0 +1,28 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title" style="text-transform: capitalize"> Edit {{ edit }} Info </h1>
+        <button class="button button-clear button-primary" ng-click="setEdit(''); modal.hide()">
+          Cancel
+        </button>
+    </ion-header-bar>
+    
+    <ion-content class="padding">
+        <ion-list>
+            <label class="item item-input">
+                <span class="input-label"> Test Info </span>
+                <input ng-model="info" type="text">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Test Info </span>
+                <input ng-model="info" type="text">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Text Info </span>
+                <input ng-model="info" type="text">
+            </label>
+            <button class="button button-full button-positive" ng-click="saveUserInfo({{ edit }})"> 
+                Save Info 
+            </button>
+        </ion-list>
+    </ion-content>
+</ion-modal-view>
