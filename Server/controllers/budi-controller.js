@@ -30,14 +30,64 @@ function BudiController () {
         return err;
     }
 
+    function insertBudi(req){
+        return function(b){
+            var result = new mongoose.Promise;
+            var budi, bornDate;
+
+            if (!b) {
+                if ( moment(req.body.born_date).isValid() ) {
+                    bornDate = moment(req.body.born_date );
+                }
+                else {
+                    throw new Error('Invalid date born');
+                }
+
+                budi = new Budi({
+                    name : req.body.name,
+                    fb_id : req.body.fb_id,
+                    genre : req.body.gender,
+                    born_date : bornDate,
+                    old_budis: [],
+                    restrictions : {
+                        genre : null,
+                        age : false
+                    }
+                });
+
+                budi.save(function (err) {
+                    if(err) {
+                        console.log(err);
+                        result.fulfill({
+                            error: 1,
+                            reason: 'An error occurred on registration'
+                        });
+                    } else {
+                        result.fulfill({
+                            error: 0,
+                            budi_id : budi._id
+                        });
+                    }
+                });
+            }
+            else {
+                result.fulfill({
+                    error : 0,
+                    budi_id : b._id
+                });
+            }
+            return result;
+        }
+    }
+
     this.insert = function (req, res) {
         var budi, bornDate;
 
         // validate mandatory Budi fields
-        if( !req.body.hasOwnProperty('email') ||
+        if( !req.body.hasOwnProperty('fb_id') ||
             !req.body.hasOwnProperty('name') ||
-            !req.body.hasOwnProperty('bornDate') || // yyyy-mm-dd
-            !req.body.hasOwnProperty('genre')) {
+            !req.body.hasOwnProperty('born_date') ||
+            !req.body.hasOwnProperty('gender')) {
                 res.json({
                     error: 1,
                     reason: 'Missing arguments'
@@ -45,8 +95,8 @@ function BudiController () {
                 return;
             }
 
-        if ( moment(req.body.bornDate, "YYYYMMDD").isValid() ) {
-            bornDate = moment(req.body.bornDate, "YYYY-MM-DD");
+        if ( moment(req.body.born_date).isValid() ) {
+            bornDate = moment(req.body.born_date );
         }
         else {
             throw new Error('Invalid date born');
@@ -54,9 +104,10 @@ function BudiController () {
 
         budi = new Budi({
             name : req.body.name,
-            email : req.body.email,
-            genre : req.body.genre,
+            fb_id : req.body.fb_id,
+            genre : req.body.gender,
             born_date : bornDate,
+            old_budis: [],
             restrictions : {
                 genre : null,
                 age : false
@@ -126,6 +177,7 @@ function BudiController () {
                 return;
             }
 
+
         Budi.findOne({_id : req.body.budi_id}).exec()
             .then(setRestrictions(req.body.restrictions))
             .then(handleAnswer(res))
@@ -133,6 +185,25 @@ function BudiController () {
                 console.log(err);
             });
     };
+
+    this.login = function (req, res) {
+        if(!req.body.hasOwnProperty('fb_id') ||
+           !req.body.hasOwnProperty('name') ||
+           !req.body.hasOwnProperty('born_date') ||
+           !req.body.hasOwnProperty('gender')){
+            res.json({
+                error:1
+            });
+            return;
+        }
+
+        Budi.findOne({fb_id : req.body.fb_id}).exec()
+            .then(insertBudi(req))
+            .then(handleAnswer(res))
+            .onReject(function (err) {
+                console.log(err);
+            });
+    }
 }
 
 module.exports = new BudiController();
