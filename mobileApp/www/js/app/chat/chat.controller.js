@@ -15,32 +15,32 @@
             picture: undefined
         };
 
-        $scope.messages = [
+        $scope.messages = $chatBS.meet_messages;//[
             /*{
-             owner: 'my',
-             side: 'right',
-             avatar: './img/avatar1.jpg',
-             message: 'hi!'
+                owner: 'my',
+                side: 'right',
+                avatar: './img/avatar1.jpg',
+                message: 'hi!'
              },
              {
-             owner: 'my',
-             side: 'right',
-             avatar: './img/avatar1.jpg',
-             message: 'how r u?'
+                owner: 'my',
+                side: 'right',
+                avatar: './img/avatar1.jpg',
+                message: 'how r u?'
              },
              {
-             owner: 'budi',
-             side: 'left',
-             avatar: './img/avatar2.jpg',
-             message: 'hey!'
+                owner: 'budi',
+                side: 'left',
+                avatar: './img/avatar2.jpg',
+                message: 'hey!'
              },
              {
-             owner: 'budi',
-             side: 'left',
-             avatar: './img/avatar2.jpg',
-             image: 'http://www.snappypixels.com/wp-content/uploads/2013/08/bunch-of-random-funny-pictures-6.jpg'
+                owner: 'budi',
+                side: 'left',
+                avatar: './img/avatar2.jpg',
+                image: 'http://www.snappypixels.com/wp-content/uploads/2013/08/bunch-of-random-funny-pictures-6.jpg'
              }*/
-        ];
+        //];
 
 
         function insertMsg(msg) {

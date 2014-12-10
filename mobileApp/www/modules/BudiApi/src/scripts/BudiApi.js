@@ -4,16 +4,17 @@ var BudiApi = angular.module('BudiApi', [])
         'use strict';
 
         var self = this;
+        var serverURL = $config.proxy.web.url;
         var endpoints = $config.budi.api.endpoints;
 
         this.loggedBudi = null;
 
         function budiExists(budi) {
-            return $http.get(endpoints.budiExists + budi.id);
+            return $http.get(serverURL+endpoints.budiExists, { budi_id: budi.id});
         }
 
         function registerBudi(budi) {
-            return $http.post(endpoints.insertBudi, {
+            return $http.post(serverURL+endpoints.insertBudi, {
                 name:budi.name,
                 email:budi.email,
                 fbId:budi.id
@@ -41,18 +42,29 @@ var BudiApi = angular.module('BudiApi', [])
                 meet_id: meet._id,
                 message: message
             });
-            return $http.post(endpoints.sendMessage, {
+            return $http.post(serverURL+endpoints.sendMessage, {
                 budi_id: budi._id,
                 meet_id: meet._id,
                 message: message
             });
         };
 
+        this.getMessages = function getMessages(meet){
+            console.log("Get messages of meet", meet);
+            return $http.get(serverURL+endpoints.getMeetMessages, {meet_id: meet._id});
+        };
+
         this.findMeet = function findMeet(budi) {
-            return $http.post(endpoints.findMeet, {
-                budiId: budi._id
-            }).then(function(response) {
+            return $http.post(
+                serverURL+endpoints.findMeet.url,
+                {
+                    budiId: budi._id
+                })
+            .then(function(response) {
                 return response.data.meet;
+            },
+            function error(e){
+                throw e;
             });
         };
 

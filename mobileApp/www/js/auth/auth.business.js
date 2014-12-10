@@ -34,9 +34,9 @@
         $rootScope.$on('loggedIn', function (event, user) {
             user.from = 'facebook';
 
-            //$budiapi.validateUser(user).then(function (budi) {
-            service.successLogin();
-            //});*/
+            $budiapi.validateUser(user).then(function (budi) {
+                service.successLogin();
+            });
         });
 
         this.successLogin = function successLogin(){
@@ -80,6 +80,10 @@
                 disableBack: true
             });
             $state.go('auth.login');
+        };
+
+        this.go = function go(){
+            $state.go('app.chat');
         };
 
     }

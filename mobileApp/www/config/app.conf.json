@@ -99,11 +99,27 @@
                     "findMeet": {
                         "url":"api/meets/find"
                     },
+                    "leaveMeet":{
+                        "url":"api/meets/leave"
+                    },
                     "sendMessage" :{
                         "url":"api/meets/message/text"
                     },
+                    "sendImage": {
+                        "url":"api/meets/message/image"
+                    },
+                    "getMeetMessages": {
+                        "url":"api/meet/get"
+                    },
                     "budiList" :{
-                        "url":""
+                        "url":"api/budies/list"
+                    },
+                    "budiDelete":
+                    {
+                        "url":"api/budies/delete"
+                    },
+                    "budiAdd":{
+                        "url":"api/budies/add"
                     }
                 }
             }
