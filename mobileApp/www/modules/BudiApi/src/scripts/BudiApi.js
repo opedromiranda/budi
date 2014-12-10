@@ -11,11 +11,11 @@ var BudiApi = angular.module('BudiApi', [])
 
         function budiExists(budi) {
             console.log(budi);
-            return $http.get(serverURL+endpoints.budiExists, { budi_id: budi._id});
+            return $http.get(serverURL+endpoints.budiExists.url, { budi_id: budi.id});
         }
 
         function registerBudi(budi) {
-            return $http.post(serverURL+endpoints.insertBudi, {
+            return $http.post(serverURL+endpoints.insertBudi.url, {
                 name:budi.name,
                 email:budi.email,
                 fbId:budi.id
@@ -43,7 +43,7 @@ var BudiApi = angular.module('BudiApi', [])
                 meet_id: meet._id,
                 message: message
             });
-            return $http.post(serverURL+endpoints.sendMessage, {
+            return $http.post(serverURL+endpoints.sendMessage.url, {
                 budi_id: budi._id,
                 meet_id: meet._id,
                 message: message
@@ -52,7 +52,7 @@ var BudiApi = angular.module('BudiApi', [])
 
         this.getMessages = function getMessages(meet){
             console.log("Get messages of meet", meet);
-            return $http.get(serverURL+endpoints.getMeetMessages, {meet_id: meet._id});
+            return $http.get(serverURL+endpoints.getMeetMessages.url, {meet_id: meet._id});
         };
 
         this.findMeet = function findMeet(budi) {
