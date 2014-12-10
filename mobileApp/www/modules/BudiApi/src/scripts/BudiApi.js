@@ -37,6 +37,16 @@ var BudiApi = angular.module('BudiApi', [])
 
         };
 
+        this.login = function login(user){
+            return $http.post(serverURL+endpoints.login.url, 
+            {
+                fb_id: user.id,
+                name: user.name,
+                born_date: user.birthday,
+                gender: user.gender
+            });
+        }
+
         this.sendMessage = function sendMessage(budi, meet, message) {
             console.log( {
                 budi_id: budi._id,

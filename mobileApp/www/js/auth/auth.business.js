@@ -34,7 +34,7 @@
         $rootScope.$on('loggedIn', function (event, user) {
             user.from = 'facebook';
 
-            $budiapi.validateUser(user).then(function (budi) {
+            $budiapi.login(user).then(function (budi) {
                 service.successLogin();
             });
         });

@@ -120,6 +120,9 @@
                     },
                     "budiAdd":{
                         "url":"api/budies/add"
+                    },
+                    "login": {
+                        "url":"api/budies/login"
                     }
                 }
             }
