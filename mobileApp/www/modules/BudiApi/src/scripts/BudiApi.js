@@ -10,7 +10,8 @@ var BudiApi = angular.module('BudiApi', [])
         this.loggedBudi = null;
 
         function budiExists(budi) {
-            return $http.get(serverURL+endpoints.budiExists, { budi_id: budi.id});
+            console.log(budi);
+            return $http.get(serverURL+endpoints.budiExists, { budi_id: budi._id});
         }
 
         function registerBudi(budi) {
