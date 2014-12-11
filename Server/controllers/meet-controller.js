@@ -169,6 +169,7 @@ function MeetController () {
                 }, updateOldBudis(meet, function(err) {
                     if(err) {
                         result.error(err);
+                        return;
                     }
                     result.fulfill({
                         error: 0,
