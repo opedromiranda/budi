@@ -9,7 +9,7 @@ var BudiApi = angular.module('BudiApi', [])
 
         this.loggedBudi = null;
 
-        function budiExists(budi) {
+        /*function budiExists(budi) {
             console.log(budi);
             return $http.get(serverURL+endpoints.budiExists.url, { budi_id: budi.id});
         }
@@ -35,7 +35,7 @@ var BudiApi = angular.module('BudiApi', [])
                     return budi;
                 });
 
-        };
+        };*/
 
         this.login = function login(user){
             return $http.post(serverURL+endpoints.login.url, 
@@ -69,7 +69,7 @@ var BudiApi = angular.module('BudiApi', [])
             return $http.post(
                 serverURL+endpoints.findMeet.url,
                 {
-                    budiId: budi.id
+                    budi_id: budi.id
                 })
             .then(function(response) {
                 return response.data.meet;

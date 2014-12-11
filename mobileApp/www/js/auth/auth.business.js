@@ -35,11 +35,11 @@
             user.from = 'facebook';
 
             $budiapi.login(user).then(function (budi) {
-                service.successLogin();
+                service.successLogin(budi.budi_id);
             });
         });
 
-        this.successLogin = function successLogin(){
+        this.successLogin = function successLogin(new_id){
             // Disable 'Back' button 
             $ionicViewService.nextViewOptions({
                 disableBack: true
@@ -48,6 +48,7 @@
             // Get User Info from Facebook
             var fb_user_info = $facebookLS.getUser();
 
+            fb_user_info.id = new_id;
             // Get Profile Picture
             var fb_user_picture;
             $authAdapter.getUserPicture()
