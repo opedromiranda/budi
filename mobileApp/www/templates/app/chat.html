@@ -59,3 +59,19 @@
 
 
 </div>
+
+<div ng-hide="meet.gotBudi && meet.active">
+    <div class="bar bar-header bar-positive">
+        <button title="More" menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+        <h1 class="title"> Waiting... </h1>
+    </div>
+    <ion-content class="has-header chat-background">
+    <p align="center">
+        <button class="button button-large button-outline button-light" style="margin-left:auto;margin-right:auto;margin-top:75%;margin-bottom:0%" disabled="">
+            Waiting for a budi   
+            <i class="fa fa-spinner fa-spin"></i>
+        </button>
+    </ion-content>
+
+
+</div>

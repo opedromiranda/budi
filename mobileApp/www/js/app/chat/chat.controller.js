@@ -137,7 +137,7 @@
                 function success(){
                     $scope.meetAnimation = false;
                     $scope.meet.active = true;
-                    $scope.meetInfo = chatBS.getMeetInfo();
+                    $scope.meetInfo = $chatBS.getMeetInfo();
                     if( !$scope.meetInfo.meet_budi ){
                         $scope.meet.gotBudi = false;
                     }
