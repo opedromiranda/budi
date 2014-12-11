@@ -48,8 +48,7 @@
             // Get User Info from Facebook
             var fb_user_info = $facebookLS.getUser();
 
-            console.log("ID", new_id);
-            fb_user_info.id = new_id;
+            fb_user_info._id = new_id;
             // Get Profile Picture
             var fb_user_picture;
             $authAdapter.getUserPicture()
