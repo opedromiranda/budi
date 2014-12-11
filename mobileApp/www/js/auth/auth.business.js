@@ -47,7 +47,6 @@
 
             // Get User Info from Facebook
             var fb_user_info = $facebookLS.getUser();
-
             fb_user_info._id = new_id;
             // Get Profile Picture
             var fb_user_picture;
@@ -72,25 +71,12 @@
                             skype: '' 
                         }));
                 }
-            );
-            
-            console.log("Successful Login!", $userService.getUser());
-            // Finally go to app
-            $state.go('app.chat');
-            return true;
-        };
-
-        this.checkSession = function checkSession(){
-            if($facebookLS.isLoggedIn()){
-                $budiapi.login($userService.getUser()).then(function (result) {
-                    service.successLogin(result.data.budi_id);
-                    return true;
-                },
-                function e(e){
-                    return false;
-                });
-            }
-            else return false;
+            ).finally(function(){
+                console.log("Successful Login!", $userService.getUser());
+                // Finally go to app
+                $state.go('app.chat');
+                return true;
+            });
         };
 
         this.logout = function logout() {

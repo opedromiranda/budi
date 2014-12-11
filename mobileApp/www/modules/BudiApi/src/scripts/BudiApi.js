@@ -43,7 +43,7 @@ var BudiApi = angular.module('BudiApi', [])
                 fb_id: user.id,
                 name: user.name,
                 born_date: user.birthday,
-                gender: user.gender
+                gender: user.gender.charAt(0)
             });
         }
 
