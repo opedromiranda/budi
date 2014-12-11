@@ -106,8 +106,8 @@ function MeetController () {
         var budi2 = meet.budies[1];
 
         Budi.findOne({_id : budi1}, function(err, doc){
-            if(err){
-                callback(err);
+            if(err || !doc){
+                callback(new Error());
             }
             else {
                 Budi.update({_id : doc._id},{
@@ -117,15 +117,9 @@ function MeetController () {
                             friend: false
                             }
                         }
-                }, function(err){
-                    if(err){
-                        callback(err);
-                    }
-                });
+                }, callback);
             }
         });
-
-        callback();
     }
 
     /**
