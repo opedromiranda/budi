@@ -56,11 +56,11 @@ function MeetController () {
      */
     function handleError(res) {
         function err(e) {
-            throw e;
-            /*res.json({
+            //throw e;
+            res.json({
                 error: 1,
                 error_object : e
-            });*/
+            });
         }
         return err;
     }
