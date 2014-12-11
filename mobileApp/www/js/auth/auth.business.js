@@ -34,8 +34,8 @@
         $rootScope.$on('loggedIn', function (event, user) {
             user.from = 'facebook';
 
-            $budiapi.login(user).then(function (budi) {
-                service.successLogin(budi.budi_id);
+            $budiapi.login(user).then(function (result) {
+                service.successLogin(result.data.budi_id);
             });
         });
 
@@ -48,6 +48,7 @@
             // Get User Info from Facebook
             var fb_user_info = $facebookLS.getUser();
 
+            console.log("ID", new_id);
             fb_user_info.id = new_id;
             // Get Profile Picture
             var fb_user_picture;
