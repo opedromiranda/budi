@@ -23,11 +23,11 @@
         
         // Mesmo que profile.controller.user //
         var user = $userS.getUser();
-
+        
         this.getBudisList = function () 
-        {
+        { 
  			// return $budiApi.budiList(user);
- 			
+            
  			var qual = 
  			[
                 {id:1, first_name: 'Patrick', last_name: 'Rogers', location: 'Cyprus', 

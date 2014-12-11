@@ -48,8 +48,7 @@
             // Get User Info from Facebook
             var fb_user_info = $facebookLS.getUser();
 
-            console.log("ID", new_id);
-            fb_user_info.id = new_id;
+            fb_user_info._id = new_id;
             // Get Profile Picture
             var fb_user_picture;
             $authAdapter.getUserPicture()
@@ -62,11 +61,20 @@
                 function(){
                     // Save User details
                     $userService.setUser(
-                        $angular.extend({}, fb_user_info, { picture: fb_user_picture })
-                    );
+                        $angular.extend({}, fb_user_info, 
+                        { 
+                            picture: fb_user_picture,
+                            twitter: '', 
+                            linkedin: '',
+                            instagram: '', 
+                            reddit: '', 
+                            googleplus: '', 
+                            skype: '' 
+                        }));
                 }
             );
-            console.log("Successful Login!", fb_user_info);
+            
+            console.log("Successful Login!", $userService.getUser());
             // Finally go to app
             $state.go('app.chat');
             return true;

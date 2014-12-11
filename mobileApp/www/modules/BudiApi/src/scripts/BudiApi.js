@@ -68,12 +68,12 @@ var BudiApi = angular.module('BudiApi', [])
         this.findMeet = function findMeet(budi) {
             console.log(serverURL+endpoints.findMeet.url,
                 {
-                    budi_id: budi.id
+                    budi_id: budi._id
                 });
             return $http.post(
                 serverURL+endpoints.findMeet.url,
                 {
-                    budi_id: budi.id
+                    budi_id: budi._id
                 })
             .then(function(response) {
                 return response.data.meet;
