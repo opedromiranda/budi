@@ -100,9 +100,12 @@
             {
                 $scope.data.showInput = true; 
                 
-                $scope.clearSearch();
-                
-                $scope.scrollTop();
+                if (!$scope.data.search.length)
+                {
+                    $scope.clearSearch();
+
+                    $scope.scrollTop();
+                }
 
                 $scope.closePopover();
             } 
@@ -223,6 +226,7 @@
                 if (!item.isLetter && itemDoesMatch) 
                 {
                     var letter = item.first_name.charAt(0).toUpperCase();
+                    
                     letterHasMatch[letter] = true;
                 }
 

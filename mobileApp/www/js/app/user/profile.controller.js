@@ -11,37 +11,43 @@
     function controller($scope, $window, $ionicModal, $profileBS)
     {
         $scope.user = $profileBS.getUserInfo;
-console.log($scope.user);
+//console.log($scope.user);
         $scope.edit = '';
         
-        $scope.info = '';
+        $scope.settings = false;
         
+        $scope.changeSettings = function()
+        {
+            $scope.settings = !$scope.settings;
+        };
+
         $scope.userMods = function()
         {
-            if($scope.user.gender === 'female') $scope.user.gender = 'Female';
-         
-            else if($scope.user.gender === 'male') $scope.user.gender = 'Male';
-            
-            if($scope.user.interested_in.length == 1) 
-            {
+            if ($scope.user.interested_in.length == 1) 
                 $scope.user.interested_in = $scope.user.interested_in[0]; 
-                
-                if($scope.user.interested_in === 'female') $scope.user.interested_in = 'Female';
-         
-                else if($scope.user.interested_in === 'male') $scope.user.interested_in = 'Male';
-            }
             
-            else if($scope.user.interested_in.length == 2) 
+            else if ($scope.user.interested_in.length == 2) 
                 $scope.user.interested_in = 'Female | Male';
             
-            if($scope.user.religion.length) 
+            if ($scope.user.religion.length) 
                 $scope.user.religion = $scope.user.religion.substr(0, $scope.user.religion.length - 3);
             
-            if($scope.user.political.length) 
+            if ($scope.user.political.length) 
                 $scope.user.political = $scope.user.political.substr(0, $scope.user.political.length - 3);
         };
         
         $scope.userMods();
+        
+        $ionicModal.fromTemplateUrl('templates/app/change_profile_info.html', 
+        {
+            scope: $scope,
+            focusFirstInput: true
+        }).then(function(modal) 
+        {
+            $scope.modal = modal;
+            
+            $scope.modal.info = '';
+        });
         
         $scope.setEdit = function(edi)
         {
@@ -50,9 +56,9 @@ console.log($scope.user);
             $scope.modal.show();
         };
         
-        $scope.setInfo = function(inf)
+        $scope.clearInfo = function()
         {
-            $scope.info = inf; 
+            $scope.modal.info = ''; 
             
             $scope.modal.hide();
         };
@@ -85,27 +91,49 @@ console.log($scope.user);
         
         $scope.age = $scope.calculateAge($scope.user.birthday);
         
-        $ionicModal.fromTemplateUrl('templates/app/change_profile_info.html', 
-        {
-            scope: $scope
-        }).then(function(modal) 
-        {
-            $scope.modal = modal;
-        });
-        
         $scope.saveUserInfo = function()
         {
-            if( $scope.info.length < 0)
+            if ($scope.modal.info.length)
             {
-                var edit2 = $scope.edit;
+                if ($scope.edit === 'picture')
+                    $scope.user.picture = $scope.modal.info;
+                
+                else if ($scope.edit === 'location')
+                    $scope.user.location.name = $scope.modal.info; 
+                
+                else if ($scope.edit === 'about me')
+                    $scope.user.bio = $scope.modal.info; 
+                
+                else if ($scope.edit === 'interested in')
+                    $scope.user.interested_in = $scope.modal.info; 
+                
+                else if ($scope.edit === 'religion')
+                    $scope.user.religion = $scope.modal.info; 
+                
+                else if ($scope.edit === 'politics')
+                    $scope.user.political = $scope.modal.info; 
+                
+                else if ($scope.edit === 'twitter')
+                    $scope.user.twitter = $scope.modal.info; 
+                
+                else if ($scope.edit === 'linkedIn')
+                    $scope.user.linkedin = $scope.modal.info; 
+                
+                else if ($scope.edit === 'instagram')
+                    $scope.user.instagram = $scope.modal.info; 
+                
+                else if ($scope.edit === 'reddit')
+                    $scope.user.reddit = $scope.modal.info; 
+                
+                else if ($scope.edit === 'googleplus')
+                    $scope.user.googleplus = $scope.modal.info; 
+                
+                else if ($scope.edit === 'skype')
+                    $scope.user.skype = $scope.modal.info;
+                
+                else;
 
-                console.log('Info: ' + $scope.info); console.log('Edit: ' + edit2); 
-
-                $scope.user.edit2 = $scope.info; console.log('hey: ' + $scope.user.edit2);
-
-                $scope.info = '';
-
-                $scope.modal.hide();
+                $scope.clearInfo();
             }
         };
         
@@ -119,5 +147,4 @@ console.log($scope.user);
         	}
         );*/
     }
-
 })(this.app, this.angular);
