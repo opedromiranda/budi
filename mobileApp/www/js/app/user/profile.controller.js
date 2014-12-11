@@ -6,21 +6,13 @@
     	_profileBS = 'ProfileBS';
 
     $angular.module($app.appName)
-        .controller(_controller, ['$scope', '$window', '$ionicModal', _profileBS, controller]);
+        .controller(_controller, ['$scope', '$window', '$ionicModal', '$ionicScrollDelegate', _profileBS, controller]);
 
-    function controller($scope, $window, $ionicModal, $profileBS)
+    function controller($scope, $window, $ionicModal, $ionicScrollDelegate, $profileBS)
     {
         $scope.user = $profileBS.getUserInfo;
-//console.log($scope.user);
-        $scope.edit = '';
+console.log($scope.user);
         
-        $scope.settings = false;
-        
-        $scope.changeSettings = function()
-        {
-            $scope.settings = !$scope.settings;
-        };
-
         $scope.userMods = function()
         {
             if ($scope.user.interested_in.length == 1) 
@@ -37,6 +29,61 @@
         };
         
         $scope.userMods();
+        
+        $scope.edit = '';
+        
+        $scope.settings = false;
+        
+        $scope.show = 
+        {
+            show: false,
+            facebook: true,
+            twitter: true,
+            linkedin: true,
+            instagram: true,
+            reddit: true,
+            googleplus: true,
+            skype: true
+        };
+        
+        $scope.changeShow = function(show)
+        {
+            if (show === 'show')
+            {
+                if ($scope.show.show) $scope.scrollTop();
+                
+                // else if (!$scope.show.show) $scope.scrollBottom();
+                
+                else;
+                    
+                $scope.show.show = !$scope.show.show;
+            }
+            
+            else if (show === 'facebook') $scope.show.facebook = !$scope.show.facebook;
+            
+            else if (show === 'twitter') $scope.show.twitter = !$scope.show.twitter;
+            
+            else if (show === 'linkedin') $scope.show.linkedin = !$scope.show.linkedin;
+            
+            else if (show === 'instagram') $scope.show.instagram = !$scope.show.instagram;
+            
+            else if (show === 'reddit') $scope.show.reddit = !$scope.show.reddit;
+            
+            else if (show === 'googleplus') $scope.show.googleplus = !$scope.show.googleplus;
+            
+            else if (show === 'skype') $scope.show.skype = !$scope.show.skype;
+            
+            else;
+        };
+        
+        $scope.changeSettings = function()
+        {
+            if ($scope.settings) $scope.scrollTop();
+
+            else;
+            
+            $scope.settings = !$scope.settings;
+        };
         
         $ionicModal.fromTemplateUrl('templates/app/change_profile_info.html', 
         {
@@ -68,6 +115,16 @@
             $window.open(link, '_self', 'location = no');
             
             return true;
+        };
+        
+        $scope.scrollBottom = function() 
+        {
+            $ionicScrollDelegate.scrollBottom(true);
+        };
+        
+        $scope.scrollTop = function() 
+        {
+            $ionicScrollDelegate.scrollTop(true);
         };
         
         $scope.calculateAge = function(birth)
