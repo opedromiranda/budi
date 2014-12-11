@@ -73,7 +73,16 @@
         };
 
         this.checkSession = function checkSession(){
-            return $facebookLS.isLoggedIn();
+            if($facebookLS.isLoggedIn()){
+                $budiapi.login($userService.getUser()).then(function (result) {
+                    service.successLogin(result.data.budi_id);
+                    return true;
+                },
+                function e(e){
+                    return false;
+                });
+            }
+            else return false;
         };
 
         this.logout = function logout() {
