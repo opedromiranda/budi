@@ -13,7 +13,7 @@
             <h2> {{ user.first_name + ' ' + user.last_name }} </h2>
             <p></p>
             <p ng-show="user.location.name.length"> {{ user.location.name }} 
-            <button ng-hide="user.location.name.length" title="Edit Location" ng-click="setEdit('location'); modal.show();"
+            <button ng-hide="user.location.name.length" title="Edit Location" ng-click="setEdit('location')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             </p>
@@ -22,19 +22,19 @@
         
         <ion-item>
             <i ng-hide="user.gender.length" class="icon ion-person"> Gender </i>
-			<i ng-show="user.gender === 'female'" class="icon ion-female"> Gender </i>
-            <i ng-show="user.gender === 'male'" class="icon ion-male"> Gender </i>
-            <button ng-hide="user.gender.length" title="Edit" ng-click="setEdit('gender'); modal.show();"
+			<i ng-show="user.gender === 'Female'" class="icon ion-female"> Gender </i>
+            <i ng-show="user.gender === 'Male'" class="icon ion-male"> Gender </i>
+            <button ng-hide="user.gender.length" title="Edit" ng-click="setEdit('gender')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             <p></p>
-			<p ng-show="user.gender.length" style="text-transform: capitalize"> &nbsp&nbsp&nbsp {{ user.gender }} </p>
+			<p ng-show="user.gender.length"> &nbsp&nbsp&nbsp {{ user.gender }} </p>
             <p ng-hide="user.gender.length"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
 
         <ion-item>
 			<i class="icon ion-calendar"> Age </i>
-            <button ng-hide="user.birthday.length" title="Edit" ng-click="setEdit('Age'); modal.show();"
+            <button ng-hide="user.birthday.length" title="Edit" ng-click="setEdit('birthday')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             <p></p>
@@ -44,7 +44,7 @@
         
         <ion-item>
 			<i class="icon ion-android-book"> About Me </i>
-            <button ng-hide="user.bio" title="Edit" ng-click="setEdit('About Me'); modal.show();"
+            <button ng-hide="user.bio" title="Edit" ng-click="setEdit('bio')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             <p></p>
@@ -54,34 +54,31 @@
         
         <ion-item>
 			<i class="icon ion-eye ion"> Interested In </i>
-            <button ng-hide="user.interested_in.length" title="Edit" ng-click="setEdit('interested In'); modal.show();"
+            <button ng-hide="user.interested_in.length" title="Edit" ng-click="setEdit('interested In')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             <p></p>
-			<p ng-show="user.interested_in.length == 1" style="text-transform: capitalize">
-                &nbsp&nbsp&nbsp {{ user.interested_in[0] }} </p>
-            <p ng-show="user.interested_in.length == 2" style="text-transform: capitalize"> 
-                &nbsp&nbsp&nbsp {{ user.interested_in[0] + ' | ' + user.interested_in[1] }} </p>
+			<p ng-show="user.interested_in.length"> &nbsp&nbsp&nbsp {{ user.interested_in }} </p>
             <p ng-hide="user.interested_in.length"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
         
         <ion-item>
 			&nbsp<i class="icon ion-bookmark"> Religion</i>
-            <button ng-hide="user.religion.length" title="Edit" ng-click="setEdit('religion'); modal.show();"
+            <button ng-hide="user.religion.length" title="Edit" ng-click="setEdit('religion')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             <p></p>
-			<p ng-show="user.religion.length"> &nbsp&nbsp&nbsp {{ user.religion.substr(0, user.religion.length - 3) }} </p>
+			<p ng-show="user.religion.length"> &nbsp&nbsp&nbsp {{ user.religion }} </p>
             <p ng-hide="user.religion.length"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
         
         <ion-item>
 			<i class="icon ion-speakerphone"> Politics </i>
-            <button ng-hide="user.political.length" title="Edit" ng-click="setEdit('politics'); modal.show();"
+            <button ng-hide="user.political.length" title="Edit" ng-click="setEdit('political')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             <p></p>
-			<p ng-show="user.political.length"> &nbsp&nbsp&nbsp {{ user.political.substr(0, user.political.length - 3) }} </p>
+			<p ng-show="user.political.length"> &nbsp&nbsp&nbsp {{ user.political }} </p>
             <p ng-hide="user.political.length"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
  
@@ -93,7 +90,7 @@
 
 		<ion-item href="" ng-click="openBrowser('{{ user.twitter }}')">
 			<i class="icon ion-social-twitter"> Twitter </i>
-            <button ng-hide="user.twitter" title="Edit" ng-click="setEdit('twitter'); modal.show();"
+            <button ng-hide="user.twitter" title="Edit" ng-click="setEdit('twitter')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             <p></p>
@@ -101,19 +98,19 @@
             <p ng-hide="user.twitter"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
         
-        <ion-item href="" ng-click="openBrowser('{{ user.linkedIn }}')">
+        <ion-item href="" ng-click="openBrowser('{{ user.linkedin }}')">
 			<i class="icon ion-social-linkedin"> LinkedIn </i>
-            <button ng-hide="user.linkedIn" title="Edit" ng-click="setEdit('linkedIn'); modal.show();"
+            <button ng-hide="user.linkedIn" title="Edit" ng-click="setEdit('linkedin')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             <p></p>
-			<p ng-show="user.linkedIn"> &nbsp&nbsp&nbsp {{ user.linkedIn }} </p>
-            <p ng-hide="user.linkedIn"> &nbsp&nbsp&nbsp Unknown </p>
+			<p ng-show="user.linkedin"> &nbsp&nbsp&nbsp {{ user.linkedin }} </p>
+            <p ng-hide="user.linkedin"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
         
-        <ion-item href="" ng-click="openBrowser('{{ user.link }}')">
+        <ion-item href="" ng-click="openBrowser('{{ user.instagram }}')">
 			<i class="icon ion-social-instagram"> Instagram </i>
-            <button ng-hide="user.instagram" title="Edit" ng-click="setEdit('instagram'); modal.show();"
+            <button ng-hide="user.instagram" title="Edit" ng-click="setEdit('instagram')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             <p></p>
@@ -121,9 +118,9 @@
             <p ng-hide="user.instagram"> &nbsp&nbsp&nbsp Unknown</p>
 		</ion-item>
         
-        <ion-item href="" ng-click="openBrowser('{{ user.link }}')">
+        <ion-item href="" ng-click="openBrowser('{{ user.reddit }}')">
 			<i class="icon ion-social-reddit"> Reddit </i>
-            <button ng-hide="user.reddit" title="Edit" ng-click="setEdit('reddit'); modal.show();"
+            <button ng-hide="user.reddit" title="Edit" ng-click="setEdit('reddit')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             <p></p>
@@ -131,9 +128,9 @@
             <p ng-hide="user.reddit"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
         
-        <ion-item href="" ng-click="openBrowser('{{ user.link }}')">
+        <ion-item href="" ng-click="openBrowser('{{ user.googleplus }}')">
 			<i class="icon ion-social-googleplus"> Google+ </i>
-            <button ng-hide="user.googleplus" title="Edit" ng-click="setEdit('google+'); modal.show();"
+            <button ng-hide="user.googleplus" title="Edit" ng-click="setEdit('google+')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             <p></p>
@@ -143,7 +140,7 @@
 
 		<ion-item>
 			<i class="icon ion-social-skype"> Skype </i>
-            <button ng-hide="user.skype" title="Edit" ng-click="setEdit('skype'); modal.show();"
+            <button ng-hide="user.skype" title="Edit" ng-click="setEdit('skype')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             <p></p>

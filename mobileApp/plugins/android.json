@@ -6,6 +6,10 @@
     "config_munge": {
         "files": {}
     },
-    "installed_plugins": {org.apache.cordova.inappbrowser},
+    "installed_plugins": {
+        "org.apache.cordova.inappbrowser": {
+            "PACKAGE_NAME": "org.apache.cordova.inappbrowser.InAppBrowser"
+        }
+    },
     "dependent_plugins": {}
 }
