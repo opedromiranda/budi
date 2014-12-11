@@ -11,7 +11,9 @@
     {
     	$scope.fbLogin = function fbLogin () 
         {
-  			$authBS.fbLoginWithPermissions();
+            if( $authBS.checkSession() )
+                $authBS.go();
+            else $authBS.fbLoginWithPermissions();
     	};
 
     }

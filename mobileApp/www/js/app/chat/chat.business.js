@@ -6,16 +6,19 @@
         _budiAPI = 'BudiApiService';
     
     $angular.module($app.appName)
-        .service(_business, ['$q', _userS, _budiAPI, business]);
+        .service(_business, ['$q', '$interval', _userS, _budiAPI, business]);
         
-    function business($q, $userS, $budiAPI) {
+    function business($q, $interval, $userS, $budiAPI) {
+        var self = this;
         var meet_info = {
-            id: undefined,
+            _id: undefined,
             meet_budi: undefined,
             active: false
         };
 
         var my_info = $userS.getUser();
+
+        this.meet_messages = [];
 
         this.getMyInfo = function getMyInfo(){
             return my_info;
@@ -56,8 +59,19 @@
             return $budAPI.sendMessage(my_info, meet_info, msg);
         };
 
+        // check for new messages each 15 seconds
+        var intervalPromise = undefined; 
+
         this.getMsgs = function getMsgs(){
-            return;
+            $budiAPI.getMessages(meet_info).then(
+                function onSuccess(messages){
+                    console.log("GOT MESSAGES", messages);
+                    self.meet_messages = self.meet_messages.concat(messages.data);
+                },
+                function onError(e){
+                    console.log(e);
+                }
+            );
         };
 
         this.getMeetInfo = function getMeetInfo(){
@@ -66,16 +80,27 @@
 
         this.findMeet = function findMeet(){
             var deferred = $q.defer();
-            deferred.resolve({});
+            
+            $budiAPI.findMeet(my_info).then(
+                function Success(_meet) {
+                    meet_info._id = _meet._id;
+                    meet_info.meet_budi = _meet.budi;
+                    console.log(_meet);
+                    intervalPromise = $interval(self.getMsgs(), 15000);
+                    deferred.resolve();
+                },
+                function Error(e){
+                    console.log(e);
+                    deferred.reject();
+                }
+            );
             return deferred.promise;
-            $budiAPI.findMeet().then(function(_meet) {
-                meet_info.id = _meet.id;
-                meet_info.meet_budi = _meet.budi;
+        };
 
-                console.log(_meet);
-                return true;
-            });
-        }
+        this.leaveMeet = function leaveMeet(){
+            $interval.cancel(intervalPromise);
+            //$budiAPI.leaveMeet(budi, meet);
+        };
     }
 
 })(this.app, this.angular);

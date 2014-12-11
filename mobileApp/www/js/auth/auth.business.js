@@ -34,12 +34,12 @@
         $rootScope.$on('loggedIn', function (event, user) {
             user.from = 'facebook';
 
-            //$budiapi.validateUser(user).then(function (budi) {
-            service.successLogin();
-            //});*/
+            $budiapi.login(user).then(function (result) {
+                service.successLogin(result.data.budi_id);
+            });
         });
 
-        this.successLogin = function successLogin(){
+        this.successLogin = function successLogin(new_id){
             // Disable 'Back' button 
             $ionicViewService.nextViewOptions({
                 disableBack: true
@@ -48,6 +48,8 @@
             // Get User Info from Facebook
             var fb_user_info = $facebookLS.getUser();
 
+            console.log("ID", new_id);
+            fb_user_info.id = new_id;
             // Get Profile Picture
             var fb_user_picture;
             $authAdapter.getUserPicture()
@@ -80,7 +82,16 @@
         };
 
         this.checkSession = function checkSession(){
-            return $facebookLS.isLoggedIn();
+            if($facebookLS.isLoggedIn()){
+                $budiapi.login($userService.getUser()).then(function (result) {
+                    service.successLogin(result.data.budi_id);
+                    return true;
+                },
+                function e(e){
+                    return false;
+                });
+            }
+            else return false;
         };
 
         this.logout = function logout() {
@@ -89,6 +100,10 @@
                 disableBack: true
             });
             $state.go('auth.login');
+        };
+
+        this.go = function go(){
+            $state.go('app.chat');
         };
 
     }
