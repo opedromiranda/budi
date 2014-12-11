@@ -11,7 +11,7 @@ var chatController = require('../controllers/chat-controller.js');
 router.post('/find', meetController.findMeet); //budi_id = id
 router.post('/message/text', chatController.sendMessage);
 router.post('/message/image', chatController.sendImage);
-router.get('/get/:meetId', chatController.get); //TODO /api/meet/get/12312312312
+router.get('/get/:meetId', chatController.get); //TODO /api/meets/get/12312312312
 
 
 module.exports = router;

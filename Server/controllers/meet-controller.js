@@ -101,24 +101,30 @@ function MeetController () {
         return budi.findMeet();
     }
 
-    function updateOldBudis(meet, callback){
+    function updateOldBudis(meet){
         var budi1 = meet.budies[0];
         var budi2 = meet.budies[1];
 
         Budi.findOne({_id : budi1}, function(err, doc){
-            if(err || !doc){
-                callback(new Error());
-            }
-            else {
-                Budi.update({_id : doc._id},{
-                    $push : {
-                        old_budis : {
-                            id : budi2,
-                            friend: false
-                            }
+            Budi.update({_id : doc._id},{
+                $push : {
+                    old_budis : {
+                        id : budi2,
+                        friend: false
                         }
-                }, callback);
-            }
+                    }
+            });
+        });
+
+        Budi.findOne({_id : budi2}, function(err, doc){
+            Budi.update({_id : doc._id},{
+                $push : {
+                    old_budis : {
+                        id : budi1,
+                        friend: false
+                    }
+                }
+            });
         });
     }
 
@@ -155,6 +161,8 @@ function MeetController () {
                     error: 0,
                     meet: meet
                 });
+
+
             });
         }
         // found a valid meet
@@ -164,9 +172,7 @@ function MeetController () {
 
                 meet.budies.push(budi._id);
 
-                Meet.update({_id : meet._id}, {
-                    $push: {budies : budi._id}
-                }, updateOldBudis(meet, function(err) {
+                var callback = function(err) {
                     if(err) {
                         result.error(err);
                         return;
@@ -175,7 +181,12 @@ function MeetController () {
                         error: 0,
                         meet: meet
                     });
-                }));
+                    updateOldBudis(meet);
+                };
+
+                Meet.update({_id : meet._id}, {
+                    $push: {budies : budi._id}
+                }, callback);
             }
             // budi is part of the meet
             else {
