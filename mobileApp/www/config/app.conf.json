@@ -109,7 +109,7 @@
                         "url":"api/meets/message/image"
                     },
                     "getMeetMessages": {
-                        "url":"api/meet/get"
+                        "url":"api/meets/get"
                     },
                     "budiList" :{
                         "url":"api/budies/list"

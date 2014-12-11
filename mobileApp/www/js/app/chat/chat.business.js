@@ -85,7 +85,7 @@
                 function Success(_meet) {
                     meet_info._id = _meet._id;
                     meet_info.meet_budi = _meet.budi;
-                    console.log(_meet);
+                    console.log("New Meet Found", _meet);
                     intervalPromise = $interval(self.getMsgs(), 15000);
                     deferred.resolve();
                 },

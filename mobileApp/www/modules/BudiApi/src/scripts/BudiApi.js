@@ -61,8 +61,8 @@ var BudiApi = angular.module('BudiApi', [])
         };
 
         this.getMessages = function getMessages(meet){
-            console.log("Get messages of meet", meet);
-            return $http.get(serverURL+endpoints.getMeetMessages.url, {meet_id: meet._id});
+            //console.log("Get messages of meet", meet);
+            return $http.get(serverURL+endpoints.getMeetMessages.url+'/'+meet._id);
         };
 
         this.findMeet = function findMeet(budi) {

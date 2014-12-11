@@ -42,6 +42,7 @@
              }*/
         //];
 
+        $scope.meetInfo = undefined;
 
         function insertMsg(msg) {
             var go_msg = {};
@@ -136,6 +137,10 @@
                 function success(){
                     $scope.meetAnimation = false;
                     $scope.meet.active = true;
+                    $scope.meetInfo = chatBS.getMeetInfo();
+                    if( !$scope.meetInfo.meet_budi ){
+                        $scope.meet.gotBudi = false;
+                    }
                 },
                 function error(e){
                     $scope.meetAnimation = false;
