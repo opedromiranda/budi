@@ -103,8 +103,7 @@
             <p ng-hide="user.political.length"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
  
-		<ion-item ng-show="show.show || show.facebook"
-                  href="" ng-click="openBrowser('{{ user.link }}')">
+		<ion-item ng-show="show.show || show.facebook" ng-click="openBrowser('{{ user.link }}')">
 			&nbsp<i class="icon ion-social-facebook"> Facebook </i>
             <button ng-show="show.show && show.facebook" title="Hide" ng-click="changeShow('facebook')"
                     class="button button-clear button-positive button-small icon ion-eye">
@@ -116,8 +115,7 @@
 			<p > &nbsp&nbsp&nbsp {{ user.link }} </p>
 		</ion-item>
 
-		<ion-item ng-show="show.show || show.twitter"
-                  href="" ng-click="openBrowser('{{ user.twitter }}')">
+		<ion-item ng-show="show.show || show.twitter" ng-click="openBrowser('{{ user.twitter }}')">
 			<i class="icon ion-social-twitter"> Twitter </i>
             <button ng-show="settings" title="Edit" ng-click="setEdit('twitter')"
                     class="button button-clear button-positive button-small icon ion-edit">
@@ -133,8 +131,7 @@
             <p ng-hide="user.twitter"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
         
-        <ion-item ng-show="show.show || show.linkedIn"
-                  href="" ng-click="openBrowser('{{ user.linkedin }}')">
+        <ion-item ng-show="show.show || show.linkedIn" ng-click="openBrowser('{{ user.linkedin }}')">
 			<i class="icon ion-social-linkedin"> LinkedIn </i>
             <button ng-show="settings" title="Edit" ng-click="setEdit('linkedIn')"
                     class="button button-clear button-positive button-small icon ion-edit">
@@ -150,8 +147,7 @@
             <p ng-hide="user.linkedin"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
         
-        <ion-item ng-show="show.show || show.instagram"
-                  href="" ng-click="openBrowser('{{ user.instagram }}')">
+        <ion-item ng-show="show.show || show.instagram" ng-click="openBrowser('{{ user.instagram }}')">
 			<i class="icon ion-social-instagram"> Instagram </i>
             <button ng-show="settings" title="Edit" ng-click="setEdit('instagram')"
                     class="button button-clear button-positive button-small icon ion-edit">
@@ -167,8 +163,7 @@
             <p ng-hide="user.instagram"> &nbsp&nbsp&nbsp Unknown</p>
 		</ion-item>
         
-        <ion-item ng-show="show.show || show.reddit"
-                  href="" ng-click="openBrowser('{{ user.reddit }}')">
+        <ion-item ng-show="show.show || show.reddit" ng-click="openBrowser('{{ user.reddit }}')">
 			<i class="icon ion-social-reddit"> Reddit </i>
             <button ng-show="settings" title="Edit" ng-click="setEdit('reddit')"
                     class="button button-clear button-positive button-small icon ion-edit">
@@ -184,8 +179,7 @@
             <p ng-hide="user.reddit"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
         
-        <ion-item ng-show="show.show || show.googleplus"
-                  href="" ng-click="openBrowser('{{ user.googleplus }}')">
+        <ion-item ng-show="show.show || show.googleplus" ng-click="openBrowser('{{ user.googleplus }}')">
 			<i class="icon ion-social-googleplus"> Google+ </i>
             <button ng-show="settings" title="Edit" ng-click="setEdit('google+')"
                     class="button button-clear button-positive button-small icon ion-edit">

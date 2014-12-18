@@ -3,7 +3,8 @@
     'use strict';
 
     var _controller = 'ProfileCtrl',
-    	_profileBS = 'ProfileBS';
+    	_profileBS = 'ProfileBS',
+        count = 0;
 
     $angular.module($app.appName)
         .controller(_controller, ['$scope', '$window', '$ionicModal', '$ionicScrollDelegate', _profileBS, controller]);
@@ -26,9 +27,11 @@ console.log($scope.user);
             
             if ($scope.user.political.length) 
                 $scope.user.political = $scope.user.political.substr(0, $scope.user.political.length - 3);
+            
+            count = count + 1;
         };
         
-        $scope.userMods();
+        if (count === 0) $scope.userMods();
         
         $scope.edit = '';
         
@@ -57,6 +60,8 @@ console.log($scope.user);
                 else;
                     
                 $scope.show.show = !$scope.show.show;
+                
+                $scope.settings = false;
             }
             
             else if (show === 'facebook') $scope.show.facebook = !$scope.show.facebook;
@@ -78,11 +83,11 @@ console.log($scope.user);
         
         $scope.changeSettings = function()
         {
-            if ($scope.settings) $scope.scrollTop();
-
-            else;
+            $scope.scrollTop();
             
             $scope.settings = !$scope.settings;
+            
+            $scope.show.show = false;
         };
         
         $ionicModal.fromTemplateUrl('templates/app/change_profile_info.html', 
@@ -112,7 +117,8 @@ console.log($scope.user);
         
         $scope.openBrowser = function(link)
         {
-            $window.open(link, '_self', 'location = no');
+            if (!$scope.settings && !$scope.show.show)
+                $window.open(link, '_self', 'location = no');
             
             return true;
         };
@@ -191,6 +197,7 @@ console.log($scope.user);
                 else;
 
                 $scope.clearInfo();
+                console.log($scope.user);
             }
         };
         
