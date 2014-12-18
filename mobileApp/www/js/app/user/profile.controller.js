@@ -185,7 +185,6 @@ console.log($scope.user);
                 else;
 
                 $scope.clearInfo();
-                console.log($scope.user);
             }
         };
         
