@@ -14,8 +14,7 @@
         </ion-nav-buttons>
 	</ion-nav-bar>
 
-	<ion-content >
-        
+	<ion-content >      
 		<ion-item class="item item-thumbnail-left">
 			<img ng-src="{{ user.picture }}">
 
@@ -103,27 +102,27 @@
             <p ng-hide="user.political.length"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
  
-		<ion-item ng-show="show.show || show.facebook" ng-click="openBrowser('{{ user.link }}')">
+		<ion-item ng-show="user.show.show || user.show.facebook" ng-click="openBrowser('{{ user.link }}')">
 			&nbsp<i class="icon ion-social-facebook"> Facebook </i>
-            <button ng-show="show.show && show.facebook" title="Hide" ng-click="changeShow('facebook')"
+            <button ng-show="user.show.show && user.show.facebook" title="Hide" ng-click="changeShow('facebook')"
                     class="button button-clear button-positive button-small icon ion-eye">
             </button>
-            <button ng-show="show.show && show.facebook === false" title="Unhide" ng-click="changeShow('facebook')"
+            <button ng-show="user.show.show && user.show.facebook === false" title="Unhide" ng-click="changeShow('facebook')"
                     class="button button-clear button-positive button-small icon ion-eye-disabled">
             </button>
             <p></p>
 			<p > &nbsp&nbsp&nbsp {{ user.link }} </p>
 		</ion-item>
 
-		<ion-item ng-show="show.show || show.twitter" ng-click="openBrowser('{{ user.twitter }}')">
+		<ion-item ng-show="user.show.show || user.show.twitter" ng-click="openBrowser('{{ user.twitter }}')">
 			<i class="icon ion-social-twitter"> Twitter </i>
             <button ng-show="settings" title="Edit" ng-click="setEdit('twitter')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
-            <button ng-show="show.show && show.twitter" title="Hide" ng-click="changeShow('twitter')"
+            <button ng-show="user.show.show && user.show.twitter" title="Hide" ng-click="changeShow('twitter')"
                     class="button button-clear button-positive button-small icon ion-eye">
             </button>
-            <button ng-show="show.show && show.twitter === false" title="Unhide" ng-click="changeShow('twitter')"
+            <button ng-show="user.show.show && user.show.twitter === false" title="Unhide" ng-click="changeShow('twitter')"
                     class="button button-clear button-positive button-small icon ion-eye-disabled">
             </button>
             <p></p>
@@ -131,15 +130,15 @@
             <p ng-hide="user.twitter"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
         
-        <ion-item ng-show="show.show || show.linkedIn" ng-click="openBrowser('{{ user.linkedin }}')">
+        <ion-item ng-show="user.show.show || user.show.linkedIn" ng-click="openBrowser('{{ user.linkedin }}')">
 			<i class="icon ion-social-linkedin"> LinkedIn </i>
             <button ng-show="settings" title="Edit" ng-click="setEdit('linkedIn')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
-            <button ng-show="show.show && show.linkedin" title="Hide" ng-click="changeShow('linkedin')"
+            <button ng-show="user.show.show && user.show.linkedin" title="Hide" ng-click="changeShow('linkedin')"
                     class="button button-clear button-positive button-small icon ion-eye">
             </button>
-            <button ng-show="show.show && show.linkedin === false" title="Unhide" ng-click="changeShow('linkedin')"
+            <button ng-show="user.show.show && user.show.linkedin === false" title="Unhide" ng-click="changeShow('linkedin')"
                     class="button button-clear button-positive button-small icon ion-eye-disabled">
             </button>
             <p></p>
@@ -147,15 +146,15 @@
             <p ng-hide="user.linkedin"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
         
-        <ion-item ng-show="show.show || show.instagram" ng-click="openBrowser('{{ user.instagram }}')">
+        <ion-item ng-show="user.show.show || user.show.instagram" ng-click="openBrowser('{{ user.instagram }}')">
 			<i class="icon ion-social-instagram"> Instagram </i>
             <button ng-show="settings" title="Edit" ng-click="setEdit('instagram')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
-            <button ng-show="show.show && show.instagram" title="Hide" ng-click="changeShow('instagram')"
+            <button ng-show="user.show.show && user.show.instagram" title="Hide" ng-click="changeShow('instagram')"
                     class="button button-clear button-positive button-small icon ion-eye">
             </button>
-            <button ng-show="show.show && show.instagram === false" title="Unhide" ng-click="changeShow('instagram')"
+            <button ng-show="user.show.show && user.show.instagram === false" title="Unhide" ng-click="changeShow('instagram')"
                     class="button button-clear button-positive button-small icon ion-eye-disabled">
             </button>
             <p></p>
@@ -163,15 +162,15 @@
             <p ng-hide="user.instagram"> &nbsp&nbsp&nbsp Unknown</p>
 		</ion-item>
         
-        <ion-item ng-show="show.show || show.reddit" ng-click="openBrowser('{{ user.reddit }}')">
+        <ion-item ng-show="user.show.show || user.show.reddit" ng-click="openBrowser('{{ user.reddit }}')">
 			<i class="icon ion-social-reddit"> Reddit </i>
             <button ng-show="settings" title="Edit" ng-click="setEdit('reddit')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
-            <button ng-show="show.show && show.reddit" title="Hide" ng-click="changeShow('reddit')"
+            <button ng-show="user.show.show && user.show.reddit" title="Hide" ng-click="changeShow('reddit')"
                     class="button button-clear button-positive button-small icon ion-eye">
             </button>
-            <button ng-show="show.show && show.reddit === false" title="Unhide" ng-click="changeShow('reddit')"
+            <button ng-show="user.show.show && user.show.reddit === false" title="Unhide" ng-click="changeShow('reddit')"
                     class="button button-clear button-positive button-small icon ion-eye-disabled">
             </button>
             <p></p>
@@ -179,15 +178,15 @@
             <p ng-hide="user.reddit"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
         
-        <ion-item ng-show="show.show || show.googleplus" ng-click="openBrowser('{{ user.googleplus }}')">
+        <ion-item ng-show="user.show.show || user.show.googleplus" ng-click="openBrowser('{{ user.googleplus }}')">
 			<i class="icon ion-social-googleplus"> Google+ </i>
             <button ng-show="settings" title="Edit" ng-click="setEdit('google+')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
-            <button ng-show="show.show && show.googleplus" title="Hide" ng-click="changeShow('googleplus')"
+            <button ng-show="user.show.show && user.show.googleplus" title="Hide" ng-click="changeShow('googleplus')"
                     class="button button-clear button-positive button-small icon ion-eye">
             </button>
-            <button ng-show="show.show && show.googleplus === false" title="Unhide" ng-click="changeShow('googleplus')"
+            <button ng-show="user.show.show && user.show.googleplus === false" title="Unhide" ng-click="changeShow('googleplus')"
                     class="button button-clear button-positive button-small icon ion-eye-disabled">
             </button>
             <p></p>
@@ -195,21 +194,20 @@
             <p ng-hide="user.googleplus"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
 
-		<ion-item ng-show="show.show || show.skype">
+		<ion-item ng-show="user.show.show || user.show.skype">
 			<i class="icon ion-social-skype"> Skype </i>
             <button ng-show="settings" title="Edit" ng-click="setEdit('skype')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
-            <button ng-show="show.show && show.skype" title="Hide" ng-click="changeShow('skype')"
+            <button ng-show="user.show.show && user.show.skype" title="Hide" ng-click="changeShow('skype')"
                     class="button button-clear button-positive button-small icon ion-eye">
             </button>
-            <button ng-show="show.show && show.skype === false" title="Unhide" ng-click="changeShow('skype')"
+            <button ng-show="user.show.show && user.show.skype === false" title="Unhide" ng-click="changeShow('skype')"
                     class="button button-clear button-positive button-small icon ion-eye-disabled">
             </button>
             <p></p>
 			<p ng-show="user.skype"> &nbsp&nbsp&nbsp {{ user.skype }} </p>
             <p ng-hide="user.skype"> &nbsp&nbsp&nbsp Unknown </p>
 		</ion-item>
-
 	</ion-content>
 </ion-view>

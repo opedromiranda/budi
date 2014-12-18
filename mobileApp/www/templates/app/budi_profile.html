@@ -1,37 +1,107 @@
-<ion-view title="Budi Profile">
+<ion-view title="{{ user.first_name + ' ' + user.last_name }} Profile">
 	<ion-nav-bar class="bar-positive" animation="no-animation">
 		&nbsp <ion-nav-back-button title="Back" class="button-icon ion-ios7-arrow-back"> Back </ion-nav-back-button>
 	</ion-nav-bar>     
 
-	<ion-content>
-		<ion-list>
-	        <ion-item class="item item-thumbnail-left">
-			<img src="/img/avatar2.jpg">
-			<!-- Falta ir buscar valores reais e foto do utilizador -->
-			<h2>     Nome do Budi</h2>
-			<p>  Cidade</p>
-
+	<ion-content ng-show="user.location.name.length">      
+		<ion-item class="item item-thumbnail-left">
+			<img ng-src="{{ user.picture }}">
+            <p></p>
+            <h2> {{ user.first_name + ' ' + user.last_name }} </h2>
+            <p></p>
+            <p ng-show="user.location.name.length" style="text-transform: capitalize"> 
+                {{ user.location.name }}
+            </p>
+		</ion-item>
+        
+        <ion-item>
+            <i ng-hide="user.gender.length" class="icon ion-transgender"> Gender </i>
+			<i ng-show="user.gender === 'female'" class="icon ion-female"> Gender </i>
+            <i ng-show="user.gender === 'male'" class="icon ion-male"> Gender </i>
+            <p></p>
+			<p style="text-transform: capitalize"> 
+                &nbsp&nbsp&nbsp {{ user.gender }} 
+            </p>
 		</ion-item>
 
-		<ion-item>
-			<i class="icon ion-email"></i>
-			&nbsp &nbsp &nbsp Utilizador@gmail.com
+        <ion-item ng-show="user.birthday.length">
+			<i class="icon ion-calendar"> Age </i>
+            <p></p>
+			<p> &nbsp&nbsp&nbsp {{ age }} </p>
+		</ion-item>
+        
+        <ion-item ng-show="user.bio">
+			<i class="icon ion-android-book"> About Me </i>
+            <p></p>
+			<p style="text-transform: capitalize"> 
+                &nbsp&nbsp&nbsp {{ user.bio }} 
+            </p>
+		</ion-item>
+        
+        <ion-item ng-show="user.interested_in.length">
+			<i class="icon ion-eye ion"> Interested In </i>
+            <p></p>
+			<p style="text-transform: capitalize"> 
+                &nbsp&nbsp&nbsp {{ user.interested_in }} 
+            </p>
+		</ion-item>
+        
+        <ion-item ng-show="user.religion.length">
+			&nbsp<i class="icon ion-bookmark"> Religion</i>
+            <p></p>
+			<p style="text-transform: capitalize"> 
+                &nbsp&nbsp&nbsp {{ user.religion }} 
+            </p>
+		</ion-item>
+        
+        <ion-item ng-show="user.political.length">
+			<i class="icon ion-speakerphone"> Politics </i>
+            <p></p>
+			<p style="text-transform: capitalize"> 
+                &nbsp&nbsp&nbsp {{ user.political }} 
+            </p>
+		</ion-item>
+ 
+		<ion-item ng-show="user.show.facebook" ng-click="openBrowser('{{ user.link }}')">
+			&nbsp<i class="icon ion-social-facebook"> Facebook </i>
+            <p></p>
+			<p > &nbsp&nbsp&nbsp {{ user.link }} </p>
 		</ion-item>
 
-		<ion-item>
-			<i class="icon ion-social-facebook"></i>
-			<p> www.facebook.com/utilizador </p>
+		<ion-item ng-show="user.twitter && user.show.twitter" ng-click="openBrowser('{{ user.twitter }}')">
+			<i class="icon ion-social-twitter"> Twitter </i>
+            <p></p>
+			<p> &nbsp&nbsp&nbsp {{ user.twitter }} </p>
+		</ion-item>
+        
+        <ion-item ng-show="user.linkedin && user.show.linkedIn" ng-click="openBrowser('{{ user.linkedin }}')">
+			<i class="icon ion-social-linkedin"> LinkedIn </i>
+            <p></p>
+			<p> &nbsp&nbsp&nbsp {{ user.linkedin }} </p>
+		</ion-item>
+        
+        <ion-item ng-show="user.instagram && user.show.instagram" ng-click="openBrowser('{{ user.instagram }}')">
+			<i class="icon ion-social-instagram"> Instagram </i>
+            <p></p>
+			<p> &nbsp&nbsp&nbsp {{ user.instagram }} </p>
+		</ion-item>
+        
+        <ion-item ng-show="user.reddit && user.show.reddit" ng-click="openBrowser('{{ user.reddit }}')">
+			<i class="icon ion-social-reddit"> Reddit </i>
+            <p></p>
+			<p> &nbsp&nbsp&nbsp {{ user.reddit }} </p>
+		</ion-item>
+        
+        <ion-item ng-show="user.googleplus && user.show.googleplus" ng-click="openBrowser('{{ user.googleplus }}')">
+			<i class="icon ion-social-googleplus"> Google+ </i>
+            <p></p>
+			<p> &nbsp&nbsp&nbsp {{ user.googleplus }} </p>
 		</ion-item>
 
-		<ion-item>
-			<i class="icon ion-social-twitter"></i>
-			<p> &nbsp &nbsp &nbsp twitter.com/utilizador</p>
+		<ion-item ng-show="user.skype && user.show.skype">
+			<i class="icon ion-social-skype"> Skype </i>
+            <p></p>
+			<p> &nbsp&nbsp&nbsp {{ user.skype }} </p>
 		</ion-item>
-
-		<ion-item>
-			<i class="icon ion-social-skype"></i>
-			<p> &nbsp &nbsp &nbsp Utilizador util</p>
-		</ion-item>
-	    </ion-list>
 	</ion-content>
 </ion-view>

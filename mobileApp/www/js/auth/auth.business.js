@@ -68,7 +68,18 @@
                             instagram: '', 
                             reddit: '', 
                             googleplus: '', 
-                            skype: '' 
+                            skype: '',
+                            show: 
+                            {
+                                show: false,
+                                facebook: true,
+                                twitter: true,
+                                linkedin: true,
+                                instagram: true,
+                                reddit: true,
+                                googleplus: true,
+                                skype: true
+                            }
                         }));
                 }
             ).finally(function(){
