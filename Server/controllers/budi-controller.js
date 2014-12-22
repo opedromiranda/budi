@@ -4,6 +4,7 @@
 
 var mongoose = require('mongoose');
 var Budi = require('../models/budi.js');
+var Meet = require('../models/meet.js');
 var moment = require('moment');
 
 function BudiController () {
@@ -168,6 +169,38 @@ function BudiController () {
         }
     }
 
+    function addBudi(b){
+        return function(m){
+            var result = new mongoose.Promise;
+
+            Meet.findById(m._id,function(err, doc) {
+                if (err) {
+                    result.error(err);
+                    return;
+                }
+                else {
+                    doc.budies.forEach(function(budi){
+                        if(budi.id == b){
+                            budi.friendReq = true;
+                        }
+                    });
+                    doc.save(function (err, meet) {
+                        if (err) {
+                            result.error(meet);
+                            return;
+                        }
+                        result.fulfill({
+                            error: 0,
+                            meet: meet
+                        });
+                    });
+                }
+            });
+
+        return result;
+        }
+    }
+
     this.restrictions = function (req, res) {
         if( !req.body.hasOwnProperty('budi_id') ||
             !req.body.hasOwnProperty('restrictions') ) {
@@ -203,7 +236,28 @@ function BudiController () {
             .onReject(function (err) {
                 console.log(err);
             });
-    }
+    };
+
+    this.addBudi = function (req, res){
+        var budiId = req.body.budi_id,
+            meetId = req.body.meet_id;
+
+        if (!meetId || !budiId) {
+            res.json({
+                error: 1
+            });
+            return
+        }
+
+        Meet.findOne({_id: meetId}).exec()
+            .then(addBudi(budiId))
+            .then(checkBudiFriends())
+            .then(handleAnswer(res))
+            .onReject(function (err){
+                console.log(err);
+            })
+
+    };
 }
 
 module.exports = new BudiController();

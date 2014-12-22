@@ -93,7 +93,6 @@ function ChatController () {
             .then(handleMeetMessage(budiId, message))
             .then(handleAnswer(res))
             .onReject(handleError(res));
-
     };
 
     function updateDB(messageObject){

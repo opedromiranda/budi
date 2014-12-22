@@ -4,7 +4,7 @@
 
 var mongoose = require('mongoose'),
     meetSchema = new mongoose.Schema({
-        budies : [{ type: mongoose.Schema.Types.ObjectId}],
+        budies : [{ id : mongoose.Schema.Types.ObjectId, friendReq: Boolean }],
         chat : 'array',
         age : Number,
         genre: String,
@@ -38,7 +38,7 @@ meetSchema.statics.findAvailableMeets = function findAvailableMeets(startDate, e
 
 meetSchema.methods.findBudis = function findBudis() {
     return Meet.find({
-        budies : this._id
+        budies : { id: this._id }
     }).exec()
 };
 
