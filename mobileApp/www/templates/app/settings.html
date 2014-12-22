@@ -13,6 +13,13 @@
             <ion-toggle ng-model="settingsData.push" ng-checked="settingsData.push" toggle-class="toggle-positive">
                 Push Notifications
             </ion-toggle>
+            <ion-item class="item item-divider">
+                Logout
+            </ion-item>
+            <button class="button button-full button-calm item" ng-click="showConfirm()">
+              Logout
+              <i class="fa fa-facebook-square fa-lg logout-icon-button"></i>
+            </button>
         </ion-list>
     </ion-content>
 </ion-view>
