@@ -184,9 +184,17 @@ body {
 .menu-header{
 	vertical-align: text-bottom
 	color: #f63134;
-
 }
 
 .logout-icon-button {
 	padding-left:0.5em;
+}
+
+.menu-user-info {
+	padding-top: 5%;
+	color: white;	
+}
+
+.menu-bar {
+	
 }

@@ -22,17 +22,7 @@
                         controller: 'AuthLoginCtrl'
                     }
                 }
-            },/*
-            'auth.logout': {
-                url: '/logout',
-                abstract: true,
-                views: {
-                    'content': {
-                        templateUrl: 'templates/auth/logout.html',
-                        controller: 'AuthLogoutCtrl'
-                    }
-                }
-            },*/
+            },
             // App
             'app': {
                 url: '/app',
