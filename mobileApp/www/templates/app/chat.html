@@ -1,6 +1,6 @@
 <div ng-show="meet.active && meet.gotBudi">
 
-    <div class="bar bar-header bar-positive">
+    <div class="bar bar-header bar-calm">
         <button title="Menu" menu-toggle="left" class="button button-icon icon ion-navicon"></button>
         <h1 class="title">{{budiInfo.name}}</h1>
         <div class="buttons">
@@ -41,16 +41,17 @@
 
 
 <div ng-hide="meet.active">
-    <div class="bar bar-header bar-positive">
+    <div class="bar bar-header bar-calm">
         <button title="More" menu-toggle="left" class="button button-icon icon ion-navicon"></button>
         <h1 class="title"> Budi </h1>
     </div>
     <ion-content class="has-header chat-background">
     <p align="center">
-        <button ng-hide="meetAnimation" class="button button-large button-positive" ng-click="findBudi()" style="margin-left:auto;margin-right:auto;margin-top:75%;margin-bottom:0%">
-            Meet new Budi
+        <button ng-hide="meetAnimation" class="button button-calm button-mid" ng-click="findBudi()">
+            Make a new budi!
+            <i class="fa fa-weixin fa-2x"></i>
         </button>
-        <button ng-show="meetAnimation" class="button button-large button-outline button-light" style="margin-left:auto;margin-right:auto;margin-top:75%;margin-bottom:0%" disabled="">
+        <button ng-show="meetAnimation" class="button button-outline button-light button-mid" disabled="">
             Finding a budi
             <i class="fa fa-circle-o-notch fa-spin"></i>
         </button>
@@ -60,18 +61,17 @@
 
 </div>
 
-<div ng-hide="meet.gotBudi && meet.active">
-    <div class="bar bar-header bar-positive">
+<div ng-show="!meet.gotBudi && meet.active">
+    <div class="bar bar-header bar-calm">
         <button title="More" menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-        <h1 class="title"> Waiting... </h1>
+        <h1 class="title"> budi on the hunt </h1>
     </div>
     <ion-content class="has-header chat-background">
     <p align="center">
-        <button class="button button-large button-outline button-light" style="margin-left:auto;margin-right:auto;margin-top:75%;margin-bottom:0%" disabled="">
-            Waiting for a budi   
-            <i class="fa fa-spinner fa-spin"></i>
+        <i class="fa fa-weixin fa-4x img-bkg-chat"></i>
+        <button class="button button-clear button-light button-mid" disabled="">
+            Queued! Waiting for a budi... 
+            <i class="fa fa-refresh fa-spin"></i>
         </button>
     </ion-content>
-
-
 </div>
