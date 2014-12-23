@@ -15,5 +15,6 @@ router.post('/settings/restrictions', budiController.restrictions); // budi_id ,
 router.post('/login', sessionController.login);
 router.post('/register', sessionController.register);
 router.post('/add', budiController.addBudi);
+router.get('/list/:budiId', budiController.getBudiFriendList);
 
 module.exports = router;

@@ -231,6 +231,34 @@ function BudiController () {
         return result;
         }
     }
+/*
+    function getFriends(b) {
+        return b.getAllFriends();
+    }
+*/
+
+    function getFriends(budi) {
+
+        return budi.findFriends();
+    }
+
+    function getFrindsData(friends){
+
+
+        var result = new mongoose.Promise;
+
+        Budi.find({"_id" : { $in : friends}}, function(err, list){
+            if(err){
+                console.log(err);
+            }
+            result.fulfill({
+                error: 0,
+                budiFriends : list
+            });
+        });
+
+        return result;
+    }
 
     this.restrictions = function (req, res) {
         if( !req.body.hasOwnProperty('budi_id') ||
@@ -287,8 +315,24 @@ function BudiController () {
             .onReject(function (err){
                 console.log(err);
             })
-
     };
+
+    this.getBudiFriendList = function (req, res) {
+        var budiId = req.params.budiId;
+
+        if(!budiId) {
+            res.json({
+                error: 1
+            });
+            return
+        }
+
+        Budi.findOne({_id : budiId}).exec()
+            .then(getFriends)
+            .then(getFrindsData)
+            .then(handleAnswer(res))
+            .onReject(handleError(res));
+    }
 }
 
 module.exports = new BudiController();

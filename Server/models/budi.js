@@ -87,6 +87,18 @@ budiSchema.methods.findMeet = function findMeet() {
     return Meet.findOne(query).exec();
 };
 
+budiSchema.methods.findFriends = function findFriends() {
+    var result = [];
+
+    this.old_budis.forEach(function(f){
+        if (f.friend) {
+            result.push(f.id);
+        }
+    });
+
+    return result;
+};
+
 var Budi = mongoose.model('Budi', budiSchema);
 
 module.exports = Budi;
