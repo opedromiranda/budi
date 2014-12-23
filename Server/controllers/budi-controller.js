@@ -169,6 +169,37 @@ function BudiController () {
         }
     }
 
+    function updateFriendList(meet){
+        var budi1 = meet.budies[0], budi2 = meet.budies[1];
+
+        if (budi1.friendReq && budi2.friendReq) {
+
+            Budi.update(
+                { "_id": budi1.id, "old_budis.id": budi2.id },
+                { "old_budis.$.friend" : true },
+                function(err,numAffected) {
+                    if(err) {
+                        console.log(err);
+                    }
+                    else
+                        console.log(numAffected);
+                }
+            );
+
+            Budi.update(
+                { "_id": budi2.id, "old_budis.id": budi1.id },
+                { "old_budis.$.friend" : true },
+                function(err,numAffected) {
+                    if(err) {
+                        console.log(err);
+                    }
+                    else
+                        console.log(numAffected);
+                }
+            );
+        }
+    }
+
     function addBudi(b){
         return function(m){
             var result = new mongoose.Promise;
@@ -189,6 +220,7 @@ function BudiController () {
                             result.error(meet);
                             return;
                         }
+                        updateFriendList(meet);
                         result.fulfill({
                             error: 0,
                             meet: meet
@@ -196,9 +228,36 @@ function BudiController () {
                     });
                 }
             });
-
         return result;
         }
+    }
+/*
+    function getFriends(b) {
+        return b.getAllFriends();
+    }
+*/
+
+    function getFriends(budi) {
+
+        return budi.findFriends();
+    }
+
+    function getFrindsData(friends){
+
+
+        var result = new mongoose.Promise;
+
+        Budi.find({"_id" : { $in : friends}}, function(err, list){
+            if(err){
+                console.log(err);
+            }
+            result.fulfill({
+                error: 0,
+                budiFriends : list
+            });
+        });
+
+        return result;
     }
 
     this.restrictions = function (req, res) {
@@ -252,13 +311,28 @@ function BudiController () {
 
         Meet.findOne({_id: meetId}).exec()
             .then(addBudi(budiId))
-            .then(checkBudiFriends())
             .then(handleAnswer(res))
             .onReject(function (err){
                 console.log(err);
             })
-
     };
+
+    this.getBudiFriendList = function (req, res) {
+        var budiId = req.params.budiId;
+
+        if(!budiId) {
+            res.json({
+                error: 1
+            });
+            return
+        }
+
+        Budi.findOne({_id : budiId}).exec()
+            .then(getFriends)
+            .then(getFrindsData)
+            .then(handleAnswer(res))
+            .onReject(handleError(res));
+    }
 }
 
 module.exports = new BudiController();

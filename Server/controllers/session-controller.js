@@ -62,7 +62,7 @@ function SessionController() {
                 });
 
             })
-    }
+    };
 
     this.login = function login(req, res) {
         var fbId = req.body.fbId;

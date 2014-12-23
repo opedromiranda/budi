@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var Meet = require('../models/meet');
 var Budi = require('../models/budi');
 var fs = require('fs');
+var moment = require('moment');
 
 
 function ChatController () {
@@ -73,7 +74,19 @@ function ChatController () {
     }
 
     function getChat(meet){
-        return meet.chat;
+        var result = new mongoose.Promise;
+
+        if (moment().diff(meet.date, 'minutes') > 1440 ){
+            result.fulfill({
+                finish : true
+            });
+        }
+        else
+            result.fulfill({
+                chat : meet.chat
+            });
+
+        return result;
     }
 
     this.sendMessage = function (req,res) {
@@ -199,7 +212,6 @@ function ChatController () {
             .then(getChat)
             .then(handleAnswer(res))
             .onReject(handleError(res));
-
     }
 
 }
