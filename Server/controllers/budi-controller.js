@@ -66,7 +66,7 @@ function BudiController () {
                     } else {
                         result.fulfill({
                             error: 0,
-                            budi_id : budi._id
+                            budi : budi
                         });
                     }
                 });
@@ -74,7 +74,7 @@ function BudiController () {
             else {
                 result.fulfill({
                     error : 0,
-                    budi_id : b._id
+                    budi : budi
                 });
             }
             return result;
@@ -110,7 +110,7 @@ function BudiController () {
             born_date : bornDate,
             old_budis: [],
             restrictions : {
-                genre : null,
+                genre : false,
                 age : false
             }
         });
@@ -221,9 +221,7 @@ function BudiController () {
 
     this.login = function (req, res) {
         if(!req.body.hasOwnProperty('fb_id') ||
-           !req.body.hasOwnProperty('name') ||
-           !req.body.hasOwnProperty('born_date') ||
-           !req.body.hasOwnProperty('gender')){
+            !req.body.hasOwnProperty('access_token')) {
             res.json({
                 error:1
             });
@@ -234,7 +232,10 @@ function BudiController () {
             .then(insertBudi(req))
             .then(handleAnswer(res))
             .onReject(function (err) {
-                console.log(err);
+                res.json({
+                    error: 1,
+                    reason: err.message
+                });
             });
     };
 
