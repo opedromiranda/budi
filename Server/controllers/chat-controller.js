@@ -74,18 +74,17 @@ function ChatController () {
     }
 
     function getChat(meet){
-        var result = new mongoose.Promise, finishMeet;
+        var result = new mongoose.Promise;
 
         if (moment().diff(meet.date, 'minutes') > 1440 ){
-            finishMeet = true;
+            result.fulfill({
+                finish : true
+            });
         }
         else
-            finishMeet = false;
-
-        result.fulfill({
-            chat : meet.chat,
-            finish : finishMeet
-        });
+            result.fulfill({
+                chat : meet.chat
+            });
 
         return result;
     }
