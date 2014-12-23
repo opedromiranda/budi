@@ -56,6 +56,7 @@ function MeetController () {
      */
     function handleError(res) {
         function err(e) {
+            console.log(e);
             //throw e;
             res.json({
                 error: 1,
@@ -178,7 +179,11 @@ function MeetController () {
         // found a valid meet
         else {
             // budi isn't part of selected meet, therefore should become a member
-            if(meet.budies[0].id != budi._id) {
+            if(meet.budies[0].id != budi._id.toString()) {
+
+                console.log(meet.indexOf(0).id);
+                console.log(" - ");
+                console.log(budi._id);
 
                 Meet.findById(meet._id,function(err, doc) {
                     if (err) {
@@ -219,7 +224,7 @@ function MeetController () {
 
         if(!req.body.hasOwnProperty('budi_id')) {
             res.json({
-                error: 1
+                error: "Missing arguments"
             }, handleError(res));
             return;
         }
