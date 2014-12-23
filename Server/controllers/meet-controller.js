@@ -179,12 +179,7 @@ function MeetController () {
         // found a valid meet
         else {
             // budi isn't part of selected meet, therefore should become a member
-            if(meet.budies[0].id != budi._id.toString()) {
-
-                console.log(meet.indexOf(0).id);
-                console.log(" - ");
-                console.log(budi._id);
-
+            if(meet.budies[0].id.toString() != budi._id.toString()) {
                 Meet.findById(meet._id,function(err, doc) {
                     if (err) {
                         result.error(err);
