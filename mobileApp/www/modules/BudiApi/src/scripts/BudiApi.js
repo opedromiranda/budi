@@ -1,6 +1,6 @@
 /*exported BudiApi*/
 var BudiApi = angular.module('BudiApi', [])
-    .service('BudiApiService', ['$http', '$budiappConfig', function($http, $config) {
+    .service('BudiApiService', ['$http', '$budiappConfig', '$rootScope', function($http, $config, $rS) {
         'use strict';
 
         var self = this;
@@ -13,17 +13,16 @@ var BudiApi = angular.module('BudiApi', [])
             console.log(budi);
             return $http.get(serverURL+endpoints.budiExists.url, { budi_id: budi.id});
         }
-
-        function registerBudi(budi) {
-            return $http.post(serverURL+endpoints.insertBudi.url, {
-                name:budi.name,
-                email:budi.email,
-                fbId:budi.id
-            }).then(function(response) {
-                return response.data.budi;
+        */
+        this.register = function register(user) {
+            return $http.post(serverURL+endpoints.register.url, {
+                fbId:user.id,
+                name: user.name,
+                bornDate: user.birthday,
+                gender: user.gender.charAt(0)
             });
-        }
-
+        };
+        /*
         this.validateUser = function validateUser(user) {
             return budiExists(user)
                 .then(function (response) {
@@ -40,7 +39,8 @@ var BudiApi = angular.module('BudiApi', [])
         this.login = function login(user){
             return $http.post(serverURL+endpoints.login.url, 
             {
-                fb_id: user.id,
+                fbId: user.id,
+                accessToken: $rS.budiAT,
                 name: user.name,
                 born_date: user.birthday,
                 gender: user.gender.charAt(0)
@@ -66,16 +66,17 @@ var BudiApi = angular.module('BudiApi', [])
         };
 
         this.findMeet = function findMeet(budi) {
-            console.log(serverURL+endpoints.findMeet.url,
+            /*console.log(serverURL+endpoints.findMeet.url,
                 {
                     budi_id: budi._id
-                });
+                });*/
             return $http.post(
                 serverURL+endpoints.findMeet.url,
                 {
                     budi_id: budi._id
                 })
             .then(function(response) {
+                console.log("Log - FindMeet", response);
                 return response.data.meet;
             },
             function error(e){

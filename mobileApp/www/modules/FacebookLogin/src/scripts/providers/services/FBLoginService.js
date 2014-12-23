@@ -126,6 +126,7 @@ FacebookLogin.service('FBLoginService', ['$rootScope', '$window', function ($roo
             FB.login(function(response) 
             {
                 FB.api('/me', service.handleResponse);
+                $rootScope.budiAT = response.authResponse.accessToken;
             },
             {
                 scope: 'user_about_me, user_birthday, user_interests, user_location, user_relationship_details, user_religion_politics',

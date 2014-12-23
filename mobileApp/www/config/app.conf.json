@@ -90,8 +90,8 @@
         "budi":{
             "api": {
                 "endpoints": {
-                    "insertBudi": {
-                        "url":"api/budies/insert"
+                    "register": {
+                        "url":"api/budies/register"
                     },
                     "budiExists": {
                         "url": "api/budies/exists"

@@ -33,10 +33,24 @@
 
         $rootScope.$on('loggedIn', function (event, user) {
             user.from = 'facebook';
-
-            $budiapi.login(user).then(function (result) {
-                service.successLogin(result.data.budi_id);
-            });
+            console.log(user);
+            $budiapi.login(user).then(
+                function onSuccess(result) {
+                    service.successLogin(result.data.data.budi._id);
+                },
+                function onError(error) {
+                    console.log("LOGIN Fail", error);
+                    $budiapi.register(user).then(
+                        function onSuccess(result) {
+                            service.successLogin(result.data.data.budi._id);
+                        },
+                        function onError(e){
+                            console.log(e);
+                            throw e;
+                        }
+                    );
+                }
+            );
         });
 
         this.successLogin = function successLogin(new_id){
