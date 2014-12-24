@@ -3,22 +3,42 @@
     
     var _business = 'ChatBS',
         _userS = 'UserService',
-        _budiAPI = 'BudiApiService';
+        _budiAPI = 'BudiApiService',
+        _storage = 'LocalStorageFactory';
     
     $angular.module($app.appName)
-        .service(_business, ['$q', '$interval', _userS, _budiAPI, business]);
+        .service(_business, ['$q', '$interval', _userS, _budiAPI, _storage, business]);
         
-    function business($q, $interval, $userS, $budiAPI) {
+    function business($q, $interval, $userS, $budiAPI, $storage) {
         var self = this;
-        var meet_info = {
-            _id: undefined,
+        /*var meet_info = {
+            _id: "549aaf980b168c1b03e87865", // 549aaf980b168c1b03e87865
             meet_budi: undefined,
-            active: false
-        };
+            active: true
+        };*/
 
         var my_info = $userS.getUser();
 
-        this.meet_messages = [];
+        var settings = {
+            data: {
+                key: 'ChatService',
+                default: {
+                    meet_info : {
+                        _id: undefined, // 549aaf980b168c1b03e87865
+                        meet_budi: undefined,
+                        active: false
+                    },
+                    chat: []
+                },
+                updates: []
+            }
+        };
+
+        var storage = new $storage(settings.data.key, settings.data.default, settings.data.updates),
+            _data = storage.get();
+        var meet_info = _data.meet_info;
+
+        this.meet_messages = _data.chat;
 
         this.getMyInfo = function getMyInfo(){
             return my_info;
@@ -66,7 +86,22 @@
             $budiAPI.getMessages(meet_info).then(
                 function onSuccess(messages){
                     console.log("GOT MESSAGES", messages);
-                    self.meet_messages = self.meet_messages.concat(messages.data);
+                    self.meet_messages = self.meet_messages.concat(messages.data.chat);
+                    if( messages.data.full && !meet_info.meet_budi){
+                        if( messages.data.budies[0].budi_id === my_info._id ){
+                            meet_budi = messages.data.budies[1];
+                        }
+                        else {
+                            meet_budi = messages.data.budies[0];
+                        }
+                        storage.save();
+                    }
+
+                    if( messages.data.finish ){
+                        $interval.cancel(intervalPromise);
+                        storage.reset();
+                        // TODO display notification with add budi
+                    }
                 },
                 function onError(e){
                     console.log(e);
@@ -84,10 +119,11 @@
             $budiAPI.findMeet(my_info).then(
                 function Success(_meet) {
                     meet_info._id = _meet._id;
-                    meet_info.meet_budi = _meet.budi;
+                    meet_info.active = true;
                     console.log("New Meet Found", _meet);
-                    intervalPromise = $interval(self.getMsgs(), 15000);
+                    intervalPromise = $interval(function(){self.getMsgs();}, 10000);
                     deferred.resolve();
+                    storage.save();
                 },
                 function Error(e){
                     console.log(e);
@@ -98,9 +134,20 @@
         };
 
         this.leaveMeet = function leaveMeet(){
-            $interval.cancel(intervalPromise);
-            //$budiAPI.leaveMeet(budi, meet);
+            $budiAPI.leaveMeet(budi, meet).then(
+                function onSuccess(data){
+                    $interval.cancel(intervalPromise);
+                    storage.reset();
+                });
         };
+
+        (function init(){
+            if(meet_info.active){
+                intervalPromise = $interval(function(){self.getMsgs();}, 10000);
+                console.log(_data);
+                //storage.reset();
+            }
+        })();
     }
 
 })(this.app, this.angular);

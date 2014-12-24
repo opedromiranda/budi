@@ -24,6 +24,8 @@
         $scope.settingsData = storage.get();
 
         $scope.setNotifications = function setNotifications() {
+            console.log("push state");
+            // show toast -> not available yet
             storage.save();
         };
 

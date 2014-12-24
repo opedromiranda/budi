@@ -10,7 +10,8 @@
             <ion-item class="item item-divider">
                 Notifications
             </ion-item>
-            <ion-toggle ng-model="settingsData.push" ng-checked="settingsData.push" toggle-class="toggle-positive">
+            <!-- ng-model="settingsData.push" ng-checked="settingsData.push" toggle-class="toggle-positive"-->
+            <ion-toggle ng-checked="false" toggle-class="toggle-calm" ng-click="setNotifications()">
                 Push Notifications
             </ion-toggle>
             <ion-item class="item item-divider">
