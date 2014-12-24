@@ -42,6 +42,7 @@ function SessionController() {
                     return answer(res, 400, {}, 3, 'User already registered');
                 }
 
+                // create budi object
                 budi = new Budi({
                     name : name,
                     fb_id : fbId,
@@ -56,7 +57,7 @@ function SessionController() {
 
                 budi.save(function (err) {
                     if(err) {
-                        return answer(res, 500, {}, 4, 'An error occured while saving the user');
+                        return answer(res, 500, {}, 4, 'An error occurred while saving the user');
                     }
                     return answer(res, 200, {budi: budi});
                 });

@@ -32,12 +32,31 @@ function ChatController () {
         return err;
     }
 
+    /**
+     * Checks if a given budi ID is present in the budies array of a meet
+     * @param meet
+     * @param budiId
+     * @return result
+     */
+    function isBudiInMeet(meet, budiId) {
+
+        var result = false;
+        meet.budies.forEach(function (el) {
+            if(el.id == budiId) {
+                result = true;
+            }
+        });
+
+        return result;
+    }
+
     function handleMeetMessage(budiId, message) {
+
 
         return function(meet) {
             var result = new mongoose.Promise;
 
-            if(meet.budies.indexOf(budiId) != -1) {
+            if(isBudiInMeet(meet, budiId)) {
 
                 Meet.update(
                     { _id : meet._id },
@@ -60,7 +79,7 @@ function ChatController () {
                 );
 
             } else {
-                result.err();
+                result.reject();
             }
 
             return result;
@@ -111,8 +130,6 @@ function ChatController () {
     function updateDB(messageObject){
         var result = new mongoose.Promise;
 
-        console.log("meet id " + messageObject.meet_id);
-
         Meet.update(
             { _id : messageObject.meet_id },
             { $push: {
@@ -144,7 +161,7 @@ function ChatController () {
             uploadedFileName = null,
             uploadedFilePath,
             publicPath = null;
-        
+
         req.busboy.on('field', function(key, value, keyTruncated, valueTruncated) {
             switch(key) {
                 case 'meet_id':
@@ -163,7 +180,7 @@ function ChatController () {
                 fs.mkdirSync(uploadedFilePath);
             }
             uploadedFilePath += filename;
-            uploadedFile = file; 
+            uploadedFile = file;
             //file.resume(); // upload is done on finish when meetId and budiId are available
             fstream = fs.createWriteStream(uploadedFilePath);
             uploadedFile.pipe(fstream);
@@ -186,7 +203,7 @@ function ChatController () {
 
             result.fulfill({
                 meet_id : meetId,
-                filePath : publicPath,
+                filePath : meetId + '/' + uploadedFileName,
                 budi_id :budiId
             });
         });
