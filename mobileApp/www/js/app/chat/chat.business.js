@@ -70,7 +70,7 @@
         };
 
         this.sendMsg = function sendMsg(msg){
-            return $budAPI.sendMessage(my_info, meet_info, msg);
+            return $budiAPI.sendMessage(my_info, meet_info, msg);
         };
 
         // check for new messages each 15 seconds
@@ -80,7 +80,8 @@
             $budiAPI.getMessages(meet_info).then(
                 function onSuccess(messages){
                     console.log("GOT MESSAGES", messages);
-                    self.meet_messages = self.meet_messages.concat(messages.data.chat);
+                    //self.meet_messages = self.meet_messages.concat(messages.data.chat);
+                    updateMessages(messages.data.chat);
                     if( messages.data.full && !meet_info.gotBudi){
                         if( messages.data.budies[0].budi_id === my_info._id ){
                             meet_info.meet_budi = messages.data.budies[1];
@@ -145,11 +146,37 @@
 
         (function init(){
             if(meet_info.active){
-                intervalPromise = $interval(function(){self.getMsgs();}, 10000);
+                intervalPromise = $interval(function(){self.getMsgs();}, 5000);
                 //console.log(_data);
                 //storage.reset();
             }
         })();
+
+        function insertMsg(msg) {
+            var go_msg = {};
+            if(msg.type === "image")
+                go_msg.image = msg.message;
+            else 
+                go_msg.message = msg.message;
+            
+            if (msg.budiSending != myInfo._id) {
+                go_msg.owner = 'budi';
+                go_msg.side = 'left';
+            }
+            else {
+                go_msg.owner = 'my';
+                go_msg.side = 'right';
+            }
+            return go_msg;
+        }
+
+        function updateMessages(messages){
+            var tempMsgs = [];
+            for(var i=0; i<messages.length; i++){
+                tempMsgs.push(insertMsg(messages[i]));
+            }
+            self.meet_messages = tempMsgs;
+        }
     }
 
 })(this.app, this.angular);

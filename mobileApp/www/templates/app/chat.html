@@ -9,8 +9,7 @@
         </div>
     </div>
     <ion-content class="has-header chat-background">
-        <div ng-repeat="msg in messages" class="item item-chat item-avatar-{{msg.side}}">
-            <img src="{{msg.avatar}}">
+        <div ng-repeat="msg in messages" class="item item-chat">
             <div class="{{msg.owner}}-bubble">
                 <img class="chat-picture" ng-show="msg.image" src="{{msg.image}}">
                 <p ng-hide="msg.image">

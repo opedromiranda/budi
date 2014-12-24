@@ -54,8 +54,8 @@ var BudiApi = angular.module('BudiApi', [])
                 message: message
             });
             return $http.post(serverURL+endpoints.sendMessage.url, {
-                budi_id: budi.id,
-                meet_id: meet.id,
+                budi_id: budi._id,
+                meet_id: meet._id,
                 message: message
             });
         };

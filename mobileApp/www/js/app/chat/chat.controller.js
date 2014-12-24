@@ -22,17 +22,18 @@
 
         function insertMsg(msg) {
             var go_msg = {};
-            go_msg.image = msg.image;
-            go_msg.message = msg.message;
-            if (msg.onwer != myInfo.id) {
+            if(msg.type === "image")
+                go_msg.image = msg.message;
+            else 
+                go_msg.message = msg.message;
+            
+            if (msg.budiSending != myInfo._id) {
                 go_msg.owner = 'budi';
                 go_msg.side = 'left';
-                go_msg.avatar = $scope.budiInfo.avatar;
             }
             else {
                 go_msg.owner = 'my';
                 go_msg.side = 'right';
-                go_msg.avatar = $scope.myInfo.picture;
             }
             $scope.messages.push(go_msg);
         }
@@ -65,12 +66,12 @@
 
         $scope.sendImage = function sendImage() {
             $scope.modal.hide();
-            $chatBS.sendImage(sendForm.picture).then(
+            $chatBS.sendImage($scope.sendForm.picture).then(
                 function success(data) {
                     var msg = {
                         owner: $scope.myInfo.id
                     };
-                    msg.image = angular.copy(sendForm.picture);
+                    msg.image = angular.copy($scope.sendForm.picture);
                     insertMsg(msg);
                     $scope.clearPicture();
                 },
@@ -81,12 +82,12 @@
         };
 
         $scope.sendMsg = function sendMsg() {
-            $chatBS.sendMsg(sendForm.message).then(
+            $chatBS.sendMsg($scope.sendForm.message).then(
                 function success(data) {
                     var msg = {
                         owner: $scope.myInfo.id
                     };
-                    msg.message = sendForm.message;
+                    msg.message = $scope.sendForm.message;
                     insertMsg(msg);
                     $scope.inputVisible = false;
                 },
@@ -114,6 +115,7 @@
                 function success(){
                     $scope.meetAnimation = false;
                     $scope.meetInfo = $chatBS.getMeetInfo();
+                    $scope.myInfo = $chatBS.getMyInfo();
                 },
                 function error(e){
                     $scope.meetAnimation = false;
