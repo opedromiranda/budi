@@ -93,34 +93,34 @@ function ChatController () {
     }
 
     function getChat(meet){
-        var result = new mongoose.Promise, budies = meet.budies, budi1 = [], budi2 = [], meetFinish = false, meetFull;
+        var result = new mongoose.Promise, budies = meet.budies, budi1 = {}, budi2 = {}, meetFinish = false,
+            meetFull = budies.length > 1;
 
         if (moment().diff(meet.date, 'minutes') > 1440 ){
             meetFinish = true;
         }
-        else if (budies.length > 1) {
-            if (budies[0].friendReq && budies[1].friendReq) {
+        else if (meetFull && budies[0].friendReq && budies[1].friendReq) {
                 Budi.findOne({_id : budies[0].id }, function(err, doc){
                     if(err){
                         result.error({
                             err : "budi not found"
                         });
-                        return result;
+                        return;
                     }
-                    budi1['id'] = doc._id;
-                    budi1['name'] = doc.name;
-                    budi1['fb_id'] = doc.fb_id;
+                    budi1.id = doc._id;
+                    budi1.name = doc.name;
+                    budi1.fb_id = doc.fb_id;
 
                     Budi.findOne({_id : budies[1].id }, function(err, doc){
                         if(err){
                             result.error({
                                 err : "budi not found"
                             });
-                            return result;
+                            return;
                         }
-                        budi2['id'] = doc._id;
-                        budi2['name'] = doc.name;
-                        budi2['fb_id'] = doc.fb_id;
+                        budi2.id = doc._id;
+                        budi2.name = doc.name;
+                        budi2.fb_id = doc.fb_id;
                         meetFull = true;
 
                         result.fulfill({
@@ -129,22 +129,19 @@ function ChatController () {
                             finish: meetFinish,
                             full: meetFull
                         });
-                        return result;
-
                     });
                 });
-            }
         }
-        else{
-            meetFull = false;
-        }
+        else
+        {
+            result.fulfill({
+                chat: meet.chat,
+                budies: [budi1, budi2],
+                finish: meetFinish,
+                full: meetFull
+            });
 
-        result.fulfill({
-            chat: meet.chat,
-            budies: [budi1, budi2],
-            finish: meetFinish,
-            full: meetFull
-        });
+        }
 
         return result;
     }
