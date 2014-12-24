@@ -117,7 +117,7 @@
                     meet_info._id = _meet._id;
                     meet_info.active = true;
                     console.log("New Meet Found", _meet);
-                    intervalPromise = $interval(function(){self.getMsgs();}, 10000);
+                    intervalPromise = $interval(function(){self.getMsgs();}, 5000);
                     deferred.resolve();
                     storage.save();
                 },
@@ -159,7 +159,7 @@
             else 
                 go_msg.message = msg.message;
             
-            if (msg.budiSending != myInfo._id) {
+            if (msg.budiSending != my_info._id) {
                 go_msg.owner = 'budi';
                 go_msg.side = 'left';
             }

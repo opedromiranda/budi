@@ -26,8 +26,8 @@
                 go_msg.image = msg.message;
             else 
                 go_msg.message = msg.message;
-            
-            if (msg.budiSending != myInfo._id) {
+
+            if (msg.budiSending != $scope.myInfo._id) {
                 go_msg.owner = 'budi';
                 go_msg.side = 'left';
             }
