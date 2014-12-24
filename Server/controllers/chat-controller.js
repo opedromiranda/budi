@@ -121,10 +121,18 @@ function ChatController () {
                         budi2['id'] = doc._id;
                         budi2['name'] = doc.name;
                         budi2['fb_id'] = doc.fb_id;
+                        meetFull = true;
+
+                        result.fulfill({
+                            chat: meet.chat,
+                            budies: [budi1, budi2],
+                            finish: meetFinish,
+                            full: meetFull
+                        });
+                        return result;
+
                     });
                 });
-
-                meetFull = true;
             }
         }
         else{
