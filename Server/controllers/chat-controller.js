@@ -93,17 +93,50 @@ function ChatController () {
     }
 
     function getChat(meet){
-        var result = new mongoose.Promise;
+        var result = new mongoose.Promise, budies = meet.budies, budi1 = [], budi2 = [], meetFinish = false, meetFull;
 
         if (moment().diff(meet.date, 'minutes') > 1440 ){
-            result.fulfill({
-                finish : true
-            });
+            meetFinish = true;
         }
-        else
-            result.fulfill({
-                chat : meet.chat
-            });
+        else if (budies.length > 1) {
+            if (budies[0].friendReq && budies[1].friendReq) {
+                Budi.findOne({_id : budies[0].id }, function(err, doc){
+                    if(err){
+                        result.error({
+                            err : "budi not found"
+                        });
+                        return result;
+                    }
+                    budi1['id'] = doc._id;
+                    budi1['name'] = doc.name;
+                    budi1['fb_id'] = doc.fb_id;
+
+                    Budi.findOne({_id : budies[1].id }, function(err, doc){
+                        if(err){
+                            result.error({
+                                err : "budi not found"
+                            });
+                            return result;
+                        }
+                        budi2['id'] = doc._id;
+                        budi2['name'] = doc.name;
+                        budi2['fb_id'] = doc.fb_id;
+                    });
+                });
+
+                meetFull = true;
+            }
+        }
+        else{
+            meetFull = false;
+        }
+
+        result.fulfill({
+            chat: meet.chat,
+            budies: [budi1, budi2],
+            finish: meetFinish,
+            full: meetFull
+        });
 
         return result;
     }
