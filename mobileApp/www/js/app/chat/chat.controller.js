@@ -68,14 +68,13 @@
             $scope.modal.hide();
             $chatBS.sendImage($scope.sendForm.picture).then(
                 function success(data) {
-                    var msg = {
-                        owner: 'my'
-                    };
-                    msg.message = angular.copy($scope.sendForm.picture);
+                    var msg = {};
+                    msg.budiSending = $scope.myInfo._id;
+                    msg.image = angular.copy($scope.sendForm.picture);
                     msg.type = "image";
                     insertMsg(msg);
                     $scope.clearPicture();
-                    $scope.sendForm.message = undefined;
+                    $scope.sendForm.message = "";
                 },
                 function error(err) {
                     console.log(err);
@@ -84,18 +83,17 @@
         };
 
         $scope.sendMsg = function sendMsg() {
-            if(!$scope.sendMsg.message)
+            if($scope.sendMsg.message === "")
                 return;
             $chatBS.sendMsg($scope.sendForm.message).then(
                 function success(data) {
-                    var msg = {
-                        owner: 'my'
-                    };
+                    var msg = {};
+                    msg.budiSending = $scope.myInfo._id;
                     msg.message = $scope.sendForm.message;
                     msg.type = "text";
                     insertMsg(msg);
                     $scope.inputVisible = false;
-                    $scope.sendForm.message = undefined;
+                    $scope.sendForm.message = "";
                 },
                 function error(err) {
                     console.log(err);
