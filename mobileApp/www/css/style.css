@@ -216,3 +216,11 @@ body {
 	right: 0;
 	color: white;
 }
+
+.msg-text {
+	color: #000 !important;
+	font-family: "Verdana" !important;
+	margin-left: 8px;
+	margin-right: 8px;
+	margin-top: 3px;
+}

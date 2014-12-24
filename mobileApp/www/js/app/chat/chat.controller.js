@@ -5,9 +5,9 @@
         _chatBS = 'ChatBS';
 
     $angular.module($app.appName)
-        .controller(_controller, ['$scope', '$ionicModal', '$ionicPopover', _chatBS, controller]);
+        .controller(_controller, ['$scope', '$ionicModal', '$ionicPopover', '$interval', _chatBS, controller]);
 
-    function controller($scope, $ionicModal, $ionicPopover, $chatBS) {
+    function controller($scope, $ionicModal, $ionicPopover, $interval, $chatBS) {
         $scope.myInfo = $chatBS.getMyInfo();
 
         $scope.sendForm = {
@@ -69,11 +69,13 @@
             $chatBS.sendImage($scope.sendForm.picture).then(
                 function success(data) {
                     var msg = {
-                        owner: $scope.myInfo.id
+                        owner: 'my'
                     };
-                    msg.image = angular.copy($scope.sendForm.picture);
+                    msg.message = angular.copy($scope.sendForm.picture);
+                    msg.type = "image";
                     insertMsg(msg);
                     $scope.clearPicture();
+                    $scope.sendForm.message = undefined;
                 },
                 function error(err) {
                     console.log(err);
@@ -82,14 +84,18 @@
         };
 
         $scope.sendMsg = function sendMsg() {
+            if(!$scope.sendMsg.message)
+                return;
             $chatBS.sendMsg($scope.sendForm.message).then(
                 function success(data) {
                     var msg = {
-                        owner: $scope.myInfo.id
+                        owner: 'my'
                     };
                     msg.message = $scope.sendForm.message;
+                    msg.type = "text";
                     insertMsg(msg);
                     $scope.inputVisible = false;
+                    $scope.sendForm.message = undefined;
                 },
                 function error(err) {
                     console.log(err);
@@ -143,6 +149,8 @@
         $scope.reset = function reset(){
             $chatBS.resetMeet();
         };
+
+        $interval(function(){$scope.messages = $chatBS.meet_messages;}, 2500);
     }
 
 })(this.app, this.angular);
