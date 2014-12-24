@@ -65,8 +65,8 @@
             return deffered.promise;
         };
 
-        this.sendImage = function sendImage(){
-            return;
+        this.sendImage = function sendImage(img){
+            return $budiAPI.sendImage(my_info, meet_info, img);
         };
 
         this.sendMsg = function sendMsg(msg){

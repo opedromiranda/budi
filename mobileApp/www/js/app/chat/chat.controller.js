@@ -57,11 +57,12 @@
         };
 
         $scope.takePicture = function takePicture() {
-            $chatBS.takePicture().then(
+            /*$chatBS.takePicture().then(
                 function success(data) {
                     $scope.sendForm.picture = data.image;
                 }
-            );
+            );*/
+            $scope.sendForm.picture = "./img/camera.png";
         };
 
         $scope.sendImage = function sendImage() {

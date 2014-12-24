@@ -1,6 +1,6 @@
 /*exported BudiApi*/
-var BudiApi = angular.module('BudiApi', [])
-    .service('BudiApiService', ['$http', '$budiappConfig', '$rootScope', function($http, $config, $rS) {
+var BudiApi = angular.module('BudiApi', ['angularFileUpload'])
+    .service('BudiApiService', ['$http', '$budiappConfig', '$rootScope', '$upload' , function($http, $config, $rS, $upload) {
         'use strict';
 
         var self = this;
@@ -57,6 +57,23 @@ var BudiApi = angular.module('BudiApi', [])
                 budi_id: budi._id,
                 meet_id: meet._id,
                 message: message
+            });
+        };
+
+        this.sendImage = function sendImage(budi, meet, image) {
+            console.log( {
+                budi_id: budi._id,
+                meet_id: meet._id,
+                image: image
+            });
+
+            var formData = new FormData();
+            formData.append('image', image);
+            formData.append('budi_id', budi._id);
+            formData.append('meet_id', meet._id);
+
+            return $http.post(serverURL+endpoints.sendImage.url, formData, {
+                transformRequest: function(data) { return data; }
             });
         };
 
