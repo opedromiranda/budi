@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var Meet = require('../models/meet');
 var Budi = require('../models/budi');
 var fs = require('fs');
+var moment = require('moment');
 
 
 function ChatController () {
@@ -31,12 +32,31 @@ function ChatController () {
         return err;
     }
 
+    /**
+     * Checks if a given budi ID is present in the budies array of a meet
+     * @param meet
+     * @param budiId
+     * @return result
+     */
+    function isBudiInMeet(meet, budiId) {
+
+        var result = false;
+        meet.budies.forEach(function (el) {
+            if(el.id == budiId) {
+                result = true;
+            }
+        });
+
+        return result;
+    }
+
     function handleMeetMessage(budiId, message) {
+
 
         return function(meet) {
             var result = new mongoose.Promise;
 
-            if(meet.budies.indexOf(budiId) != -1) {
+            if(isBudiInMeet(meet, budiId)) {
 
                 Meet.update(
                     { _id : meet._id },
@@ -59,7 +79,7 @@ function ChatController () {
                 );
 
             } else {
-                result.err();
+                result.reject();
             }
 
             return result;
@@ -73,7 +93,57 @@ function ChatController () {
     }
 
     function getChat(meet){
-        return meet.chat;
+        var result = new mongoose.Promise, budies = meet.budies, budi1 = {}, budi2 = {}, meetFinish = false,
+            meetFull = budies.length > 1;
+
+        if (moment().diff(meet.date, 'minutes') > 1440 ){
+            meetFinish = true;
+        }
+        else if (meetFull && budies[0].friendReq && budies[1].friendReq) {
+                Budi.findOne({_id : budies[0].id }, function(err, doc){
+                    if(err){
+                        result.error({
+                            err : "budi not found"
+                        });
+                        return;
+                    }
+                    budi1.id = doc._id;
+                    budi1.name = doc.name;
+                    budi1.fb_id = doc.fb_id;
+
+                    Budi.findOne({_id : budies[1].id }, function(err, doc){
+                        if(err){
+                            result.error({
+                                err : "budi not found"
+                            });
+                            return;
+                        }
+                        budi2.id = doc._id;
+                        budi2.name = doc.name;
+                        budi2.fb_id = doc.fb_id;
+                        meetFull = true;
+
+                        result.fulfill({
+                            chat: meet.chat,
+                            budies: [budi1, budi2],
+                            finish: meetFinish,
+                            full: meetFull
+                        });
+                    });
+                });
+        }
+        else
+        {
+            result.fulfill({
+                chat: meet.chat,
+                budies: [budi1, budi2],
+                finish: meetFinish,
+                full: meetFull
+            });
+
+        }
+
+        return result;
     }
 
     this.sendMessage = function (req,res) {
@@ -93,13 +163,10 @@ function ChatController () {
             .then(handleMeetMessage(budiId, message))
             .then(handleAnswer(res))
             .onReject(handleError(res));
-
     };
 
     function updateDB(messageObject){
         var result = new mongoose.Promise;
-
-        console.log("meet id " + messageObject.meet_id);
 
         Meet.update(
             { _id : messageObject.meet_id },
@@ -132,7 +199,7 @@ function ChatController () {
             uploadedFileName = null,
             uploadedFilePath,
             publicPath = null;
-        
+
         req.busboy.on('field', function(key, value, keyTruncated, valueTruncated) {
             switch(key) {
                 case 'meet_id':
@@ -151,7 +218,7 @@ function ChatController () {
                 fs.mkdirSync(uploadedFilePath);
             }
             uploadedFilePath += filename;
-            uploadedFile = file; 
+            uploadedFile = file;
             //file.resume(); // upload is done on finish when meetId and budiId are available
             fstream = fs.createWriteStream(uploadedFilePath);
             uploadedFile.pipe(fstream);
@@ -174,7 +241,7 @@ function ChatController () {
 
             result.fulfill({
                 meet_id : meetId,
-                filePath : publicPath,
+                filePath : meetId + '/' + uploadedFileName,
                 budi_id :budiId
             });
         });
@@ -200,7 +267,6 @@ function ChatController () {
             .then(getChat)
             .then(handleAnswer(res))
             .onReject(handleError(res));
-
     }
 
 }

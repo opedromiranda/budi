@@ -4,6 +4,7 @@
 
 var mongoose = require('mongoose');
 var Budi = require('../models/budi.js');
+var Meet = require('../models/meet.js');
 var moment = require('moment');
 
 function BudiController () {
@@ -65,7 +66,7 @@ function BudiController () {
                     } else {
                         result.fulfill({
                             error: 0,
-                            budi_id : budi._id
+                            budi : budi
                         });
                     }
                 });
@@ -73,7 +74,7 @@ function BudiController () {
             else {
                 result.fulfill({
                     error : 0,
-                    budi_id : b._id
+                    budi : budi
                 });
             }
             return result;
@@ -109,7 +110,7 @@ function BudiController () {
             born_date : bornDate,
             old_budis: [],
             restrictions : {
-                genre : null,
+                genre : false,
                 age : false
             }
         });
@@ -168,6 +169,97 @@ function BudiController () {
         }
     }
 
+    function updateFriendList(meet){
+        var budi1 = meet.budies[0], budi2 = meet.budies[1];
+
+        if (budi1.friendReq && budi2.friendReq) {
+
+            Budi.update(
+                { "_id": budi1.id, "old_budis.id": budi2.id },
+                { "old_budis.$.friend" : true },
+                function(err,numAffected) {
+                    if(err) {
+                        console.log(err);
+                    }
+                    else
+                        console.log(numAffected);
+                }
+            );
+
+            Budi.update(
+                { "_id": budi2.id, "old_budis.id": budi1.id },
+                { "old_budis.$.friend" : true },
+                function(err,numAffected) {
+                    if(err) {
+                        console.log(err);
+                    }
+                    else
+                        console.log(numAffected);
+                }
+            );
+        }
+    }
+
+    function addBudi(b){
+        return function(m){
+            var result = new mongoose.Promise;
+
+            Meet.findById(m._id,function(err, doc) {
+                if (err) {
+                    result.error(err);
+                    return;
+                }
+                else {
+                    doc.budies.forEach(function(budi){
+                        if(budi.id == b){
+                            budi.friendReq = true;
+                        }
+                    });
+                    doc.save(function (err, meet) {
+                        if (err) {
+                            result.error(meet);
+                            return;
+                        }
+                        updateFriendList(meet);
+                        result.fulfill({
+                            error: 0,
+                            meet: meet
+                        });
+                    });
+                }
+            });
+        return result;
+        }
+    }
+/*
+    function getFriends(b) {
+        return b.getAllFriends();
+    }
+*/
+
+    function getFriends(budi) {
+
+        return budi.findFriends();
+    }
+
+    function getFrindsData(friends){
+
+
+        var result = new mongoose.Promise;
+
+        Budi.find({"_id" : { $in : friends}}, function(err, list){
+            if(err){
+                console.log(err);
+            }
+            result.fulfill({
+                error: 0,
+                budiFriends : list
+            });
+        });
+
+        return result;
+    }
+
     this.restrictions = function (req, res) {
         if( !req.body.hasOwnProperty('budi_id') ||
             !req.body.hasOwnProperty('restrictions') ) {
@@ -188,9 +280,7 @@ function BudiController () {
 
     this.login = function (req, res) {
         if(!req.body.hasOwnProperty('fb_id') ||
-           !req.body.hasOwnProperty('name') ||
-           !req.body.hasOwnProperty('born_date') ||
-           !req.body.hasOwnProperty('gender')){
+            !req.body.hasOwnProperty('access_token')) {
             res.json({
                 error:1
             });
@@ -201,8 +291,47 @@ function BudiController () {
             .then(insertBudi(req))
             .then(handleAnswer(res))
             .onReject(function (err) {
-                console.log(err);
+                res.json({
+                    error: 1,
+                    reason: err.message
+                });
             });
+    };
+
+    this.addBudi = function (req, res){
+        var budiId = req.body.budi_id,
+            meetId = req.body.meet_id;
+
+        if (!meetId || !budiId) {
+            res.json({
+                error: 1
+            });
+            return
+        }
+
+        Meet.findOne({_id: meetId}).exec()
+            .then(addBudi(budiId))
+            .then(handleAnswer(res))
+            .onReject(function (err){
+                console.log(err);
+            })
+    };
+
+    this.getBudiFriendList = function (req, res) {
+        var budiId = req.params.budiId;
+
+        if(!budiId) {
+            res.json({
+                error: 1
+            });
+            return
+        }
+
+        Budi.findOne({_id : budiId}).exec()
+            .then(getFriends)
+            .then(getFrindsData)
+            .then(handleAnswer(res))
+            .onReject(handleError(res));
     }
 }
 

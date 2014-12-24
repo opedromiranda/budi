@@ -56,6 +56,7 @@ function MeetController () {
      */
     function handleError(res) {
         function err(e) {
+            console.log(e);
             //throw e;
             res.json({
                 error: 1,
@@ -102,30 +103,40 @@ function MeetController () {
     }
 
     function updateOldBudis(meet){
-        var budi1 = meet.budies[0];
-        var budi2 = meet.budies[1];
+        var budi1 = meet.budies[0].id,
+            budi2 = meet.budies[1].id;
 
-        Budi.findOne({_id : budi1}, function(err, doc){
-            Budi.update({_id : doc._id},{
-                $push : {
-                    old_budis : {
-                        id : budi2,
-                        friend: false
-                        }
-                    }
+        Budi.findByIdAndUpdate(
+            budi1,
+            { $push: {"old_budis": {
+                id: budi2,
+                friend: false
+            }}}, function(err, model){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    console.log(model);
+                }
             });
-        });
 
-        Budi.findOne({_id : budi2}, function(err, doc){
-            Budi.update({_id : doc._id},{
-                $push : {
-                    old_budis : {
+
+        Budi.findByIdAndUpdate(
+            budi2,
+                { $push:
+                    {"old_budis": {
                         id : budi1,
                         friend: false
                     }
+                }},
+            function(err,model) {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    console.log(model);
                 }
             });
-        });
     }
 
     /**
@@ -142,7 +153,9 @@ function MeetController () {
         if(!meet) {
             meet = new Meet({
                 date : moment(),
-                budies : [budi._id],
+                budies : [ { id: budi._id,
+                            friendReq: false }
+                ],
                 age : moment().diff(budi.born_date, 'years'),
                 genre : budi.genre,
                 reports : budi.reports.length,
@@ -161,32 +174,34 @@ function MeetController () {
                     error: 0,
                     meet: meet
                 });
-
-
             });
         }
         // found a valid meet
         else {
             // budi isn't part of selected meet, therefore should become a member
-            if(meet.budies.indexOf(budi._id) == -1) {
-
-                meet.budies.push(budi._id);
-
-                var callback = function(err) {
-                    if(err) {
+            if(meet.budies[0].id.toString() != budi._id.toString()) {
+                Meet.findById(meet._id,function(err, doc) {
+                    if (err) {
                         result.error(err);
                         return;
                     }
-                    result.fulfill({
-                        error: 0,
-                        meet: meet
-                    });
-                    updateOldBudis(meet);
-                };
+                    else {
+                        doc.budies.push({id: budi._id, friendReq: false});
+                        doc.save(function (err, m) {
+                            if (err) {
+                                result.error(m);
+                                return;
+                            }
 
-                Meet.update({_id : meet._id}, {
-                    $push: {budies : budi._id}
-                }, callback);
+                            updateOldBudis(m);
+
+                            result.fulfill({
+                                error: 0,
+                                meet: m
+                            });
+                        });
+                    }
+                });
             }
             // budi is part of the meet
             else {
@@ -204,7 +219,7 @@ function MeetController () {
 
         if(!req.body.hasOwnProperty('budi_id')) {
             res.json({
-                error: 1
+                error: "Missing arguments"
             }, handleError(res));
             return;
         }
