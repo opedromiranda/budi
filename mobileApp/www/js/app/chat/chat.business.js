@@ -151,7 +151,7 @@
                 //storage.reset();
             }
         })();
-
+//
         function insertMsg(msg) {
             var go_msg = {};
             if(msg.type === "image")
