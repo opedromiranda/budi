@@ -113,11 +113,7 @@
             $chatBS.findMeet().then(
                 function success(){
                     $scope.meetAnimation = false;
-                    $scope.meet.active = true;
                     $scope.meetInfo = $chatBS.getMeetInfo();
-                    if( !$scope.meetInfo.meet_budi ){
-                        $scope.meet.gotBudi = false;
-                    }
                 },
                 function error(e){
                     $scope.meetAnimation = false;
@@ -126,7 +122,7 @@
         };
 
         $scope.endMeet = function endMeet() {
-            $scope.meet.active = false
+            $chatBS.resetMeet();
         };
 
         $ionicPopover.fromTemplateUrl('templates/app/popover-chat.html', {

@@ -11,12 +11,6 @@
         
     function business($q, $interval, $userS, $budiAPI, $storage) {
         var self = this;
-        /*var meet_info = {
-            _id: "549aaf980b168c1b03e87865", // 549aaf980b168c1b03e87865
-            meet_budi: undefined,
-            active: true
-        };*/
-
         var my_info = $userS.getUser();
 
         var settings = {
@@ -24,7 +18,7 @@
                 key: 'ChatService',
                 default: {
                     meet_info : {
-                        _id: undefined, // 549aaf980b168c1b03e87865
+                        _id: undefined,
                         meet_budi: undefined,
                         active: false
                     },
@@ -87,13 +81,14 @@
                 function onSuccess(messages){
                     console.log("GOT MESSAGES", messages);
                     self.meet_messages = self.meet_messages.concat(messages.data.chat);
-                    if( messages.data.full && !meet_info.meet_budi){
+                    if( messages.data.full && !meet_info.gotBudi){
                         if( messages.data.budies[0].budi_id === my_info._id ){
-                            meet_budi = messages.data.budies[1];
+                            meet_info.meet_budi = messages.data.budies[1];
                         }
                         else {
-                            meet_budi = messages.data.budies[0];
+                            meet_info.meet_budi = messages.data.budies[0];
                         }
+                        meet_info.gotBudi = true;
                         storage.save();
                     }
 
@@ -137,19 +132,21 @@
             $budiAPI.leaveMeet(budi, meet).then(
                 function onSuccess(data){
                     $interval.cancel(intervalPromise);
+                    meet_info.active = false;
                     storage.reset();
                 });
         };
 
         this.resetMeet = function resetMeet(){
             $interval.cancel(intervalPromise);
+            meet_info.active = false;
             storage.reset();
         };
 
         (function init(){
             if(meet_info.active){
                 intervalPromise = $interval(function(){self.getMsgs();}, 10000);
-                console.log(_data);
+                //console.log(_data);
                 //storage.reset();
             }
         })();
