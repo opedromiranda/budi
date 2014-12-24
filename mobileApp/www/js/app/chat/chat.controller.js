@@ -141,6 +141,10 @@
         $scope.closePopover = function () {
             $scope.popover.hide();
         };
+
+        $scope.reset = function reset(){
+            $chatBS.resetMeet();
+        };
     }
 
 })(this.app, this.angular);

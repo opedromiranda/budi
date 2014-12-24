@@ -141,6 +141,11 @@
                 });
         };
 
+        this.resetMeet = function resetMeet(){
+            $interval.cancel(intervalPromise);
+            storage.reset();
+        };
+
         (function init(){
             if(meet_info.active){
                 intervalPromise = $interval(function(){self.getMsgs();}, 10000);
