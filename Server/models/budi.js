@@ -44,12 +44,18 @@ budiSchema.methods.findMeet = function findMeet() {
     var budiReports = this.reports.length,
         budiAgeRestriction = this.restrictions.age || false,
         budiGenreRestriction = this.restrictions.genre || false,
-        oldBudis = this.old_budis,
+        oldBudis = [],
         yearsOld = moment().diff(this.born_date, 'years'),
-        gender = this.genre,
-        query = {
+        gender = this.genre;
+
+        this.old_budis.forEach(function (oldBudi) {
+            oldBudis.push(oldBudi.id);
+        });
+    var query = {
             budies: {
-                $size: 1,
+                $size: 1
+            },
+            'budies.id': {
                 $nin: oldBudis
             },
             reports: {
