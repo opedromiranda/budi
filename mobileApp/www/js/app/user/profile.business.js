@@ -13,6 +13,11 @@
         /*jshint validthis:true */
         
         this.getUserInfo = $user_service.getUser();
+
+        this.updateUser = function(user)
+        {
+            $user_service.setUser(user);
+        };
         
     /*    this.getUserInfo = function getUserInfo() {
             var req = $adapter.getInfo.to();

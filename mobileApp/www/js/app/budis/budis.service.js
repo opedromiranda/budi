@@ -21,8 +21,7 @@
             search: ''
         };
         
-        // Mesmo que profile.controller.user //
-        var user = $userS.getUser();
+        this.user = $userS.getUser();
         
         this.getBudisList = function () 
         { 

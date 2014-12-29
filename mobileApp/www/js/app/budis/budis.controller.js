@@ -3,32 +3,45 @@
     'use strict';
 
     var _controller = 'BudisCtrl',
-    _service = 'BudisService';
+    _service = 'BudisService',
+    _profileBS = 'ProfileBS',
+    count = 0;
 
     $angular.module($app.appName)
-        .controller(_controller, ['$scope', _service, '$ionicScrollDelegate', '$ionicPopover', '$ionicPopup', 'filterFilter', controller]);
+        .controller(_controller, ['$scope', _service, '$ionicScrollDelegate', '$ionicPopover',
+                                  '$ionicPopup', 'filterFilter', _profileBS, controller]);
 
-    function controller($scope, $service, $ionicScrollDelegate, $ionicPopover, $ionicPopup, $filterFilter) 
+    function controller($scope, $service, $ionicScrollDelegate, $ionicPopover, $ionicPopup, $filterFilter, $profileBS) 
     {  
         var letters = [],
             currentCharCode = 'A'.charCodeAt(0) - 1,
             letterHasMatch = {};
         
+        $scope.user = $service.user;
+        
+        $scope.updateUser = function(user)
+        {
+            $profileBS.updateUser(user);
+        };
+        
         $scope.data = $service.data;
         
-        $scope.blockedBudisList = $service.getBlockedBudisList();
-        
+        // $scope.blockedBudisList = $service.getBlockedBudisList();
+
         $scope.budisList = [];
         
-        $scope.budisListUnsorted = $service.getBudisList(); 
+        // $scope.budisListUnsorted = $service.getBudisList();
+        $scope.user.budis = $service.getBudisList();
         
+        $scope.budisListUnsorted = $scope.user.budis; 
+
         $scope.budisBlocked = function()
         {
-            for (var i = 0; i < $scope.blockedBudisList.length; i++)
+            for (var i = 0; i < $scope.user.blocked.length; i++)
             {
                 for (var j = 0; j < $scope.budisListUnsorted.length; j++)
                 {
-                   if ($scope.budisListUnsorted[j].id === $scope.blockedBudisList[i])
+                   if ($scope.budisListUnsorted[j].id === $scope.user.blocked[i])
                        $scope.budisListUnsorted[j].blocked = true;
                     
                     else;
@@ -50,10 +63,16 @@
 
         $scope.onBudiDelete = function(budi) 
         {     
-            //função eliminar budi ->> servidor
-            $scope.deleteBudi = $service.deleteBudi();
-
+            // função eliminar budi ->> servidor
+            // $scope.deleteBudi = $service.deleteBudi();
+            
             $scope.budisList.splice($scope.budisList.indexOf(budi), 1);
+            
+            $scope.budisListUnsorted.splice($scope.budisListUnsorted.indexOf(budi), 1);
+            
+            $scope.user.budis = $scope.budisListUnsorted;
+            
+            $scope.updateUser($scope.user);
 
             if ($scope.searchResults().length === 0) $scope.onButtonClick('cancel');
         };
@@ -69,6 +88,26 @@
         $scope.onBudiBlock = function(budi) 
         {     
             budi.blocked = true;
+            
+            $scope.user.blocked.push(budi.id);
+            console.log('blocked: ' + $scope.user.blocked);
+            
+            $scope.updateUser($scope.user);
+            
+            if ($scope.searchResults().length === 0) $scope.onButtonClick('cancel');
+        };
+        
+        $scope.onBudiUnblock = function(budi) 
+        {     
+            budi.blocked = false;
+            
+            var index = $scope.user.blocked.indexOf(budi.id);
+            
+            $scope.user.blocked.splice(index, 1);
+            
+            console.log('blocked: ' + $scope.user.blocked);
+            
+            $scope.updateUser($scope.user);
             
             if ($scope.searchResults().length === 0) $scope.onButtonClick('cancel');
         };
@@ -323,24 +362,43 @@
             });
         };
         
+        $scope.showConfirmUnblockBudi = function(budi) 
+        {
+            var template = budi.first_name + ' ' + budi.last_name + ' Will Be Unblocked',
+                confirmPopup = $ionicPopup.confirm(
+            {
+               title: 'Unblock Budi',
+               template: $scope.emptySpaces(template) + template
+            });
+
+            confirmPopup.then(function(res) 
+            {
+                if(res) $scope.onBudiUnblock(budi);
+            });
+        };
+        
         $scope.showConfirm = function(budi)
         {
             if ($scope.data.showDelete) $scope.showConfirmDeleteBudi(budi);
             
             else if ($scope.data.showReport) $scope.showConfirmReportBudi(budi);
             
-            else if ($scope.data.showBlock) $scope.showConfirmBlockBudi(budi);
+            else if ($scope.data.showBlock && budi.blocked === true) $scope.showConfirmUnblockBudi(budi);
+            
+            else if ($scope.data.showBlock && (budi.blocked || budi.blocked === false)) $scope.showConfirmBlockBudi(budi);
             
             else;
         };
         
-        $scope.buttonName = function() 
+        $scope.buttonName = function(budi) 
         {
             if ($scope.data.showDelete) return 'Delete Budi';
             
             else if ($scope.data.showReport) return 'Report Budi';
             
-            else if ($scope.data.showBlock) return 'Block Budi';
+            else if ($scope.data.showBlock && budi.blocked === true) return 'Unblock Budi';
+            
+            else if ($scope.data.showBlock && (budi.blocked || budi.blocked === false)) return 'Block Budi';
             
             else;
         };

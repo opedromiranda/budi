@@ -12,7 +12,11 @@
     function controller($scope, $window, $ionicModal, $ionicScrollDelegate, $profileBS)
     {
         $scope.user = $profileBS.getUserInfo;
-console.log($scope.user);
+        
+        $scope.updateUser = function(user)
+        {
+            $profileBS.updateUser(user);
+        };
         
         $scope.userMods = function()
         {
@@ -26,13 +30,17 @@ console.log($scope.user);
             
             if (!$scope.user.religion) $scope.user.religion = '';
                 
-            else if ($scope.user.religion.length) 
+            else if ($scope.user.religion.length && 
+                     $scope.user.religion.substr($scope.user.religion.length - 3, $scope.user.religion.length) === ' ()') 
                 $scope.user.religion = $scope.user.religion.substr(0, $scope.user.religion.length - 3);
             
             if (!$scope.user.political) $scope.user.political = '';
                 
-            else if ($scope.user.political.length) 
+            else if ($scope.user.political.length && 
+                     $scope.user.political.substr($scope.user.political.length - 3, $scope.user.political.length) === ' ()') 
                 $scope.user.political = $scope.user.political.substr(0, $scope.user.political.length - 3);
+            
+            $scope.updateUser($scope.user);
             
             count = count + 1;
         };
@@ -81,6 +89,8 @@ console.log($scope.user);
             else if (show === 'skype') $scope.user.show.skype = !$scope.user.show.skype;
             
             else;
+            
+            $scope.updateUser($scope.user);
         };
         
         $scope.changeSettings = function()
@@ -197,6 +207,8 @@ console.log($scope.user);
                     $scope.user.skype = $scope.modal.info;
                 
                 else;
+                
+                $scope.updateUser($scope.user);
 
                 $scope.clearInfo();
             }

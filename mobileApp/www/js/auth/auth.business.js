@@ -33,7 +33,7 @@
 
         $rootScope.$on('loggedIn', function (event, user) {
             user.from = 'facebook';
-            console.log(user);
+            
             $budiapi.login(user).then(
                 function onSuccess(result) {
                     service.successLogin(result.data.data.budi._id);
@@ -77,6 +77,8 @@
                         $angular.extend({}, fb_user_info, 
                         { 
                             picture: fb_user_picture,
+                            budis: [],
+                            blocked: [],
                             twitter: '', 
                             linkedin: '',
                             instagram: '', 
@@ -97,7 +99,7 @@
                                 reddit: true,
                                 googleplus: true,
                                 skype: true
-                            }
+                            },
                         }));
                 }
             ).finally(function(){
