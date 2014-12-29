@@ -233,19 +233,6 @@
 
         	return qual;
         };
-        
-        this.getBlockedBudisList = function() 
-        {
-            // return $budiApi.blockedBudiList(user);
- 			
- 			var qual = 
- 			[ 
-                1, 4, 8, 13, 17, 23, 29, 30 , 35, 38, 43, 
-                48, 50, 54, 56, 57, 65, 78, 82, 89, 94, 99 
-            ];
-            
-            return qual;
-        };
 
         this.deleteBudi = function() 
         {

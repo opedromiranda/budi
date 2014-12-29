@@ -25,8 +25,6 @@
         };
         
         $scope.data = $service.data;
-        
-        // $scope.blockedBudisList = $service.getBlockedBudisList();
 
         $scope.budisList = [];
         
