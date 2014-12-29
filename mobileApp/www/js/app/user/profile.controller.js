@@ -16,16 +16,22 @@ console.log($scope.user);
         
         $scope.userMods = function()
         {
-            if ($scope.user.interested_in.length == 1) 
+            if (!$scope.user.interested_in) $scope.user.interested_in = '';
+            
+            else if ($scope.user.interested_in.length == 1) 
                 $scope.user.interested_in = $scope.user.interested_in[0]; 
             
             else if ($scope.user.interested_in.length == 2) 
                 $scope.user.interested_in = 'Female | Male';
             
-            if ($scope.user.religion.length) 
+            if (!$scope.user.religion) $scope.user.religion = '';
+                
+            else if ($scope.user.religion.length) 
                 $scope.user.religion = $scope.user.religion.substr(0, $scope.user.religion.length - 3);
             
-            if ($scope.user.political.length) 
+            if (!$scope.user.political) $scope.user.political = '';
+                
+            else if ($scope.user.political.length) 
                 $scope.user.political = $scope.user.political.substr(0, $scope.user.political.length - 3);
             
             count = count + 1;
@@ -51,6 +57,14 @@ console.log($scope.user);
                 
                 $scope.settings = false;
             }
+            
+            else if (show === 'bio') $scope.user.show.bio = !$scope.user.show.bio;
+            
+            else if (show === 'interested_in') $scope.user.show.interested_in = !$scope.user.show.interested_in;
+            
+            else if (show === 'religion') $scope.user.show.religion = !$scope.user.show.religion;
+            
+            else if (show === 'political') $scope.user.show.political = !$scope.user.show.political;
             
             else if (show === 'facebook') $scope.user.show.facebook = !$scope.user.show.facebook;
             

@@ -86,6 +86,10 @@
                             show: 
                             {
                                 show: false,
+                                bio: true,
+                                interested_in: true,
+                                religion: true,
+                                political: true,
                                 facebook: true,
                                 twitter: true,
                                 linkedin: true,
