@@ -1,6 +1,6 @@
 /*exported BudiApi*/
 var BudiApi = angular.module('BudiApi', ['angularFileUpload'])
-    .service('BudiApiService', ['$http', '$budiappConfig', '$rootScope', '$upload' , function($http, $config, $rS, $upload) {
+    .service('BudiApiService', ['$q','$http', '$budiappConfig', '$rootScope', '$upload' , function($q, $http, $config, $rS, $upload) {
         'use strict';
 
         var self = this;
@@ -61,6 +61,7 @@ var BudiApi = angular.module('BudiApi', ['angularFileUpload'])
         };
 
         this.sendImage = function sendImage(budi, meet, image) {
+            var deferred = $q.defer();
             console.log( {
                 budi_id: budi._id,
                 meet_id: meet._id,
@@ -72,9 +73,29 @@ var BudiApi = angular.module('BudiApi', ['angularFileUpload'])
             formData.append('budi_id', budi._id);
             formData.append('meet_id', meet._id);
 
-            return $http.post(serverURL+endpoints.sendImage.url, formData, {
+            var xhr = new XMLHttpRequest(); 
+
+            xhr.open( 'POST', serverURL+endpoints.sendImage.url , true );
+            xhr.onreadystatechange = function(){
+                console.log('state changed');
+            };
+            xhr.addEventListener("load", xhrSuccess, false);
+            xhr.addEventListener("error", xhrError, false);
+
+            xhr.send( formData );
+
+            function xhrSuccess () {
+                deferred.resolve({});
+            }
+
+            function xhrError(){
+                deferred.reject();
+            }
+
+            return deferred.promise();
+            /*return $http.post(serverURL+endpoints.sendImage.url, formData, {
                 transformRequest: function(data) { return data; }
-            });
+            });*/
         };
 
         this.getMessages = function getMessages(meet){
