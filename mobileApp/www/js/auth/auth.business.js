@@ -4,14 +4,14 @@
     var _business = 'AuthBS',
         _authAdapter = 'AuthAdapter',
         _userService = 'UserService',
-        _facebookLS = 'FBLoginService',
         _budiapi = 'BudiApiService',
-        _proxy = 'AppDataProxy';
+        _proxy = 'AppDataProxy',
+        _fbS = 'FacebookService';
 
     $angular.module($app.appName)
-        .service(_business, ['$q', '$rootScope', '$state', '$ionicViewService', _authAdapter, _userService, _facebookLS, _budiapi, _proxy, business]);
+        .service(_business, ['$q', '$rootScope', '$state', '$ionicViewService', _authAdapter, _userService, _budiapi, _proxy,_fbS, business]);
 
-    function business($q, $rootScope, $state, $ionicViewService, $authAdapter, $userService, $facebookLS, $budiapi, $proxy) {
+    function business($q, $rootScope, $state, $ionicViewService, $authAdapter, $userService, $budiapi, $proxy, $fbS) {
         /*jshint validthis:true */
 
         var service = this;
@@ -23,12 +23,15 @@
         */
 
         this.fbLogin = function fbLogin(){
-            $facebookLS.login();
+            //$facebookLS.login();
         };
         
         this.fbLoginWithPermissions = function()
         {
-            $facebookLS.loginWithPermissions();
+            //$facebookLS.loginWithPermissions();
+            $fbS.login();
+            $fbS.getInfo();
+            //$fbS.logout();
         };
 
         $rootScope.$on('loggedIn', function (event, user) {
@@ -111,7 +114,7 @@
         };
 
         this.logout = function logout() {
-            $facebookLS.logOut();
+           // $facebookLS.logOut();
             $ionicViewService.nextViewOptions({
                 disableBack: true
             });

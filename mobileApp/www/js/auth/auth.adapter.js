@@ -10,7 +10,7 @@
         /*jshint validthis:true */
         this.getUserPicture = function getUserPicture(){
     		var deferred = $q.defer();
-    		FB.api(
+    		/*FB.api(
 			    "/me/picture",
 			    {
 			        "redirect": false,
@@ -27,7 +27,7 @@
 			      	 deferred.reject();
 			      }
 			    }
-			);
+			);*/
 			return deferred.promise;
     	};
     }

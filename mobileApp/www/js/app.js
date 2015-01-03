@@ -1,7 +1,7 @@
 // Ionic Starter App
 (function ($window, $app, $angular) {
 
-    $angular.module($app.appName, ['ionic', 'budiProxy', 'ngCordova', 'FacebookLogin','BudiApi'])
+    $angular.module($app.appName, ['ionic', 'budiProxy', 'ngCordova', /*'FacebookLogin',*/'BudiApi'])
         .config(['$stateProvider', '$urlRouterProvider', '$compileProvider', appConfig])
         .run(['$budiappConfig', '$ionicPlatform', '$log', '$http', appRun]);
 
