@@ -7,12 +7,12 @@
         count = 0;
 
     $angular.module($app.appName)
-        .controller(_controller, ['$scope', '$window', '$ionicModal', '$ionicScrollDelegate', _profileBS, controller]);
+        .controller(_controller, ['$scope', '$window', '$ionicModal', '$ionicScrollDelegate', '$state', _profileBS, controller]);
 
-    function controller($scope, $window, $ionicModal, $ionicScrollDelegate, $profileBS)
+    function controller($scope, $window, $ionicModal, $ionicScrollDelegate, $state, $profileBS)
     {
         $scope.user = $profileBS.getUserInfo;
-        
+
         $scope.updateUser = function(user)
         {
             $profileBS.updateUser(user);
@@ -54,10 +54,8 @@
         $scope.changeShow = function(show)
         {
             if (show === 'show')
-            {
+            {               
                 if ($scope.user.show.show) $scope.scrollTop();
-                
-                // else if (!$scope.user.show.show) $scope.scrollBottom();
                 
                 else;
                     
@@ -101,6 +99,30 @@
             
             $scope.user.show.show = false;
         };
+        
+        $scope.changePicture = function()
+        {
+            document.getElementById('browseButton').click();
+        };
+        
+        angular.element(document.getElementById('browseButton')).on('change',function(e)
+        {
+            var file = e.target.files[0],
+               fileReader = new FileReader();
+
+            angular.element(document.getElementById('browseButton')).val('');
+
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = function(event)
+            {
+                $scope.user.picture = fileReader.result;
+
+                $scope.updateUser($scope.user);
+
+                $state.go($state.current);
+            };
+        });
         
         $ionicModal.fromTemplateUrl('templates/app/change_profile_info.html', 
         {
@@ -209,19 +231,11 @@
                 else;
                 
                 $scope.updateUser($scope.user);
-
+                
                 $scope.clearInfo();
+                
+                $state.go($state.current, {}, {reload: true});
             }
         };
-        
-        // TODO update profile as necessary, so if offline we have something
-        /*$profileBS.getUserInfo().then(
-        	function onSuccess(data){
-       			$scope.user = data;
-        	},
-        	function onError(error){
-        		console.log(error);
-        	}
-        );*/
     }
 })(this.app, this.angular);
