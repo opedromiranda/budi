@@ -237,7 +237,9 @@ function ChatController () {
             }
             publicPath += uploadedFileName;
 
-            fs.rename(uploadedFilePath, publicPath);
+            console.log("public file path: " +  publicPath.toString());
+            
+            fs.rename(uploadedFilePath, publicPath.toString());
 
             result.fulfill({
                 meet_id : meetId,
