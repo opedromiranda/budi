@@ -38,7 +38,7 @@
             return my_info;
         };
 
-    	this.takePicture = function takePicture() {
+    	this.takePicture = function takePicture(source) {
             var deffered = $q.defer();
             
             // Open camera and save this on service
@@ -56,7 +56,14 @@
             }
             
             try {
-                navigator.camera.getPicture(picOnSuccess, picOnFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI });
+                navigator.camera.getPicture(picOnSuccess, picOnFail, 
+                    { 
+                        quality: 50, 
+                        destinationType : Camera.DestinationType.FILE_URI,
+                        sourceType : source, // Camera.PictureSourceType = {PHOTOLIBRARY : 0,CAMERA : 1,SAVEDPHOTOALBUM : 2}; 
+                        encodingType: Camera.EncodingType.JPEG,
+                        saveToPhotoAlbum: true 
+                    });
             } catch(error) {
                 console.log('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
                 deffered.reject();   

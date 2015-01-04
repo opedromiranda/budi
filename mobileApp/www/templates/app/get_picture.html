@@ -6,16 +6,16 @@
         	<div ng-hide="sendForm.picture">
 	        	<img class="camera-temp" src="./img/camera.png">
 	        	<br><br>
-		        <button class="button button-outline button-balanced icon-left ion-android-camera" ng-click="takePicture()">
+		        <button class="button button-outline button-balanced icon-left ion-android-camera" ng-click="takePicture(1)">
 		        	Take a Picture!
 				</button>
 				<br><br>
-				<button class="button button-outline button-energized icon-left ion-android-image" ng-click="selectPicture()">
+				<button class="button button-outline button-energized icon-left ion-android-image" ng-click="takePicture(0)">
 		        	Choose One From Your Gallery
 				</button>
 			</div>
 			<div ng-show="sendForm.picture">
-				<img class="picture-display" src="{{sendForm.picture}}">io
+				<img class="picture-display" ng-src="{{sendForm.picture}}">
 				<br><br>
 				<div class="picButtons">
 					<button title="Send Photo" class="button button-outline button-balanced" id="picBleft" ng-click="sendImage()">

@@ -78,6 +78,7 @@
                     service.successLogin(user, result.data.data.budi._id);
                 },
                 function onError(e){
+                    console.log("ERROR Register");
                     console.log(JSON.stringify(e));
                 }
             );
@@ -160,10 +161,17 @@
 
         this.logout = function logout() {
            // $facebookLS.logOut();
-            $ionicViewService.nextViewOptions({
-                disableBack: true
+           $cordovaFacebook.logout()
+            .then(function(success) {
+                $ionicViewService.nextViewOptions({
+                    disableBack: true
+                });
+                $state.go('auth.login');
+                console.log(JSON.stringify(success));
+            }, function (error) {
+              console.log(JSON.stringify(error));
             });
-            $state.go('auth.login');
+            
         };
 
         this.go = function go(){

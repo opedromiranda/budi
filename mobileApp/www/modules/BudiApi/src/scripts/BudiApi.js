@@ -84,17 +84,20 @@ var BudiApi = angular.module('BudiApi', [])
             xhr.addEventListener("load", xhrSuccess, false);
             xhr.addEventListener("error", xhrError, false);
 
+            xhr.setRequestHeader("Content-Type", "image/jpeg");
             xhr.send( formData );
 
-            function xhrSuccess () {
-                deferred.resolve({});
+            function xhrSuccess (response) {
+                console.log(response);
+                deferred.resolve(response);
             }
 
-            function xhrError(){
+            function xhrError(error){
+                console.log(error);
                 deferred.reject();
             }
 
-            return deferred.promise();
+            return deferred.promise;
             /*return $http.post(serverURL+endpoints.sendImage.url, formData, {
                 transformRequest: function(data) { return data; }
             });*/

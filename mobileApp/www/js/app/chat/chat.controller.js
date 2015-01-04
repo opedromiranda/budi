@@ -56,13 +56,13 @@
             $scope.sendForm.picture = undefined;
         };
 
-        $scope.takePicture = function takePicture() {
-            /*$chatBS.takePicture().then(
+        $scope.takePicture = function takePicture(src) {
+            $chatBS.takePicture(src).then(
                 function success(data) {
                     $scope.sendForm.picture = data.image;
                 }
-            );*/
-            $scope.sendForm.picture = "./img/camera.png";
+            );
+            //$scope.sendForm.picture = "./img/camera.png";
         };
 
         $scope.sendImage = function sendImage() {
@@ -71,7 +71,7 @@
                 function success(data) {
                     var msg = {};
                     msg.budiSending = $scope.myInfo._id;
-                    msg.image = angular.copy($scope.sendForm.picture);
+                    msg.image = $scope.sendForm.picture;
                     msg.type = "image";
                     insertMsg(msg);
                     $scope.clearPicture();
@@ -129,7 +129,7 @@
         };
 
         $scope.endMeet = function endMeet() {
-            $chatBS.resetMeet();
+            $chatBS.leaveMeet();
         };
 
         $ionicPopover.fromTemplateUrl('templates/app/popover-chat.html', {
