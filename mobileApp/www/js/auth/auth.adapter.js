@@ -10,36 +10,21 @@
         /*jshint validthis:true */
         this.getUserPicture = function getUserPicture(){
     		var deferred = $q.defer();
-    		$cordovaFacebook.api("/me/picture")
+    		$cordovaFacebook.api("me/picture?redirect=0")
             .then(
                 function(response) {
-                  console.log("GOT PIC");
-                  console.log(JSON.stringify(response));
-                  deferred.resolve({});
+                  //console.log("GOT PIC");
+                  //console.log(JSON.stringify(response));
+                  //console.log(response);
+                  deferred.resolve({
+                  	picture: response.data.url
+                  });
                 }, function (error) {
                   //console.log("API ERROR");
-                  console.log(error);
+                  console.log(JSON.stringify(error));
                   deferred.reject();
                 }
             );
-    		/*FB.api(
-			    "/me/picture",
-			    {
-			        "redirect": false,
-			        "height": "400",
-			        "type": "square",
-			        "width": "400"
-			    },
-			    function (response) {
-			      if (response && !response.error) {
-			        deferred.resolve({
-			        	pictureURL: response.data.url
-			        });
-			      }else {
-			      	 deferred.reject();
-			      }
-			    }
-			);*/
 			return deferred.promise;
     	};
     }

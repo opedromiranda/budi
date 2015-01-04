@@ -32,7 +32,7 @@
                     .then(function(success) {
                         getFbUserInfo();
                     }, function (error) {
-                      console.log(error);
+                      console.log(JSON.stringify(error));
                     });
                 }
                 else {
@@ -40,7 +40,7 @@
                 }
             }, 
             function error(e){
-                console.log(e);
+                console.log(JSON.stringify(e));
             });
         };
 
@@ -62,10 +62,11 @@
             var token = getFbAccessToken();
             $budiapi.login(user, token).then(
                 function onSuccess(result) {
-                    service.successLogin(result.data.data.budi._id);
+                    service.successLogin(user, result.data.data.budi._id);
                 },
                 function onError(error) {
-                    console.log("LOGIN Fail", error);
+                    console.log("LOGIN Fail");
+                    console.log(JSON.stringify(error));
                     budiApiRegister(user);
                 }
             );
@@ -83,7 +84,7 @@
         }
 
         function getFbAccessToken(){
-            $cordovaFacebook.getAccessToken()
+            return $cordovaFacebook.getAccessToken()
             .then(function(token) {
               //console.log("ACCESS TOKEN");
               //console.log(JSON.stringify(success));
@@ -113,12 +114,13 @@
             $authAdapter.getUserPicture()
             .then(
                 function success(data){
-                    fb_user_picture = $angular.copy(data.pictureURL);
+                    fb_user_picture = $angular.copy(data.picture);
                 }
             )
             .then(
                 function(){
                     // Save User details
+                    console.log(JSON.stringify(fb_user_info));
                     $userService.setUser(
                         $angular.extend({}, fb_user_info, 
                         { 

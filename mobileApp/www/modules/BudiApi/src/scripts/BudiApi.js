@@ -37,6 +37,8 @@ var BudiApi = angular.module('BudiApi', [])
         };*/
 
         this.login = function login(user, token){
+            console.log("TOKEN");
+            console.log(token);
             return $http.post(serverURL+endpoints.login.url, 
             {
                 fbId: user.id,
