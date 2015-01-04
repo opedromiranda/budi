@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "ng-file-upload": "~2.0.5",
-    "ngCordova": "~0.1.9-alpha"
+    "ngCordova": "~0.1.9-alpha",
+    "facebook-connect-plugin": "https://raw.githubusercontent.com/Wizcorp/phonegap-facebook-plugin/master/facebookConnectPlugin.js"
   }
 }

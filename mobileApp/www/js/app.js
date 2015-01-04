@@ -2,10 +2,16 @@
 (function ($window, $app, $angular) {
 
     $angular.module($app.appName, ['ionic', 'budiProxy', 'ngCordova', /*'FacebookLogin',*/'BudiApi'])
-        .config(['$stateProvider', '$urlRouterProvider', '$compileProvider', appConfig])
+        .config(['$stateProvider', '$urlRouterProvider', '$compileProvider', '$cordovaFacebookProvider', appConfig])
         .run(['$budiappConfig', '$ionicPlatform', '$log', '$http', appRun]);
 
-    function appConfig($stateProvider, $urlRouterProvider, $compileProvider) {
+    function appConfig($stateProvider, $urlRouterProvider, $compileProvider, $cordovaFacebookProvider) {
+
+        /*if (window.cordova.platformId == "browser") {
+            var appID = 868824609795999;
+            var version = "v2.1"; // or leave blank and default is v2.0
+            $cordovaFacebookProvider.browserInit(appID, version);
+        }*/
 
         var states = {
             // Authentication

@@ -1,6 +1,6 @@
 /*exported BudiApi*/
-var BudiApi = angular.module('BudiApi', ['angularFileUpload'])
-    .service('BudiApiService', ['$q','$http', '$budiappConfig', '$rootScope', '$upload' , function($q, $http, $config, $rS, $upload) {
+var BudiApi = angular.module('BudiApi', [])
+    .service('BudiApiService', ['$q','$http', '$budiappConfig', function($q, $http, $config) {
         'use strict';
 
         var self = this;
@@ -36,11 +36,11 @@ var BudiApi = angular.module('BudiApi', ['angularFileUpload'])
 
         };*/
 
-        this.login = function login(user){
+        this.login = function login(user, token){
             return $http.post(serverURL+endpoints.login.url, 
             {
                 fbId: user.id,
-                accessToken: $rS.budiAT,
+                accessToken: token,
                 name: user.name,
                 born_date: user.birthday,
                 gender: user.gender.charAt(0)

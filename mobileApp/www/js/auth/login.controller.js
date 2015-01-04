@@ -11,7 +11,7 @@
     {
     	$scope.fbLogin = function fbLogin () 
         {
-            $authBS.fbLoginWithPermissions();
+            $authBS.fbLogin();
     	};
 
     }

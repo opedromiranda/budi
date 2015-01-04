@@ -5,13 +5,13 @@
         _authAdapter = 'AuthAdapter',
         _userService = 'UserService',
         _budiapi = 'BudiApiService',
-        _proxy = 'AppDataProxy',
-        _fbS = 'FacebookService';
+        _proxy = 'AppDataProxy';
+        //_fbS = 'FacebookService';
 
     $angular.module($app.appName)
-        .service(_business, ['$q', '$rootScope', '$state', '$ionicViewService', _authAdapter, _userService, _budiapi, _proxy,_fbS, business]);
+        .service(_business, ['$q', '$interval', '$rootScope', '$state', '$ionicViewService', '$cordovaFacebook', _authAdapter, _userService, _budiapi, _proxy, business]);
 
-    function business($q, $rootScope, $state, $ionicViewService, $authAdapter, $userService, $budiapi, $proxy, $fbS) {
+    function business($q, $interval, $rootScope, $state, $ionicViewService, $cordovaFacebook, $authAdapter, $userService, $budiapi, $proxy) {
         /*jshint validthis:true */
 
         var service = this;
@@ -23,47 +23,90 @@
         */
 
         this.fbLogin = function fbLogin(){
-            //$facebookLS.login();
-        };
-        
-        this.fbLoginWithPermissions = function()
-        {
-            //$facebookLS.loginWithPermissions();
-            $fbS.login();
-            $fbS.getInfo();
-            //$fbS.logout();
+            $cordovaFacebook.getLoginStatus()
+            .then(function success(response){
+                //console.log("STATUS RESPONSE");
+                //console.log(JSON.stringify(response));
+                if(response.status !== "connected"){
+                    $cordovaFacebook.login(["user_about_me", "user_birthday", "user_interests", "user_location", "user_relationship_details", "user_religion_politics"])
+                    .then(function(success) {
+                        getFbUserInfo();
+                    }, function (error) {
+                      console.log(error);
+                    });
+                }
+                else {
+                    getFbUserInfo();
+                }
+            }, 
+            function error(e){
+                console.log(e);
+            });
         };
 
-        $rootScope.$on('loggedIn', function (event, user) {
-            user.from = 'facebook';
-            
-            $budiapi.login(user).then(
+        function getFbUserInfo(){
+            $cordovaFacebook.api("/me")
+            .then(
+                function(user_info) {
+                  //console.log("THROUGH API");
+                  //console.log(JSON.stringify(success));
+                  budiApiLogin(user_info);
+                }, function (error) {
+                  //console.log("API ERROR");
+                  console.log(error);
+                }
+            );
+        }
+
+        function budiApiLogin(user){
+            var token = getFbAccessToken();
+            $budiapi.login(user, token).then(
                 function onSuccess(result) {
                     service.successLogin(result.data.data.budi._id);
                 },
                 function onError(error) {
                     console.log("LOGIN Fail", error);
-                    $budiapi.register(user).then(
-                        function onSuccess(result) {
-                            service.successLogin(result.data.data.budi._id);
-                        },
-                        function onError(e){
-                            console.log(e);
-                            throw e;
-                        }
-                    );
+                    budiApiRegister(user);
                 }
             );
-        });
+        }
 
-        this.successLogin = function successLogin(new_id){
+        function budiApiRegister(user){
+            $budiapi.register(user).then(
+                function onSuccess(result) {
+                    service.successLogin(user, result.data.data.budi._id);
+                },
+                function onError(e){
+                    console.log(JSON.stringify(e));
+                }
+            );
+        }
+
+        function getFbAccessToken(){
+            $cordovaFacebook.getAccessToken()
+            .then(function(token) {
+              //console.log("ACCESS TOKEN");
+              //console.log(JSON.stringify(success));
+              return token;
+            }, function (error) {
+              console.log(error);
+              throw err;
+            });
+        }
+        
+        this.fbLoginWithPermissions = function()
+        {
+            //$facebookLS.loginWithPermissions();
+        };
+
+        this.successLogin = function successLogin(user, new_id){
             // Disable 'Back' button 
             $ionicViewService.nextViewOptions({
                 disableBack: true
             });
 
             // Get User Info from Facebook
-            var fb_user_info = $facebookLS.getUser();
+            var fb_user_info = user;//$facebookLS.getUser();
             fb_user_info._id = new_id;
             // Get Profile Picture
             var fb_user_picture;
