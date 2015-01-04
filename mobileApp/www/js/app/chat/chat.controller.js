@@ -149,6 +149,13 @@
             $chatBS.resetMeet();
         };
 
+        $scope.locked = function(){
+            return false;
+            if($chatBS.getNrOfPictures() >= 5)
+                return false;
+            else return true;
+        };
+
         $interval(function(){$scope.messages = $chatBS.meet_messages;}, 2500);
     }
 

@@ -64,11 +64,11 @@ var BudiApi = angular.module('BudiApi', [])
 
         this.sendImage = function sendImage(budi, meet, image) {
             var deferred = $q.defer();
-            console.log( {
+            console.log( JSON.stringify({
                 budi_id: budi._id,
                 meet_id: meet._id,
                 image: image
-            });
+            }));
 
             var formData = new FormData();
             formData.append('image', image);

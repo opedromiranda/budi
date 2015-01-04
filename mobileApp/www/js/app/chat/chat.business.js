@@ -12,7 +12,8 @@
     function business($q, $interval, $userS, $budiAPI, $storage) {
         var self = this;
         var my_info = $userS.getUser();
-
+        var nrOfPictures = 0;
+    
         var settings = {
             data: {
                 key: 'ChatService',
@@ -26,6 +27,10 @@
                 },
                 updates: []
             }
+        };
+
+        this.getNrOfPictures = function(){
+            return nrOfPictures;
         };
 
         var storage = new $storage(settings.data.key, settings.data.default, settings.data.updates),
@@ -43,7 +48,7 @@
             
             // Open camera and save this on service
             function picOnSuccess(imageURI) {
-                console.log(_business, "Snapshot Success:", imageURI);
+                console.log("Snapshot Success: " + imageURI);
                 // Return
                 deffered.resolve({
                     image: imageURI
@@ -51,7 +56,7 @@
             }
 
             function picOnFail(message) {
-                console.log(_business, "Snapshot Failure:", message);
+                console.log("Snapshot Failure: " + message);
                 deffered.reject(message);
             }
             
@@ -161,8 +166,10 @@
 //
         function insertMsg(msg) {
             var go_msg = {};
-            if(msg.type === "image")
+            if(msg.type === "image"){
                 go_msg.image = msg.message;
+                nrOfPictures++;
+            }
             else 
                 go_msg.message = msg.message;
             
@@ -179,6 +186,7 @@
 
         function updateMessages(messages){
             var tempMsgs = [];
+            nrOfPictures = 0;
             for(var i=0; i<messages.length; i++){
                 tempMsgs.push(insertMsg(messages[i]));
             }
