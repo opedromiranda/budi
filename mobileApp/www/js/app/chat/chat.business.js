@@ -7,9 +7,9 @@
         _storage = 'LocalStorageFactory';
     
     $angular.module($app.appName)
-        .service(_business, ['$q', '$interval', _userS, _budiAPI, _storage, business]);
+        .service(_business, ['$q', '$interval', '$ionicPopup', _userS, _budiAPI, _storage, business]);
         
-    function business($q, $interval, $userS, $budiAPI, $storage) {
+    function business($q, $interval, $ionicPopup, $userS, $budiAPI, $storage) {
         var self = this;
         var my_info = $userS.getUser();
         var nrOfPictures = 0;
@@ -21,7 +21,9 @@
                     meet_info : {
                         _id: undefined,
                         meet_budi: undefined,
-                        active: false
+                        active: false,
+                        added_budi: false,
+                        got_friend: false
                     },
                     chat: []
                 },
@@ -91,25 +93,104 @@
         this.getMsgs = function getMsgs(){
             $budiAPI.getMessages(meet_info).then(
                 function onSuccess(messages){
-                    console.log("GOT MESSAGES", messages);
+                    console.log("GOT MESSAGES");
+                    //console.log(JSON.stringify(messages));
                     //self.meet_messages = self.meet_messages.concat(messages.data.chat);
-                    updateMessages(messages.data.chat);
-                    if( messages.data.full && !meet_info.gotBudi){
-                        if( messages.data.budies[0].budi_id === my_info._id ){
-                            meet_info.meet_budi = messages.data.budies[1];
+
+                    //check for a friend request
+                    
+                    if( ! meet_info.added_budi ){
+                        var showDialog = false;
+                        if( messages.data.friends[0].id === my_info._id){
+                            if(messages.data.friends[1].friendReq){
+                                showDialog = true;
+                            }
+                        } else if( messages.data.friends[1].id === my_info._id){
+                            if(messages.data.friends[0].friendReq){
+                                showDialog = true;
+                            }
                         }
-                        else {
-                            meet_info.meet_budi = messages.data.budies[0];
+
+                        //display dialog to add friend if they want
+                        if( showDialog ){
+                            var confirmPopup = $ionicPopup.confirm({
+                                title: 'Friend Request',
+                                subTitle: 'Notice: friend requests can only occur once!'
+                                template: 'Your current budi has sent you a friend request. Want to add him?',
+                                cancelText: 'No',
+                                okText: 'Yes'
+                            });
+                            
+                            confirmPopup.then(function(res) {
+                                if(res) {
+                                    self.addBudi();
+                                    meet_info.added_budi = true;
+                                    // show toast 'You are now friends!'
+                                }
+                                showDialog = false;
+                            });
                         }
-                        meet_info.gotBudi = true;
-                        storage.save();
                     }
+
+                    if( messages.data.leave ){
+                        $interval.cancel(intervalPromise);
+                        
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Meeting has ended',
+                            template: 'Your current budi has left the meeting! Better luck next time :/'
+                        });
+                        
+                        alertPopup.then(function(res) {
+                            console.log("got meet leave notified");
+                        });
+                        
+                        meet_info.active = false;
+                        storage.reset();
+                        return;
+                    } 
 
                     if( messages.data.finish ){
                         $interval.cancel(intervalPromise);
+
+                        if(!meet_info.added_budi){
+                            var confirmPopup = $ionicPopup.confirm({
+                                title: 'Meeting has ended',
+                                template: 'A day has past already! The meeting ended and you didn\'t send a friend request. Do you want to do that now?',
+                                cancelText: 'No, thank you',
+                                okText: 'Yes, please'
+                            });
+                            
+                            confirmPopup.then(function(res) {
+                                if(res) {
+                                    self.addBudi();
+                                    meet_info.added_budi = true;
+                                    // show toast 'a friend request has been sent!'
+                                }
+                                showDialog = false;
+                            });
+                        }
+
+                        meet_info.active = false;
                         storage.reset();
-                        // TODO display notification with add budi
+                        return;
                     }
+                    
+                    //set budi
+                    if( messages.data.full && !meet_info.gotBudi){
+                        if( messages.data.budies[0].budi_id === my_info._id ){
+                            meet_info.meet_budi = messages.data.budies[1];
+                            meet_info.gotFriend = true;
+                        }
+                        else if( messages.data.budies[1].budi_id === my_info._id ){
+                            meet_info.meet_budi = messages.data.budies[0];
+                            meet_info.gotFriend = true;
+                        } else meet_info.gotFriend = false;
+                        meet.gotBudi = true;
+                    }
+
+
+                    updateMessages(messages.data.chat);
+                    storage.save();
                 },
                 function onError(e){
                     console.log(e);
@@ -142,12 +223,16 @@
         };
 
         this.leaveMeet = function leaveMeet(){
-            $budiAPI.leaveMeet(budi, meet).then(
+            $budiAPI.leaveMeet(meet).then(
                 function onSuccess(data){
                     $interval.cancel(intervalPromise);
                     meet_info.active = false;
                     storage.reset();
-                });
+                },
+                function onError(e){
+                    console.log(e);
+                }
+            );
         };
 
         this.resetMeet = function resetMeet(){
@@ -194,7 +279,22 @@
         }
 
         this.addBudi = function addBudi(){
-
+            var budi_id = undefined; 
+            if( messages.data.friends[0].id === my_info._id){
+                budi_id = messages.data.friends[1].id;
+            }
+            else budi_id = messages.data.friends[0].id;
+            
+            $budiAPI.addBudi(my_info._id, budi_id).then(
+                function onSuccess(res){
+                    //show toast friend request sent
+                    meet_info.added_budi = true;
+                    console.log("Add Budi Success");
+                },
+                function onError(e){
+                    console.log(e);
+                }
+            );
         };
     }
 

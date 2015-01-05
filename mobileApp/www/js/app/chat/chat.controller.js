@@ -118,7 +118,7 @@
         $scope.meet = $chatBS.getMeetInfo();
         $scope.meetAnimation = false;
 
-        console.log($chatBS.getMeetInfo());
+        //console.log($chatBS.getMeetInfo());
         $scope.findBudi = function findBudi() {
             $scope.meetAnimation = true;
             $chatBS.findMeet().then(
@@ -161,9 +161,12 @@
             else return true;
         };
 
-        $interval(function(){$scope.messages = $chatBS.meet_messages;}, 2500);
+        $interval(function(){
+            if($scope.messages.length != $chatBS.meet_messages.length)
+                $scope.messages = $chatBS.meet_messages;
+        }, 1000);
 
-        function dataURItoBlob(dataURI) {
+        /*function dataURItoBlob(dataURI) {
         // convert base64/URLEncoded data component to raw binary data held in a string
          var byteString = atob(dataURI.split(',')[1]);
          var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
@@ -177,7 +180,7 @@
 
          var bb = new Blob([ab], { "type": mimeString });
          return bb;
-        }
+        }*/
 
         $scope.addBudi = function(){
             $chatBS.addBudi();
