@@ -71,11 +71,12 @@ var BudiApi = angular.module('BudiApi', [])
             }));
 
             var formData = new FormData();
+
             formData.append('image', image);
             formData.append('budi_id', budi._id);
             formData.append('meet_id', meet._id);
 
-            var xhr = new XMLHttpRequest(); 
+            /*var xhr = new XMLHttpRequest(); 
 
             xhr.open( 'POST', serverURL+endpoints.sendImage.url , true );
             xhr.onreadystatechange = function(){
@@ -84,11 +85,11 @@ var BudiApi = angular.module('BudiApi', [])
             xhr.addEventListener("load", xhrSuccess, false);
             xhr.addEventListener("error", xhrError, false);
 
-            xhr.setRequestHeader("Content-Type", "image/jpeg");
+            xhr.setRequestHeader("Content-Type", "Content-Type:multipart/form-data;");
             xhr.send( formData );
 
             function xhrSuccess (response) {
-                console.log(response);
+                console.log(JSON.stringify(response));
                 deferred.resolve(response);
             }
 
@@ -97,10 +98,13 @@ var BudiApi = angular.module('BudiApi', [])
                 deferred.reject();
             }
 
-            return deferred.promise;
-            /*return $http.post(serverURL+endpoints.sendImage.url, formData, {
-                transformRequest: function(data) { return data; }
-            });*/
+            return deferred.promise;*/
+            return $http({
+                method: 'POST',
+                url: serverURL+endpoints.sendImage.url, 
+                data: formData,
+                headers: {'Content-Type': 'multipart/form-data'}
+            });
         };
 
         this.getMessages = function getMessages(meet){

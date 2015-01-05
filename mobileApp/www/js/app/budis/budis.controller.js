@@ -28,7 +28,7 @@
 
         $scope.budisList = [];
         
-        // $scope.budisListUnsorted = $service.getBudisList();
+        //test. $scope.user.budis = empty at first. remove above line to actual budis list
         $scope.user.budis = $service.getBudisList();
         
         $scope.budisListUnsorted = $scope.user.budis; 

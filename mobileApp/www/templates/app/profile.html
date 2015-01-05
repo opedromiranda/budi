@@ -21,6 +21,7 @@
             <p ng-hide="settings"></p>
             <h2 ng-show="settings"></h2>
             <h2> 
+                <input type="file" id="browseButton" accept="image/*" style="display:none"/>
                 <button ng-show="settings" title="Change Picture" ng-click="changePicture()"
                         class="button button-clear button-positive button-small icon ion-edit">
                 </button>
@@ -124,7 +125,7 @@
         
         <ion-item ng-show="user.show.show || user.show.googleplus" ng-click="openBrowser('{{ user.googleplus }}')">
 			<i class="icon ion-social-googleplus"> Google+ </i>
-            <button ng-show="settings" title="Edit" ng-click="setEdit('google+')"
+            <button ng-show="settings" title="Edit" ng-click="setEdit('googleplus')"
                     class="button button-clear button-positive button-small icon ion-edit">
             </button>
             <button ng-show="user.show.show && user.show.googleplus" title="Hide" ng-click="changeShow('googleplus')"
