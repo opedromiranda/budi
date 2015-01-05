@@ -54,12 +54,14 @@
 
         $scope.clearPicture = function clearPicture() {
             $scope.sendForm.picture = undefined;
+            $scope.sendForm.pictureSEND = undefined;
         };
 
         $scope.takePicture = function takePicture(src) {
             $chatBS.takePicture(src).then(
                 function success(data) {
-                    $scope.sendForm.picture = data.image;
+                    $scope.sendForm.pictureSEND = dataURItoBlob("data:image/jpeg;base64,"+data.image);
+                    $scop.sendForm.picture = "data:image/jpeg;base64,"+data.image;
                 }
             );
             //$scope.sendForm.picture = "./img/camera.png";
@@ -71,7 +73,7 @@
                 function success(data) {
                     var msg = {};
                     msg.budiSending = $scope.myInfo._id;
-                    msg.image = $scope.sendForm.picture;
+                    msg.image = $scope.sendForm.pictureSEND;
                     msg.type = "image";
                     insertMsg(msg);
                     $scope.clearPicture();
@@ -157,6 +159,22 @@
         };
 
         $interval(function(){$scope.messages = $chatBS.meet_messages;}, 2500);
+
+        function dataURItoBlob(dataURI) {
+        // convert base64/URLEncoded data component to raw binary data held in a string
+         var byteString = atob(dataURI.split(',')[1]);
+         var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+         var ab = new ArrayBuffer(byteString.length);
+         var ia = new Uint8Array(ab);
+         for (var i = 0; i < byteString.length; i++)
+         {
+            ia[i] = byteString.charCodeAt(i);
+         }
+
+         var bb = new Blob([ab], { "type": mimeString });
+         return bb;
+        }
     }
 
 })(this.app, this.angular);

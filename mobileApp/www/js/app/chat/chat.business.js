@@ -64,7 +64,7 @@
                 navigator.camera.getPicture(picOnSuccess, picOnFail, 
                     { 
                         quality: 50, 
-                        destinationType : Camera.DestinationType.FILE_URI,
+                        destinationType : Camera.DestinationType.DATA_URL,
                         sourceType : source, // Camera.PictureSourceType = {PHOTOLIBRARY : 0,CAMERA : 1,SAVEDPHOTOALBUM : 2}; 
                         encodingType: Camera.EncodingType.JPEG,
                         saveToPhotoAlbum: true 
