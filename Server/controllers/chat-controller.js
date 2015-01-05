@@ -93,11 +93,18 @@ function ChatController () {
     }
 
     function getChat(meet){
-        var result = new mongoose.Promise, budies = meet.budies, budi1 = {}, budi2 = {}, meetFinish = false,
-            meetFull = budies.length > 1;
+        var result = new mongoose.Promise, budies = meet.budies, budi1 = {}, budi2 = {},meetLeave = meet.finish,
+            meetFull = budies.length > 1, meetFinish = moment().diff(meet.date, 'minutes') > 1440;
 
-        if (moment().diff(meet.date, 'minutes') > 1440 ){
-            meetFinish = true;
+        if (meetFinish || meetLeave){
+            result.fulfill({
+                chat: meet.chat,
+                budies: [budi1, budi2],
+                finish: true,
+                full: meetFull,
+                friends: meet.budies,
+                leave: meetLeave
+            });
         }
         else if (meetFull && budies[0].friendReq && budies[1].friendReq) {
                 Budi.findOne({_id : budies[0].id }, function(err, doc){
@@ -127,7 +134,9 @@ function ChatController () {
                             chat: meet.chat,
                             budies: [budi1, budi2],
                             finish: meetFinish,
-                            full: meetFull
+                            full: meetFull,
+                            friends: meet.budies,
+                            leave: meetLeave
                         });
                     });
                 });
@@ -138,7 +147,9 @@ function ChatController () {
                 chat: meet.chat,
                 budies: [budi1, budi2],
                 finish: meetFinish,
-                full: meetFull
+                full: meetFull,
+                friends: meet.budies,
+                leave: meetLeave
             });
 
         }
@@ -238,7 +249,7 @@ function ChatController () {
             publicPath += uploadedFileName;
 
             console.log("public file path: " +  publicPath.toString());
-            
+
             fs.rename(uploadedFilePath, publicPath.toString());
 
             result.fulfill({

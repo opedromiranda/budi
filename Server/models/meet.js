@@ -13,6 +13,7 @@ var mongoose = require('mongoose'),
             age: Boolean,
             genre: String
         },
+        finish: Boolean,
         date : Date
     });
 
