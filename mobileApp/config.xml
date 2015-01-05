@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.budi.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>budiApp</name>
+    <name>Budi</name>
+    <icon src="www/img/logo_1024x1024.png"/>
     <description>
         budi
     </description>

@@ -115,7 +115,7 @@
                         if( showDialog ){
                             var confirmPopup = $ionicPopup.confirm({
                                 title: 'Friend Request',
-                                subTitle: 'Notice: friend requests can only occur once!'
+                                subTitle: 'Notice: friend requests can only occur once!',
                                 template: 'Your current budi has sent you a friend request. Want to add him?',
                                 cancelText: 'No',
                                 okText: 'Yes'
