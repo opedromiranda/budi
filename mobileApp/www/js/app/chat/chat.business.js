@@ -192,6 +192,10 @@
             }
             self.meet_messages = tempMsgs;
         }
+
+        this.addBudi = function addBudi(){
+
+        };
     }
 
 })(this.app, this.angular);
