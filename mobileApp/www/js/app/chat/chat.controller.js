@@ -61,7 +61,7 @@
             $chatBS.takePicture(src).then(
                 function success(data) {
                     $scope.sendForm.pictureSEND = dataURItoBlob("data:image/jpeg;base64,"+data.image);
-                    $scop.sendForm.picture = "data:image/jpeg;base64,"+data.image;
+                    $scop.sendForm.picture = "data:image/jpeg;base64, "+ data.image;
                 }
             );
             //$scope.sendForm.picture = "./img/camera.png";
@@ -69,11 +69,14 @@
 
         $scope.sendImage = function sendImage() {
             $scope.modal.hide();
-            $chatBS.sendImage($scope.sendForm.picture).then(
+            console.log("IMAGE");
+            console.log($scope.sendForm.picture);
+            console.log($scope.sendForm.pictureSEND);
+            $chatBS.sendImage($scope.sendForm.pictureSEND).then(
                 function success(data) {
                     var msg = {};
                     msg.budiSending = $scope.myInfo._id;
-                    msg.image = $scope.sendForm.pictureSEND;
+                    msg.image = $scope.sendForm.picture;
                     msg.type = "image";
                     insertMsg(msg);
                     $scope.clearPicture();
@@ -175,6 +178,21 @@
          var bb = new Blob([ab], { "type": mimeString });
          return bb;
         }
+
+        /*function encodeImageUri(imageUri)
+        {
+             var c=document.createElement('canvas');
+             var ctx=c.getContext("2d");
+             var img=new Image();
+             img.onload = function(){
+               c.width=this.width;
+               c.height=this.height;
+               ctx.drawImage(img, 0,0);
+             };
+             img.src=imageUri;
+             var dataURL = c.toDataURL("image/jpeg");
+             return dataURL;
+        }*/
     }
 
 })(this.app, this.angular);
