@@ -1,23 +1,59 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version='1.0' encoding='utf-8'?>
 <widget id="com.budi.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>budiApp</name>
-  <description>
+    <name>budiApp</name>
+    <description>
         budi
     </description>
-  <author email="contact@budi.com" href="http://budiapp.com/">
+    <author email="contact@budi.com" href="http://budiapp.com/">
       budi
     </author>
-  <content src="index.html"/>
-  <access origin="*"/>
-  <preference name="webviewbounce" value="false"/>
-  <preference name="UIWebViewBounce" value="false"/>
-  <preference name="DisallowOverscroll" value="true"/>
-  <preference name="BackupWebStorage" value="none"/>
-  <feature name="StatusBar">
-    <param name="ios-package" value="CDVStatusBar" onload="true"/>
-  </feature>
-  <feature name="InAppBrowser">
-    <param name="ios-package" value="CDVInAppBrowser" />
-    <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
-  </feature>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="BackupWebStorage" value="none" />
+    <feature name="StatusBar">
+        <param name="ios-package" onload="true" value="CDVStatusBar" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="ios-package" value="CDVInAppBrowser" />
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <feature name="Keyboard">
+        <param name="id" value="com.ionic.keyboard" />
+        <param name="url" value="https://github.com/driftyco/ionic-plugins-keyboard.git#:." />
+    </feature>
+    <feature name="PushPlugin">
+        <param name="id" value="com.phonegap.plugins.PushPlugin" />
+        <param name="url" value="https://github.com/phonegap-build/PushPlugin.git#:." />
+    </feature>
+    <feature name="Facebook Connect">
+        <param name="id" value="com.phonegap.plugins.facebookconnect" />
+        <variable name="APP_ID" value="868824609795999" />
+        <variable name="APP_NAME" value="budi" />
+    </feature>
+    <feature name="LocalNotification">
+        <param name="id" value="de.appplant.cordova.plugin.local-notification" />
+    </feature>
+    <feature name="Toast">
+        <param name="id" value="nl.x-services.plugins.toast" />
+        <param name="url" value="https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git#:." />
+    </feature>
+    <feature name="Camera">
+        <param name="id" value="org.apache.cordova.camera" />
+    </feature>
+    <feature name="Console">
+        <param name="id" value="org.apache.cordova.console" />
+    </feature>
+    <feature name="Device">
+        <param name="id" value="org.apache.cordova.device" />
+    </feature>
+    <feature name="Notification">
+        <param name="id" value="org.apache.cordova.dialogs" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="id" value="org.apache.cordova.inappbrowser" />
+        <param name="url" value="https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git#:." />
+    </feature>
 </widget>
