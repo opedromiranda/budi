@@ -137,11 +137,11 @@
                     ],
                     "application": [
                         {
-                            "xml": "<meta-data android:name=\"com.facebook.sdk.ApplicationId\" android:value=\"@string/fb_app_id\" />",
+                            "xml": "<meta-data android:name=\"com.facebook.sdk.ApplicationId\" android:value=\"fb_app_id\" />",
                             "count": 1
                         },
                         {
-                            "xml": "<activity android:label=\"@string/fb_app_name\" android:name=\"com.facebook.LoginActivity\" android:theme=\"@android:style/Theme.Translucent.NoTitleBar\" />",
+                            "xml": "<activity android:label=\"fb_app_name\" android:name=\"com.facebook.LoginActivity\" android:theme=\"@android:style/Theme.Translucent.NoTitleBar\" />",
                             "count": 1
                         }
                     ]

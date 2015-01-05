@@ -9,13 +9,15 @@
 
     $angular.module($app.appName)
         .controller(_controller, ['$scope', _service, '$ionicScrollDelegate', '$ionicPopover',
-                                  '$ionicPopup', 'filterFilter', _profileBS, controller]);
+                                  '$ionicPopup', 'filterFilter', '$state', _profileBS, controller]);
 
-    function controller($scope, $service, $ionicScrollDelegate, $ionicPopover, $ionicPopup, $filterFilter, $profileBS) 
+    function controller($scope, $service, $ionicScrollDelegate, $ionicPopover, $ionicPopup, $filterFilter, $state, $profileBS) 
     {  
         var letters = [],
             currentCharCode = 'A'.charCodeAt(0) - 1,
             letterHasMatch = {};
+        
+        $scope.budi = $service.budi;
         
         $scope.user = $service.user;
         
@@ -399,6 +401,34 @@
             else if ($scope.data.showBlock && (budi.blocked || budi.blocked === false)) return 'Block Budi';
             
             else;
+        };
+        
+        $scope.calculateAge = function(birth)
+        {
+            var todayDate = new Date(),
+                todayYear = todayDate.getFullYear(),
+                todayMonth = todayDate.getMonth(),
+                todayDay = todayDate.getDate(),
+                birthDate = new Date(birth),
+                birthYear = birthDate.getFullYear(),
+                birthMonth = birthDate.getMonth(),
+                birthDay = birthDate.getDate(),
+                age = todayYear - birthYear;
+            
+            if (todayMonth < birthMonth) age--;
+
+            else if (todayMonth === birthMonth && todayDay < birthDay) age--;
+
+            return age;
+        };
+        
+        $scope.age = $scope.calculateAge($scope.budi.birthday);
+        
+        $scope.seeBudiProfile = function(id)
+        {
+            $service.budi = $scope.user;
+
+            $state.go('app.budi_profile');
         };
     }
 })(this.app, this.angular);

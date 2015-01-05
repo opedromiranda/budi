@@ -27,7 +27,7 @@
 	    </ion-item>
         <ion-list show-delete="data.showDelete || data.showReport || data.showBlock" ng-repeat="budi in searchResults()" >
           <!-- trocar URL para profile do budi seleccionado -->
-            <ion-item ng-if="!budi.isLetter" ng-href="#/app/budis/profile" class="item item-thumbnail-left item-icon-right">    
+            <ion-item ng-if="!budi.isLetter" ng-click="seeBudiProfile(budi.id)" class="item item-thumbnail-left item-icon-right">    
                 <img ng-src="{{ budi.picture }}">
                 <i title="View Profile" class="icon icon-right ion-ios7-arrow-forward"></i>
                 <p></p>
