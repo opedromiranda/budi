@@ -60,8 +60,11 @@
         $scope.takePicture = function takePicture(src) {
             $chatBS.takePicture(src).then(
                 function success(data) {
-                    $scope.sendForm.pictureSEND = dataURItoBlob("data:image/jpeg;base64,"+data.image);
-                    $scop.sendForm.picture = "data:image/jpeg;base64, "+ data.image;
+                   // $scope.sendForm.pictureSEND = dataURItoBlob("data:image/jpeg;base64,"+data.image);
+                    $scope.sendForm.picture = "data:image/jpeg;base64,"+ data.image;
+                    console.log("IMAGE");
+                    console.log($scope.sendForm.picture);
+                    //console.log($scope.sendForm.pictureSEND);
                 }
             );
             //$scope.sendForm.picture = "./img/camera.png";
@@ -69,9 +72,6 @@
 
         $scope.sendImage = function sendImage() {
             $scope.modal.hide();
-            console.log("IMAGE");
-            console.log($scope.sendForm.picture);
-            console.log($scope.sendForm.pictureSEND);
             $chatBS.sendImage($scope.sendForm.pictureSEND).then(
                 function success(data) {
                     var msg = {};
