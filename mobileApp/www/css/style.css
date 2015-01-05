@@ -146,6 +146,7 @@
 
 .picture-display {
 	max-width: 90%;
+	max-height: 60%;
 	height: auto;
 }
 

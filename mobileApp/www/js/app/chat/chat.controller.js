@@ -164,23 +164,8 @@
         $interval(function(){
             if($scope.messages.length != $chatBS.meet_messages.length)
                 $scope.messages = $chatBS.meet_messages;
+            $scope.meetInfo =  $chatBS.getMyInfo();
         }, 1000);
-
-        /*function dataURItoBlob(dataURI) {
-        // convert base64/URLEncoded data component to raw binary data held in a string
-         var byteString = atob(dataURI.split(',')[1]);
-         var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-
-         var ab = new ArrayBuffer(byteString.length);
-         var ia = new Uint8Array(ab);
-         for (var i = 0; i < byteString.length; i++)
-         {
-            ia[i] = byteString.charCodeAt(i);
-         }
-
-         var bb = new Blob([ab], { "type": mimeString });
-         return bb;
-        }*/
 
         $scope.addBudi = function(){
             $chatBS.addBudi();

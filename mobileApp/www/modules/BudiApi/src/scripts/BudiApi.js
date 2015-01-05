@@ -137,10 +137,10 @@ var BudiApi = angular.module('BudiApi', [])
             return this.loggedBudi;
         };
 
-        this.addBudi = function addBudi(myID, budiID){
-            return $http.post(serverURL.endpoints.budiAdd.url, {
-                id : myID,
-                budi_id : budiID 
+        this.addBudi = function addBudi(myID, meetID){
+            return $http.post(serverURL+endpoints.budiAdd.url, {
+                budi_id : myID,
+                meet_id : meetID 
             });
         };
 

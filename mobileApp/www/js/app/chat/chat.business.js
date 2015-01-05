@@ -100,7 +100,7 @@
                     if( messages.data.full ){
                         meet_info.gotBudi = true;
 
-                        if(meet_info.meet_budi === 'undefined'){
+                        if(meet_info.meet_budi === undefined){
                             if( messages.data.friends[0].id === my_info._id){
                                 meet_info.meet_budi = messages.data.friends[1];
                             } else if( messages.data.friends[1].id === my_info._id){
@@ -289,14 +289,12 @@
         }
 
         this.addBudi = function addBudi(){
-            if(meet_info.meet_budi === 'undefined')
-                return;
-            
-            $budiAPI.addBudi(my_info._id, meet_info.meet_budi.id).then(
+            $budiAPI.addBudi(my_info._id, meet_info._id).then(
                 function onSuccess(res){
                     //show toast friend request sent
                     meet_info.added_budi = true;
                     console.log("Add Budi Success");
+                    console.log(JSON.stringify(res));
                 },
                 function onError(e){
                     console.log(e);
