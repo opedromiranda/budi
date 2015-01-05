@@ -60,7 +60,7 @@
                 views: {
                     'content': {
                         templateUrl: "templates/app/budi_profile.html",
-                        controller: 'ProfileCtrl'
+                        controller: 'BudisCtrl'
                     }
                 }
             },

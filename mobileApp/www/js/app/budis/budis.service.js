@@ -23,6 +23,8 @@
         
         this.user = $userS.getUser();
         
+        this.budi = {};
+        
         this.getBudisList = function () 
         { 
  			// return $budiApi.budiList(user);

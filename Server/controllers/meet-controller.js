@@ -139,6 +139,25 @@ function MeetController () {
             });
     }
 
+    function leaveMeet(meet) {
+        var result = new mongoose.Promise;
+
+        meet.finish = true;
+        meet.save(function (err, m) {
+            if (err) {
+                result.error(m);
+                return;
+            }
+
+            result.fulfill({
+                error: 0,
+                meet: m
+            });
+
+            return result;
+        });
+    }
+
     /**
      * Returns a promise that will try to be fulfilled with a meet object to be answered to client
      * If the meet object is null, it will create and save a new meet object with budi._id
@@ -162,7 +181,8 @@ function MeetController () {
                 restrictions : {
                     age : budi.restrictions.age,
                     genre : budi.restrictions.genre
-                }
+                },
+                finish: false
             });
 
             meet.save(function (err, meet) {
@@ -229,6 +249,21 @@ function MeetController () {
         Budi.findOne({_id : req.body.budi_id}).exec()
             .then(findAvailableMeets)
             .then(handleMeet)
+            .then(handleAnswer(res))
+            .onReject(handleError(res));
+    };
+
+    this.leave = function (req, res) {
+
+        if(!req.body.hasOwnProperty('meet_id')) {
+            res.json({
+                error: "Missing arguments"
+            }, handleError(res));
+            return;
+        }
+
+        Meet.findOne({_id : req.body.meet_id}).exec()
+            .then(leaveMeet)
             .then(handleAnswer(res))
             .onReject(handleError(res));
     };

@@ -60,8 +60,11 @@
         $scope.takePicture = function takePicture(src) {
             $chatBS.takePicture(src).then(
                 function success(data) {
-                    $scope.sendForm.pictureSEND = dataURItoBlob("data:image/jpeg;base64,"+data.image);
-                    $scop.sendForm.picture = "data:image/jpeg;base64, "+ data.image;
+                   // $scope.sendForm.pictureSEND = dataURItoBlob("data:image/jpeg;base64,"+data.image);
+                    $scope.sendForm.picture = "data:image/jpeg;base64,"+ data.image;
+                    console.log("IMAGE");
+                    console.log($scope.sendForm.picture);
+                    //console.log($scope.sendForm.pictureSEND);
                 }
             );
             //$scope.sendForm.picture = "./img/camera.png";
@@ -69,9 +72,6 @@
 
         $scope.sendImage = function sendImage() {
             $scope.modal.hide();
-            console.log("IMAGE");
-            console.log($scope.sendForm.picture);
-            console.log($scope.sendForm.pictureSEND);
             $chatBS.sendImage($scope.sendForm.pictureSEND).then(
                 function success(data) {
                     var msg = {};
@@ -118,7 +118,7 @@
         $scope.meet = $chatBS.getMeetInfo();
         $scope.meetAnimation = false;
 
-        console.log($chatBS.getMeetInfo());
+        //console.log($chatBS.getMeetInfo());
         $scope.findBudi = function findBudi() {
             $scope.meetAnimation = true;
             $chatBS.findMeet().then(
@@ -161,9 +161,12 @@
             else return true;
         };
 
-        $interval(function(){$scope.messages = $chatBS.meet_messages;}, 2500);
+        $interval(function(){
+            if($scope.messages.length != $chatBS.meet_messages.length)
+                $scope.messages = $chatBS.meet_messages;
+        }, 1000);
 
-        function dataURItoBlob(dataURI) {
+        /*function dataURItoBlob(dataURI) {
         // convert base64/URLEncoded data component to raw binary data held in a string
          var byteString = atob(dataURI.split(',')[1]);
          var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
@@ -177,22 +180,11 @@
 
          var bb = new Blob([ab], { "type": mimeString });
          return bb;
-        }
-
-        /*function encodeImageUri(imageUri)
-        {
-             var c=document.createElement('canvas');
-             var ctx=c.getContext("2d");
-             var img=new Image();
-             img.onload = function(){
-               c.width=this.width;
-               c.height=this.height;
-               ctx.drawImage(img, 0,0);
-             };
-             img.src=imageUri;
-             var dataURL = c.toDataURL("image/jpeg");
-             return dataURL;
         }*/
+
+        $scope.addBudi = function(){
+            $chatBS.addBudi();
+        };
     }
 
 })(this.app, this.angular);
