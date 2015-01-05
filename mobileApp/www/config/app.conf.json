@@ -112,7 +112,7 @@
                         "url":"api/meets/get"
                     },
                     "budiList" :{
-                        "url":"api/budies/list"
+                        "url":"api/budies/list/"
                     },
                     "budiDelete":
                     {

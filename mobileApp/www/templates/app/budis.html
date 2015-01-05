@@ -33,11 +33,9 @@
                 <p></p>
                 <h2>
                     <i title="Blocked" ng-show="budi.blocked" class="icon-left ion-locked"></i> 
-                    {{ budi.first_name + ' ' + budi.last_name }} 
+                    {{ budi.name }} 
                 </h2>
                 <p></p>
-                <p ng-show="budi.location.length"> {{ budi.location }} </p>
-                <p ng-show="!budi.location.length"> Unknown </p> 
                 <ion-delete-button ng-hide="data.showSearch === false" title="{{ buttonName(budi) }}" 
                     class="ion-minus-circled" ng-click="showConfirm(budi)"> 
                 </ion-delete-button>

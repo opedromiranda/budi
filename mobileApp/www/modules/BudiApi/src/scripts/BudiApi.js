@@ -149,4 +149,8 @@ var BudiApi = angular.module('BudiApi', [])
                 meet_id: meet._id
             });
         };
+
+        this.getBudis = function getBudis(myID){
+            return $http.get(serverURL+endpoints.budiList.url+myID);
+        };
     }]);

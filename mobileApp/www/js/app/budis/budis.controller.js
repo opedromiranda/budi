@@ -217,6 +217,7 @@
             else return false;
         };
 
+        /*
         $scope.budisListUnsorted
             .sort(function(a, b)
             {
@@ -235,7 +236,7 @@
                 currentCharCode = personCharCode;
 
                 $scope.budisList.push(person);
-            });
+            });*/
 
         for (var i = currentCharCode + 1; i <= 'Z'.charCodeAt(0); i++)
         {

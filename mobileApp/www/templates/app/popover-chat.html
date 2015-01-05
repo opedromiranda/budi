@@ -1,10 +1,11 @@
 <style>.popover { height:auto; width: 150px; }</style>
 
 <ion-popover-view>
-    <button ng-hide="meet.added_budi" class="button button-full button-positive" ng-click="popover.hide($event) ; addBudi()">
+    <button ng-hide="meet.added_budi" class="button button-clear button-positive" ng-click="popover.hide($event) ; addBudi()">
         <i class="icon ion-android-add-contact"> &nbsp Add Budi </i>    
     </button>
-    <button class="button button-full button-positive" ng-click="popover.hide($event) ; endMeet()">
+    <button ng-show="meet.added_budi" class="button button-clear button-positive" disabled>
+    <button class="button button-clear button-positive" ng-click="popover.hide($event) ; endMeet()">
         <i class="icon ion-log-out"> Leave Chat </i>    
     </button>
 </ion-popover-view>
