@@ -11,7 +11,7 @@
                 <img src="{{ user_info.picture }}">
                 <h2 class="menu-user-info"> {{ user_info.name }} </h2>
             </div>
-            <ion-item class="item-icon-left" ng-repeat="item in items" nav-clear menu-close ng-href="{{ item.url }}">
+            <ion-item class="item-icon-left bar-header bar-positive" ng-repeat="item in items" nav-clear menu-close ng-href="{{ item.url }}">
                 <i class="icon {{ item.icon }}"></i>
                 {{ item.name }}
             </ion-item>
