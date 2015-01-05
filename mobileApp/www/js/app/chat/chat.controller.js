@@ -118,7 +118,6 @@
         $scope.meet = $chatBS.getMeetInfo();
         $scope.meetAnimation = false;
 
-        //console.log($chatBS.getMeetInfo());
         $scope.findBudi = function findBudi() {
             $scope.meetAnimation = true;
             $chatBS.findMeet().then(
