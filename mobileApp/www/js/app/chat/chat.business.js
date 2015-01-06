@@ -162,6 +162,8 @@
                             
                             meet_info.active = false;
                             storage.reset();
+                            _data = storage.get();
+                            meet_info = _data.meet_info;
                             return;
                         } 
 
@@ -187,6 +189,8 @@
 
                             meet_info.active = false;
                             storage.reset();
+                            _data = storage.get();
+                            meet_info = _data.meet_info;
                             return;
                         }
 
@@ -243,6 +247,8 @@
                     $interval.cancel(intervalPromise);
                     meet_info.active = false;
                     storage.reset();
+                    _data = storage.get();
+                    meet_info = _data.meet_info;
                 },
                 function onError(e){
                     //console.log(e);
@@ -254,6 +260,8 @@
             $interval.cancel(intervalPromise);
             meet_info.active = false;
             storage.reset();
+            _data = storage.get();
+            meet_info = _data.meet_info;
         };
 
         (function init(){

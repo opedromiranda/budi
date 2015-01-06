@@ -9,7 +9,7 @@
             </button>
         </div>
     </div>
-    <ion-content class="has-header chat-background">
+    <ion-content class="has-header chat-background" has-bouncing="true">
         <div ng-repeat="msg in messages" class="item item-chat item-chat-{{msg.side}}">
             <div class="{{msg.owner}}-bubble">
                 <img class="chat-picture" ng-show="{{msg.type === 'image'}}" ng-src="{{msg.image}}">
@@ -33,7 +33,6 @@
                 <i class="icon ion-camera"></i>
             </div>
             <div ng-show="locked()" title="Send Photo" class="tab-item">
-                <i class="icon ion-ios7-email"></i>
                 <i  class="fa fa-lg fa-lock"></i>
             </div>
             <div ng-hide="locked()" title="Send Message"  class="tab-item" ng-click="toggleInput()">
