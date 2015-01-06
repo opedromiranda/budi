@@ -152,7 +152,7 @@
         $scope.openBrowser = function(link)
         {
             if (!$scope.settings && !$scope.user.show.show)
-                $window.open(link, '_self', 'location = no');
+                $window.open(link, '_blank', 'location = no');
             
             return true;
         };

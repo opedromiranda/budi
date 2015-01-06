@@ -27,29 +27,34 @@
         
         this.getBudisList = function()
         { 
+            var deferred = $q.defer();
             self.user = $userS.getUser();
- 			return $budiApi.getBudis(self.user._id)
+ 			$budiApi.getBudis(self.user._id)
             .then(
                 function onSuccess(data){
-                    console.log(JSON.stringify(data.budiFriends));
+                    console.log(JSON.stringify(data.data.budiFriends));
                     var budisgot = [];
-                    for(var i=0; i<data.budiFriends.length; i++){
+                    for(var i=0; i<data.data.budiFriends.length; i++){
                         var bd = {};
-                        bd.id = data.budiFriends[i].fb_id;
-                        bd.name = data.budiFriends[i].name;
-                        if( data.budiFriends[i].genre === 'm' )
+                        bd.id = data.data.budiFriends[i].fb_id;
+                        bd.name = data.data.budiFriends[i].name;
+                        if( data.data.budiFriends[i].genre === 'm' )
                             bd.gender = 'male';
                         else bd.gender = 'female';
-                        bd.picture = 'http://graph.facebook.com/'+data.budiFriends[i].fb_id+'/picture?type=square';
+                        bd.picture = 'http://graph.facebook.com/'+data.data.budiFriends[i].fb_id+'/picture?type=square';
                         bd.blocked = false;
+                        bd.link = 'https://www.facebook.com/app_scope_user_id/'+data.data.budiFriends[i].fb_id+'/';
                         budisgot.push(bd);
                     }
-                    return bd;
+                    console.log(JSON.stringify(budisgot));
+                    deferred.resolve({budis: budisgot});
                 },
                 function onError(e){
                     console.log(e);
-                    return [];
+                    deferred.reject(e);
                 });
+
+            return deferred.promise;
             
  			/*var qual = 
  			[

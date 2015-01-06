@@ -1,107 +1,42 @@
-<ion-view title="{{ budi.first_name + ' ' + budi.last_name }} Profile">
-	<ion-nav-bar class="bar-positive" animation="no-animation">
-		&nbsp <ion-nav-back-button title="Back" class="button-icon ion-ios7-arrow-back"> Back </ion-nav-back-button>
-	</ion-nav-bar>     
+<ion-modal-view>
+	<ion-header-bar class="bar bar-positive">
+		<button class="button button-icon button-clear icon ion-arrow-left-c" ng-click="closeBudiProfile()">
+    	</button>
+    	<h1 class="title" > {{ selectedBudi.name }}'s Profile </h1>
+    </ion-header-bar>     
 
-	<ion-content ng-show="budi.location.name.length">      
+	<ion-content>      
 		<ion-item class="item item-thumbnail-left">
-			<img ng-src="{{ budi.picture }}">
+			<img ng-src="{{ selectedBudi.picture }}">
             <p></p>
-            <h2> {{ budi.first_name + ' ' + budi.last_name }} </h2>
+            <h2> {{ selectedBudi.name }} </h2>
             <p></p>
-            <p ng-show="budi.location.name.length" style="text-transform: capitalize"> 
+            <p ng-show="budi.location" style="text-transform: capitalize"> 
                 {{ budi.location.name }}
             </p>
 		</ion-item>
         
         <ion-item>
-            <i ng-hide="budi.gender.length" class="icon ion-transgender"> Gender </i>
-			<i ng-show="budi.gender === 'female'" class="icon ion-female"> Gender </i>
-            <i ng-show="budi.gender === 'male'" class="icon ion-male"> Gender </i>
+            <i ng-hide="selectedBudi.gender.length" class="icon ion-transgender"> Gender </i>
+			<i ng-show="selectedBudi.gender === 'female'" class="icon ion-female"> Gender </i>
+            <i ng-show="selectedBudi.gender === 'male'" class="icon ion-male"> Gender </i>
             <p></p>
 			<p style="text-transform: capitalize"> 
-                &nbsp&nbsp&nbsp {{ budi.gender }} 
+                &nbsp&nbsp&nbsp {{ selectedBudi.gender }} 
             </p>
 		</ion-item>
 
-        <ion-item ng-show="budi.birthday.length">
+        <ion-item ng-show="selectedBudi.birthday.length">
 			<i class="icon ion-calendar"> Age </i>
             <p></p>
 			<p> &nbsp&nbsp&nbsp {{ age }} </p>
 		</ion-item>
-        
-        <ion-item ng-show="budi.bio && budi.show.bio">
-			<i class="icon ion-android-book"> About Me </i>
-            <p></p>
-			<p style="text-transform: capitalize"> 
-                &nbsp&nbsp&nbsp {{ budi.bio }} 
-            </p>
-		</ion-item>
-        
-        <ion-item ng-show="budi.interested_in && budi.show.interested_in">
-			<i class="icon ion-eye ion"> Interested In </i>
-            <p></p>
-			<p style="text-transform: capitalize"> 
-                &nbsp&nbsp&nbsp {{ budi.interested_in }} 
-            </p>
-		</ion-item>
-        
-        <ion-item ng-show="budi.religion && budi.show.religion">
-			&nbsp<i class="icon ion-bookmark"> Religion</i>
-            <p></p>
-			<p style="text-transform: capitalize"> 
-                &nbsp&nbsp&nbsp {{ budi.religion }} 
-            </p>
-		</ion-item>
-        
-        <ion-item ng-show="budi.political && budi.show.political">
-			<i class="icon ion-speakerphone"> Politics </i>
-            <p></p>
-			<p style="text-transform: capitalize"> 
-                &nbsp&nbsp&nbsp {{ budi.political }} 
-            </p>
-		</ion-item>
  
-		<ion-item ng-show="budi.facebook && budi.show.facebook" ng-click="openBrowser('{{ budi.link }}')">
+		<ion-item ng-show="selectedBudi.link" ng-click="openBrowser('{{selectedBudi.link}}')">
 			&nbsp<i class="icon ion-social-facebook"> Facebook </i>
             <p></p>
-			<p > &nbsp&nbsp&nbsp {{ budi.link }} </p>
+			<p > &nbsp&nbsp&nbsp View facebook profile </p>
 		</ion-item>
 
-		<ion-item ng-show="budi.twitter && budi.show.twitter" ng-click="openBrowser('{{ budi.twitter }}')">
-			<i class="icon ion-social-twitter"> Twitter </i>
-            <p></p>
-			<p> &nbsp&nbsp&nbsp {{ budi.twitter }} </p>
-		</ion-item>
-        
-        <ion-item ng-show="budi.linkedin && budi.show.linkedIn" ng-click="openBrowser('{{ budi.linkedin }}')">
-			<i class="icon ion-social-linkedin"> LinkedIn </i>
-            <p></p>
-			<p> &nbsp&nbsp&nbsp {{ budi.linkedin }} </p>
-		</ion-item>
-        
-        <ion-item ng-show="budi.instagram && budi.show.instagram" ng-click="openBrowser('{{ budi.instagram }}')">
-			<i class="icon ion-social-instagram"> Instagram </i>
-            <p></p>
-			<p> &nbsp&nbsp&nbsp {{ budi.instagram }} </p>
-		</ion-item>
-        
-        <ion-item ng-show="budi.reddit && budi.show.reddit" ng-click="openBrowser('{{ budi.reddit }}')">
-			<i class="icon ion-social-reddit"> Reddit </i>
-            <p></p>
-			<p> &nbsp&nbsp&nbsp {{ budi.reddit }} </p>
-		</ion-item>
-        
-        <ion-item ng-show="budi.googleplus && budi.show.googleplus" ng-click="openBrowser('{{ budi.googleplus }}')">
-			<i class="icon ion-social-googleplus"> Google+ </i>
-            <p></p>
-			<p> &nbsp&nbsp&nbsp {{ budi.googleplus }} </p>
-		</ion-item>
-
-		<ion-item ng-show="budi.skype && budi.show.skype">
-			<i class="icon ion-social-skype"> Skype </i>
-            <p></p>
-			<p> &nbsp&nbsp&nbsp {{ budi.skype }} </p>
-		</ion-item>
 	</ion-content>
-</ion-view>
+</ion-modal-view>

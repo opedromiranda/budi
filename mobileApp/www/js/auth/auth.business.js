@@ -9,9 +9,9 @@
         //_fbS = 'FacebookService';
 
     $angular.module($app.appName)
-        .service(_business, ['$q', '$interval', '$rootScope', '$state', '$ionicViewService', '$cordovaFacebook', _authAdapter, _userService, _budiapi, _proxy, business]);
+        .service(_business, ['$q', '$interval', '$rootScope', '$state', '$ionicViewService', '$cordovaFacebook', '$cordovaToast', _authAdapter, _userService, _budiapi, _proxy, business]);
 
-    function business($q, $interval, $rootScope, $state, $ionicViewService, $cordovaFacebook, $authAdapter, $userService, $budiapi, $proxy) {
+    function business($q, $interval, $rootScope, $state, $ionicViewService, $cordovaFacebook, $cordovaToast, $authAdapter, $userService, $budiapi, $proxy) {
         /*jshint validthis:true */
 
         var service = this;
@@ -32,7 +32,12 @@
                     .then(function(success) {
                         getFbUserInfo();
                     }, function (error) {
-                      console.log(JSON.stringify(error));
+                      //console.log(JSON.stringify(error));
+                        $cordovaToast.showShortBottom('An error occured. Try again later.').then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                     });
                 }
                 else {
@@ -40,7 +45,7 @@
                 }
             }, 
             function error(e){
-                console.log(JSON.stringify(e));
+                //console.log(JSON.stringify(e));
             });
         };
 
@@ -49,11 +54,16 @@
             .then(
                 function(user_info) {
                   //console.log("THROUGH API");
-                  //console.log(JSON.stringify(success));
+                  //console.log(JSON.stringify(user_info));
                   budiApiLogin(user_info);
                 }, function (error) {
                   //console.log("API ERROR");
-                  console.log(error);
+                  //console.log(error);
+                  $cordovaToast.showShortBottom('An error occured. Try again later.').then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                 }
             );
         }
@@ -65,9 +75,14 @@
                     service.successLogin(user, result.data.data.budi._id);
                 },
                 function onError(error) {
-                    console.log("LOGIN Fail");
-                    console.log(JSON.stringify(error));
+                    //console.log("LOGIN Fail");
+                    //console.log(JSON.stringify(error));
                     budiApiRegister(user);
+                    $cordovaToast.showShortBottom('An error occured. Try again later.').then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                 }
             );
         }
@@ -78,8 +93,13 @@
                     service.successLogin(user, result.data.data.budi._id);
                 },
                 function onError(e){
-                    console.log("ERROR Register");
-                    console.log(JSON.stringify(e));
+                    //console.log("ERROR Register");
+                    //console.log(JSON.stringify(e));
+                    $cordovaToast.showShortBottom('An error occured. Try again later.').then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                 }
             );
         }
@@ -88,10 +108,15 @@
             return $cordovaFacebook.getAccessToken()
             .then(function(token) {
               //console.log("ACCESS TOKEN");
-              //console.log(JSON.stringify(success));
+              //console.log(JSON.stringify(token));
               return token;
             }, function (error) {
-              console.log(error);
+              //console.log(error);
+              $cordovaToast.showShortBottom('An error occured. Try again later.').then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
               throw err;
             });
         }
@@ -121,7 +146,7 @@
             .then(
                 function(){
                     // Save User details
-                    console.log(JSON.stringify(fb_user_info));
+                    //console.log(JSON.stringify(fb_user_info));
                     $userService.setUser(
                         $angular.extend({}, fb_user_info, 
                         { 
@@ -152,7 +177,7 @@
                         }));
                 }
             ).finally(function(){
-                console.log("Successful Login!", $userService.getUser());
+                //console.log("Successful Login!", $userService.getUser());
                 // Finally go to app
                 $state.go('app.chat');
                 return true;
@@ -167,9 +192,9 @@
                     disableBack: true
                 });
                 $state.go('auth.login');
-                console.log(JSON.stringify(success));
+                //console.log(JSON.stringify(success));
             }, function (error) {
-              console.log(JSON.stringify(error));
+              //console.log(JSON.stringify(error));
             });
             
         };

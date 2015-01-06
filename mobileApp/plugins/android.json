@@ -182,9 +182,6 @@
         "nl.x-services.plugins.toast": {
             "PACKAGE_NAME": "com.budi.app"
         },
-        "org.apache.cordova.console": {
-            "PACKAGE_NAME": "com.budi.app"
-        },
         "org.apache.cordova.dialogs": {
             "PACKAGE_NAME": "com.budi.app"
         },
@@ -194,6 +191,9 @@
         "com.phonegap.plugins.facebookconnect": {
             "APP_ID": "868824609795999",
             "APP_NAME": "budi",
+            "PACKAGE_NAME": "com.budi.app"
+        },
+        "org.apache.cordova.console": {
             "PACKAGE_NAME": "com.budi.app"
         }
     },

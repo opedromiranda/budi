@@ -55,7 +55,7 @@
                     }
                 }
             },
-            'app.budi_profile': {
+            /*'app.budi_profile': {
                 url: "/budis/profile",
                 views: {
                     'content': {
@@ -63,7 +63,7 @@
                         controller: 'BudisCtrl'
                     }
                 }
-            },
+            },*/
             'app.profile': {
                 url: "/profile",
                 views: {

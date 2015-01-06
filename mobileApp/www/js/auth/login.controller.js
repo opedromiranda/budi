@@ -13,7 +13,6 @@
         {
             $authBS.fbLogin();
     	};
-
     }
 
 })(this.app, this.angular);

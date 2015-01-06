@@ -65,7 +65,7 @@
 .my-bubble 
 {
 	position: relative;
-	width: 100%;
+	max-width: 100%;
 	min-height: 52px;
 	height: auto;
 	padding: 6px;
@@ -76,7 +76,6 @@
 	-moz-border-radius: 7px;
 	border-radius: 7px;
 	margin-right: 5px;
-	text-align: right;
 }
 
 .my-bubble:after 
@@ -107,8 +106,14 @@
 	height: auto;
 }
 
-.item-chat * {
-	
+.item-chat-left * {
+	clear:both;
+   	float:left;
+}
+
+.item-chat-right * {
+	clear:both;
+   	float:right;
 }
 
 .chat-picture {
@@ -207,7 +212,7 @@ body {
 
 .button-mid {
 	margin-top: 45%;
-	width: 50%;
+	width: 70%;
 }
 
 .button-mid i {
@@ -240,4 +245,8 @@ body {
 	width:100%;
 	height:auto;
 
+}
+
+.button-pop {
+	margin-top: 0px;
 }

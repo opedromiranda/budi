@@ -64,29 +64,42 @@ var BudiApi = angular.module('BudiApi', [])
 
         this.sendImage = function sendImage(budi, meet, image) {
             var deferred = $q.defer();
-            console.log( JSON.stringify({
+            /*console.log( JSON.stringify({
                 budi_id: budi._id,
                 meet_id: meet._id,
                 image: image
-            }));
+            }));*/
+            return $http.post(serverURL+endpoints.sendMessage.url, {
+                budi_id: budi._id,
+                meet_id: meet._id,
+                message: JSON.stringify({image: image})
+            });
 
-            var formData = new FormData();
-
-            formData.append('image', image);
+            /*var formData = new FormData();
+            var decodedFile = new Buffer(image, 'base64');
+            formData.append('image', decodedFile);
             formData.append('budi_id', budi._id);
             formData.append('meet_id', meet._id);
 
             /*var xhr = new XMLHttpRequest(); 
 
             xhr.open( 'POST', serverURL+endpoints.sendImage.url , true );
-            xhr.onreadystatechange = function(){
-                console.log('state changed');
-            };
+
+            var boundary = '------multipartformboundary' + (new Date).getTime(),
+            dashdash = '--',
+            crlf = '\r\n',
+            content = dashdash+boundary+crlf+'Content-Disposition: form-data; name="image";"'+crlf+crlf+image+crlf+dashdash+boundary+dashdash+crlf;
+
             xhr.addEventListener("load", xhrSuccess, false);
             xhr.addEventListener("error", xhrError, false);
 
-            xhr.setRequestHeader("Content-Type", "Content-Type:multipart/form-data;");
-            xhr.send( formData );
+            //xhr.setRequestHeader("Content-Type", "Content-Type:multipart/form-data;");
+            xhr.setRequestHeader("Content-type", "multipart/form-data; boundary="+boundary);
+            xhr.setRequestHeader("Content-length", content.length);
+            xhr.setRequestHeader("Connection", "close");
+            // execute
+            xhr.send(content);
+            //xhr.send( formData );
 
             function xhrSuccess (response) {
                 console.log(JSON.stringify(response));
@@ -99,12 +112,12 @@ var BudiApi = angular.module('BudiApi', [])
             }
 
             return deferred.promise;*/
-            return $http({
+            /*return $http({
                 method: 'POST',
                 url: serverURL+endpoints.sendImage.url, 
                 data: formData,
                 headers: {'Content-Type': 'multipart/form-data'}
-            });
+            });*/
         };
 
         this.getMessages = function getMessages(meet){

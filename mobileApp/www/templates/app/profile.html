@@ -1,12 +1,12 @@
-<ion-view title="My Profile">
+<ion-view title="Profile">
     <ion-nav-bar class="bar-positive" animation="no-animation">
         <ion-nav-buttons>
             <button title="Menu" menu-toggle="left" class="button button-icon icon ion-navicon"></button>
         </ion-nav-buttons>
         <ion-nav-buttons side="right">
-            <button title="Hide/Unhide Info" ng-click="changeShow('show')"
+            <!--<button title="Hide/Unhide Info" ng-click="changeShow('show')"
                     class="button button-clear icon ion-power">
-            </button>
+            </button>-->
             &nbsp&nbsp&nbsp&nbsp
             <button title="Edit Profile" ng-click="changeSettings()"
                     class="button button-clear icon ion-gear-a">
@@ -25,7 +25,7 @@
                 <button ng-show="settings" title="Change Picture" ng-click="changePicture()"
                         class="button button-clear button-positive button-small icon ion-edit">
                 </button>
-                {{ user.first_name + ' ' + user.last_name }} </h2>
+                {{ user.name }} </h2>
             <p ng-hide="settings"></p>
             <p ng-show="settings" style="text-transform: capitalize">
                 &nbsp&nbsp
@@ -72,7 +72,7 @@
                     class="button button-clear button-positive button-small icon ion-eye-disabled">
             </button>
             <p></p>
-            <p > &nbsp&nbsp&nbsp {{ user.link }} </p>
+            <p > &nbsp&nbsp&nbsp View my page </p>
         </ion-item>
 
         <ion-item ng-show="user.show.show || user.show.twitter" ng-click="openBrowser('{{ user.twitter }}')">

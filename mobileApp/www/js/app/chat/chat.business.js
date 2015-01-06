@@ -7,9 +7,9 @@
         _storage = 'LocalStorageFactory';
     
     $angular.module($app.appName)
-        .service(_business, ['$q', '$interval', '$ionicPopup', _userS, _budiAPI, _storage, business]);
+        .service(_business, ['$q', '$interval', '$ionicPopup', '$cordovaToast', _userS, _budiAPI, _storage, business]);
         
-    function business($q, $interval, $ionicPopup, $userS, $budiAPI, $storage) {
+    function business($q, $interval, $ionicPopup, $cordovaToast, $userS, $budiAPI, $storage) {
         var self = this;
         var my_info = $userS.getUser();
         var nrOfPictures = 0;
@@ -50,7 +50,7 @@
             
             // Open camera and save this on service
             function picOnSuccess(imageURI) {
-                console.log("Snapshot Success: " + imageURI);
+                //console.log("Snapshot Success: " + imageURI);
                 // Return
                 deffered.resolve({
                     image: imageURI
@@ -58,21 +58,21 @@
             }
 
             function picOnFail(message) {
-                console.log("Snapshot Failure: " + message);
+                //console.log("Snapshot Failure: " + message);
                 deffered.reject(message);
             }
             
             try {
                 navigator.camera.getPicture(picOnSuccess, picOnFail, 
                     { 
-                        quality: 50, 
+                        quality: 20, 
                         destinationType : Camera.DestinationType.DATA_URL,
                         sourceType : source, // Camera.PictureSourceType = {PHOTOLIBRARY : 0,CAMERA : 1,SAVEDPHOTOALBUM : 2}; 
                         encodingType: Camera.EncodingType.JPEG,
                         saveToPhotoAlbum: true 
                     });
             } catch(error) {
-                console.log('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+                //console.log('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
                 deffered.reject();   
             }
             
@@ -93,7 +93,7 @@
         this.getMsgs = function getMsgs(){
             $budiAPI.getMessages(meet_info).then(
                 function onSuccess(messages){
-                    console.log("GOT MESSAGES");
+                    //console.log("GOT MESSAGES");
                     //console.log(JSON.stringify(messages));
                     //self.meet_messages = self.meet_messages.concat(messages.data.chat);
 
@@ -123,6 +123,7 @@
 
                             //display dialog to add friend if they want
                             if( showDialog ){
+                                meet_info.added_budi = true;
                                 var confirmPopup = $ionicPopup.confirm({
                                     title: 'Friend Request',
                                     subTitle: 'Notice: friend requests can only occur once!',
@@ -136,6 +137,11 @@
                                         self.addBudi();
                                         meet_info.added_budi = true;
                                         // show toast 'You are now friends!'
+                                        $cordovaToast.showShortBottom('You are now friends!').then(function(success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
                                     }
                                     showDialog = false;
                                 });
@@ -151,7 +157,7 @@
                             });
                             
                             alertPopup.then(function(res) {
-                                console.log("got meet leave notified");
+                                //console.log("got meet leave notified");
                             });
                             
                             meet_info.active = false;
@@ -174,7 +180,6 @@
                                     if(res) {
                                         self.addBudi();
                                         meet_info.added_budi = true;
-                                        // show toast 'a friend request has been sent!'
                                     }
                                     showDialog = false;
                                 });
@@ -203,7 +208,7 @@
                     }  
                 },
                 function onError(e){
-                    console.log(e);
+                    //console.log(e);
                 }
             );
         };
@@ -219,13 +224,13 @@
                 function Success(_meet) {
                     meet_info._id = _meet._id;
                     meet_info.active = true;
-                    console.log("New Meet Found", _meet);
+                    //console.log("New Meet Found", _meet);
                     intervalPromise = $interval(function(){self.getMsgs();}, 5000);
                     deferred.resolve();
                     storage.save();
                 },
                 function Error(e){
-                    console.log(e);
+                    //console.log(e);
                     deferred.reject();
                 }
             );
@@ -240,7 +245,7 @@
                     storage.reset();
                 },
                 function onError(e){
-                    console.log(e);
+                    //console.log(e);
                 }
             );
         };
@@ -261,12 +266,21 @@
 //
         function insertMsg(msg) {
             var go_msg = {};
-            if(msg.type === "image"){
+            /*if(msg.type === "image"){
                 go_msg.image = msg.message;
                 nrOfPictures++;
             }
             else 
+                go_msg.message = msg.message;*/
+            try {
+                var jimage = JSON.parse(msg.message);
+                go_msg.image = jimage.image;
+                go_msg.type = 'image';
+                nrOfPictures++;
+            } catch(e){
                 go_msg.message = msg.message;
+                go_msg.type = 'text';
+            }
             
             if (msg.budiSending != my_info._id) {
                 go_msg.owner = 'budi';
@@ -292,12 +306,17 @@
             $budiAPI.addBudi(my_info._id, meet_info._id).then(
                 function onSuccess(res){
                     //show toast friend request sent
+                    $cordovaToast.showShortBottom('Friend request sent!').then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
                     meet_info.added_budi = true;
-                    console.log("Add Budi Success");
-                    console.log(JSON.stringify(res));
+                    //console.log("Add Budi Success");
+                    //console.log(JSON.stringify(res));
                 },
                 function onError(e){
-                    console.log(e);
+                    //console.log(e);
                 }
             );
         };
