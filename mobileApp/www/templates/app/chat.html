@@ -29,14 +29,14 @@
     </div>
     <div class="tabs-striped tabs-background-dark tabs-color-calm">
         <div class="tabs">
-            <div ng-hide="locked()" title="Send Photo" class="tab-item" ng-click="showPicturePage()">
+            <div title="Send Photo" class="tab-item" ng-click="showPicturePage()">
                 <i class="icon ion-camera"></i>
             </div>
             <div ng-show="locked()" title="Send Photo" class="tab-item">
-                <i class="icon ion-camera"></i>
+                <i class="icon ion-ios7-email"></i>
                 <i  class="fa fa-lg fa-lock"></i>
             </div>
-            <div title="Send Message"  class="tab-item" ng-click="toggleInput()">
+            <div ng-hide="locked()" title="Send Message"  class="tab-item" ng-click="toggleInput()">
                 <i class="icon ion-ios7-email"></i>
             </div>
         </div>
